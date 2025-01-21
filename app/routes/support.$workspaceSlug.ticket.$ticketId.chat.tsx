@@ -7,8 +7,6 @@ import { Button } from "~/components/ui/button";
 import { Send } from "lucide-react";
 
 export async function loader({ params }: { params: { workspaceSlug: string; ticketId: string } }) {
-  console.log('Chat loader - params:', params);
-
   try {
     // Get workspace
     const { data: workspace, error: workspaceError } = await supabaseAdmin
@@ -17,17 +15,9 @@ export async function loader({ params }: { params: { workspaceSlug: string; tick
       .eq('slug', params.workspaceSlug)
       .single();
 
-    if (workspaceError) {
-      console.error('Workspace error:', workspaceError);
+    if (workspaceError || !workspace) {
       throw new Response("Workspace not found", { status: 404 });
     }
-
-    if (!workspace) {
-      console.error('No workspace found for slug:', params.workspaceSlug);
-      throw new Response("Workspace not found", { status: 404 });
-    }
-
-    console.log('Found workspace:', workspace);
 
     // Get ticket with chat room - using explicit relationship
     const { data: ticket, error: ticketError } = await supabaseAdmin
@@ -47,17 +37,9 @@ export async function loader({ params }: { params: { workspaceSlug: string; tick
       .eq('workspace_id', workspace.id)
       .single();
 
-    if (ticketError) {
-      console.error('Ticket error:', ticketError);
+    if (ticketError || !ticket) {
       throw new Response("Ticket not found", { status: 404 });
     }
-
-    if (!ticket) {
-      console.error('No ticket found for ID:', params.ticketId);
-      throw new Response("Ticket not found", { status: 404 });
-    }
-
-    console.log('Found ticket:', ticket);
 
     // Get messages
     const { data: messages, error: messagesError } = await supabaseAdmin
@@ -69,8 +51,6 @@ export async function loader({ params }: { params: { workspaceSlug: string; tick
     if (messagesError) {
       console.error('Messages error:', messagesError);
     }
-
-    console.log('Found messages:', messages);
 
     return json({ workspace, ticket, messages: messages || [] });
   } catch (error) {

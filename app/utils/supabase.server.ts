@@ -10,9 +10,6 @@ if (!SUPABASE_URL) throw new Error('SUPABASE_URL is required');
 if (!SUPABASE_ANON_KEY) throw new Error('SUPABASE_ANON_KEY is required');
 if (!SUPABASE_SERVICE_ROLE_KEY) throw new Error('SUPABASE_SERVICE_ROLE_KEY is required');
 
-console.log('Supabase URL:', SUPABASE_URL);
-console.log('Service Role Key exists:', !!SUPABASE_SERVICE_ROLE_KEY);
-
 // For authenticated routes that need session handling
 export const createServerSupabase = ({
   request,

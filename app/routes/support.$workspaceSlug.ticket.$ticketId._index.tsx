@@ -16,7 +16,6 @@ export async function loader({ params }: LoaderFunctionArgs) {
     .single();
 
   if (workspaceError || !workspace) {
-    console.error('Workspace not found:', workspaceError);
     throw new Response("Workspace not found", { status: 404 });
   }
 
@@ -41,7 +40,6 @@ export async function loader({ params }: LoaderFunctionArgs) {
     .single();
 
   if (ticketError || !ticket) {
-    console.error('Ticket not found:', ticketError);
     throw new Response("Ticket not found", { status: 404 });
   }
 
