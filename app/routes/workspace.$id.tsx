@@ -13,8 +13,14 @@ import {
   Timer,
   BarChart3,
   MessagesSquare,
-  Inbox
+  Inbox,
+  BookOpen,
+  Search,
+  FileText,
+  Star,
+  PlusCircle
 } from "lucide-react";
+import { Input } from "~/components/ui/input";
 
 // Mock data - will be replaced with real data later
 const mockData = {
@@ -72,7 +78,38 @@ const mockData = {
       status: "pending",
       time: "3h ago"
     }
-  ]
+  ],
+  knowledgeBase: {
+    popularArticles: [
+      {
+        id: 1,
+        title: "How to Process Refunds",
+        category: "Payments",
+        views: 1234,
+        lastUpdated: "2d ago"
+      },
+      {
+        id: 2,
+        title: "Shipping Policy Overview",
+        category: "Shipping",
+        views: 982,
+        lastUpdated: "1w ago"
+      },
+      {
+        id: 3,
+        title: "Common Order Issues",
+        category: "Orders",
+        views: 756,
+        lastUpdated: "3d ago"
+      }
+    ],
+    categories: [
+      { id: 1, name: "Getting Started", articles: 12 },
+      { id: 2, name: "Orders & Shipping", articles: 24 },
+      { id: 3, name: "Returns & Refunds", articles: 18 },
+      { id: 4, name: "Technical Support", articles: 31 }
+    ]
+  }
 };
 
 export async function loader({ request, params }: { request: Request; params: { id: string } }) {
@@ -112,6 +149,10 @@ export default function Workspace() {
           <Button variant="ghost" className="w-full justify-start">
             <Inbox className="mr-2 h-4 w-4" />
             Tickets
+          </Button>
+          <Button variant="ghost" className="w-full justify-start">
+            <BookOpen className="mr-2 h-4 w-4" />
+            Knowledge Base
           </Button>
           <Button variant="ghost" className="w-full justify-start">
             <Users className="mr-2 h-4 w-4" />
@@ -240,6 +281,85 @@ export default function Workspace() {
             </CardContent>
           </Card>
         </div>
+
+                {/* Knowledge Base Quick Access */}
+                <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold">Knowledge Base</h2>
+            <div className="flex items-center gap-4">
+              <div className="relative w-64">
+                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input placeholder="Search articles..." className="pl-8" />
+              </div>
+              <Button size="sm">
+                <PlusCircle className="mr-2 h-4 w-4" />
+                New Article
+              </Button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Popular Articles */}
+            <Card className="md:col-span-2">
+              <CardHeader>
+                <CardTitle>Popular Articles</CardTitle>
+                <CardDescription>Frequently accessed documentation</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {mockData.knowledgeBase.popularArticles.map(article => (
+                    <div key={article.id} className="flex items-center">
+                      <div className="flex-1 space-y-1">
+                        <div className="flex items-center gap-2">
+                          <FileText className="h-4 w-4 text-muted-foreground" />
+                          <p className="text-sm font-medium">
+                            {article.title}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                          <span>{article.category}</span>
+                          <span>•</span>
+                          <span>{article.views} views</span>
+                          <span>•</span>
+                          <span>Updated {article.lastUpdated}</span>
+                        </div>
+                      </div>
+                      <Button variant="ghost" size="sm">
+                        <Star className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Categories */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Categories</CardTitle>
+                <CardDescription>Browse by topic</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  {mockData.knowledgeBase.categories.map(category => (
+                    <Button
+                      key={category.id}
+                      variant="ghost"
+                      className="w-full justify-between"
+                    >
+                      <span>{category.name}</span>
+                      <span className="text-xs text-muted-foreground">
+                        {category.articles} articles
+                      </span>
+                    </Button>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+
       </div>
     </div>
   );
