@@ -18,7 +18,7 @@ interface ActionData {
 }
 
 export async function action({ request, params }: { request: Request; params: { workspaceSlug: string } }): Promise<Response | ActionData> {
-  console.log('Action started - workspace slug:', params.workspaceSlug);
+  
 
   // Get workspace
   const { data: workspace, error: workspaceError } = await supabaseAdmin
@@ -27,7 +27,7 @@ export async function action({ request, params }: { request: Request; params: { 
     .eq('slug', params.workspaceSlug)
     .single();
 
-  console.log('Workspace query result:', { workspace, error: workspaceError });
+  
 
   if (workspaceError) {
     console.error('Workspace error:', workspaceError);
@@ -47,7 +47,7 @@ export async function action({ request, params }: { request: Request; params: { 
   const subject = formData.get("subject") as string;
   const description = formData.get("description") as string;
 
-  console.log('Form data:', { email, subject, description: description.slice(0, 50) + '...' });
+  
 
   // Validate
   const errors: ActionData['errors'] = {};
@@ -62,11 +62,11 @@ export async function action({ request, params }: { request: Request; params: { 
   }
 
   if (Object.keys(errors).length > 0) {
-    console.log('Validation errors:', errors);
+    
     return { errors };
   }
 
-  console.log('Creating ticket for workspace:', workspace.id);
+  
 
   try {
     // Create ticket and chat room
@@ -92,7 +92,7 @@ export async function action({ request, params }: { request: Request; params: { 
       };
     }
 
-    console.log('Created ticket:', ticket);
+    
 
     // Create chat room
     const { data: chatRoom, error: chatError } = await supabaseAdmin
@@ -123,7 +123,7 @@ export async function action({ request, params }: { request: Request; params: { 
       };
     }
 
-    console.log('Created chat room:', chatRoom);
+    
 
     // Update ticket with chat room id
     const { error: updateError } = await supabaseAdmin
@@ -140,7 +140,7 @@ export async function action({ request, params }: { request: Request; params: { 
       };
     }
 
-    console.log('Successfully created ticket and chat room, redirecting...');
+    
     return redirect(`/support/${params.workspaceSlug}/ticket/${ticket.id}/chat`);
   } catch (error) {
     console.error('Unexpected error:', error);

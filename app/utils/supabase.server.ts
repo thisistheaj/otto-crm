@@ -45,6 +45,6 @@ supabaseAdmin.from('workspaces').select('count').single()
     if (error) {
       console.error('Supabase admin client test failed:', error);
     } else {
-      console.log('Supabase admin client initialized successfully');
+      
     }
   }); 
