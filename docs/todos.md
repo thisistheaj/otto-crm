@@ -8,7 +8,7 @@
   - [x] Create workspace button
   - [x] Join workspace button
 - [x] Add navigation logic to create/join pages
-- [ ] Implement workspace selection handler
+- [x] Implement workspace selection handler
 
 ## 2. Profile Completion Dialog Component
 - [x] Create reusable dialog component
@@ -19,12 +19,12 @@
 - [x] Style with shadcn components
 
 ## 3. Workspace Creation (`workspace.new.tsx`)
-- [ ] Create workspace form
-- [ ] Implement workspace creation mutation
-- [ ] Add automatic admin role assignment
-- [ ] Add validation
-- [ ] Implement redirect to workspace dashboard
-- [ ] Add error handling
+- [x] Create workspace form
+- [x] Implement workspace creation mutation
+- [x] Add automatic admin role assignment
+- [x] Add validation
+- [x] Implement redirect to workspace dashboard
+- [x] Add error handling
 
 ## 4. Workspace Join (`workspace.join.tsx`)
 - [ ] Implement invite link handling
