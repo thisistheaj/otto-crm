@@ -1,0 +1,108 @@
+erDiagram
+    auth_users ||--o| profiles : has
+    auth_users ||--o{ workspace_members : belongs_to
+    workspace_members }o--|| workspaces : part_of
+    workspaces ||--o{ tickets : contains
+    workspaces ||--o{ articles : contains
+    workspaces ||--o{ documents : contains
+    workspaces ||--o{ categories : contains
+    tickets ||--o| conversations : has
+    conversations ||--o{ messages : contains
+    articles }o--|| categories : belongs_to
+    documents }o--|| categories : belongs_to
+    
+    auth_users {
+        uuid id PK
+        string email
+        boolean email_verified
+        timestamp created_at
+        timestamp last_sign_in_at
+    }
+
+    profiles {
+        uuid id PK "refs auth.users"
+        string full_name
+        string avatar_url
+        timestamp updated_at
+    }
+
+    workspaces {
+        uuid id PK
+        string name
+        string slug
+        jsonb settings
+        timestamp created_at
+    }
+
+    workspace_members {
+        uuid id PK
+        uuid user_id FK "refs auth.users"
+        uuid workspace_id FK
+        enum role "admin|agent"
+        array permissions
+        timestamp joined_at
+    }
+
+    tickets {
+        uuid id PK
+        uuid workspace_id FK
+        string customer_email
+        string subject
+        enum status "open|pending|resolved|closed"
+        enum priority "low|medium|high|urgent"
+        uuid assigned_to_id FK "refs auth.users"
+        array tags
+        timestamp created_at
+    }
+
+    conversations {
+        uuid id PK
+        uuid ticket_id FK
+        array participants "refs auth.users"
+        enum status "active|closed"
+        timestamp created_at
+    }
+
+    messages {
+        uuid id PK
+        uuid conversation_id FK
+        uuid sender_id FK "refs auth.users"
+        string content
+        enum type "text|system|ai"
+        timestamp created_at
+    }
+
+    articles {
+        uuid id PK
+        uuid workspace_id FK
+        string title
+        string content
+        string slug
+        uuid category_id FK
+        array tags
+        uuid author_id FK "refs auth.users"
+        enum status "draft|published|internal"
+        timestamp created_at
+    }
+
+    documents {
+        uuid id PK
+        uuid workspace_id FK
+        string title
+        string file_name
+        string file_path
+        uuid category_id FK
+        array tags
+        uuid uploader_id FK "refs auth.users"
+        enum status "draft|published|internal"
+        timestamp created_at
+    }
+
+    categories {
+        uuid id PK
+        uuid workspace_id FK
+        string name
+        string slug
+        uuid parent_id FK "self-ref"
+        integer order
+    }

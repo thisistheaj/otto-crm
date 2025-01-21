@@ -1,0 +1,49 @@
+flowchart TB
+    subgraph Public
+        Entry["/"] --> Auth{Logged in?}
+        Auth -->|No| Login[auth.login]
+        Auth -->|No| Signup[auth.signup]
+        Auth -->|Yes| WorkspaceSelect{Has workspace?}
+        
+        WorkspaceSelect -->|No| CreateWorkspace[workspace.new]
+        WorkspaceSelect -->|No| JoinWorkspace[workspace.join]
+        WorkspaceSelect -->|Yes| Dashboard
+    end
+
+    subgraph CustomerPortal["Customer Journey"]
+        direction LR
+        SupportEntry[support.$workspaceSlug] --> KBSearch[support.$workspaceSlug.knowledge]
+        SupportEntry --> CreateTicket[support.$workspaceSlug.ticket.new]
+        CreateTicket --> ViewTicket[support.$workspaceSlug.ticket.$ticketId]
+        ViewTicket --> StartChat[support.$workspaceSlug.chat]
+    end
+
+    subgraph AgentPortal["Agent/Admin Journey"]
+        direction LR
+        Dashboard[workspace.$workspaceId] --> 
+        TicketList[workspace.$workspaceId.tickets]
+        TicketList --> TicketDetail[workspace.$workspaceId.tickets.$ticketId]
+        
+        Dashboard --> ChatList[workspace.$workspaceId.chat]
+        ChatList --> ChatDetail[workspace.$workspaceId.chat.$conversationId]
+        
+        Dashboard --> KBList[workspace.$workspaceId.knowledge]
+        KBList --> Articles[workspace.$workspaceId.knowledge.articles]
+        KBList --> Documents[workspace.$workspaceId.knowledge.documents]
+        Articles --> ArticleEdit[workspace.$workspaceId.knowledge.articles.$articleId]
+        
+        Dashboard --> AgentList[workspace.$workspaceId.agents]
+        Dashboard --> Analytics[workspace.$workspaceId.analytics]
+        Dashboard --> Settings[workspace.$workspaceId.settings]
+        Dashboard --> Routing[workspace.$workspaceId.routing]
+    end
+
+    style CustomerPortal fill:#e6f3ff,stroke:#666
+    style AgentPortal fill:#fff3e6,stroke:#666
+    style Public fill:#f0f0f0,stroke:#666
+    
+    classDef route fill:#fff,stroke:#333,stroke-width:2px
+    classDef decision fill:#fffbe6,stroke:#333,stroke-width:2px
+    
+    class Auth,WorkspaceSelect decision
+    class Login,Signup,CreateWorkspace,JoinWorkspace,Dashboard,TicketList,TicketDetail,ChatList,ChatDetail,KBList,Articles,Documents,ArticleEdit,AgentList,Analytics,Settings,Routing,SupportEntry,KBSearch,CreateTicket,ViewTicket,StartChat route
