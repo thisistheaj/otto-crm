@@ -5,58 +5,43 @@ export type Workspace = Database['public']['Tables']['workspaces']['Row'];
 export type WorkspaceInsert = Database['public']['Tables']['workspaces']['Insert'];
 export type WorkspaceMember = Database['public']['Tables']['workspace_members']['Row'];
 
-export type WorkspaceMembershipWithWorkspace = {
-  workspace_id: string;
-  role: 'admin' | 'agent';
-  workspaces: {
-    id: string;
-    name: string;
-    slug: string;
-  };
+export type WorkspaceMembershipWithWorkspace = Database["public"]["Tables"]["workspace_members"]["Row"] & {
+  workspaces: Database["public"]["Tables"]["workspaces"]["Row"];
 };
 
 export async function getWorkspaces(supabase: SupabaseClient<Database>, userId: string) {
-  const { data: memberships, error } = await supabase
-    .from('workspace_members')
+  const { data: workspaces } = await supabase
+    .from("workspace_members")
     .select(`
-      workspace_id,
-      role,
+      *,
       workspaces (
-        id,
-        name,
-        slug
+        *
       )
     `)
-    .eq('user_id', userId);
+    .eq("user_id", userId);
 
-  if (error) throw error;
-  return memberships as WorkspaceMembershipWithWorkspace[];
+  return workspaces as WorkspaceMembershipWithWorkspace[];
 }
 
 export async function createWorkspace(
   supabase: SupabaseClient<Database>,
-  userId: string,
-  workspace: WorkspaceInsert
+  data: {
+    name: string;
+    created_by: string;
+  }
 ) {
-  const { data: newWorkspace, error: workspaceError } = await supabase
-    .from('workspaces')
-    .insert(workspace)
-    .select()
-    .single();
+  // Start a transaction by using RPC
+  const { data: workspace, error: workspaceError } = await supabase.rpc('create_workspace_with_admin', {
+    workspace_name: data.name,
+    user_id: data.created_by
+  });
 
-  if (workspaceError) throw workspaceError;
+  if (workspaceError) {
+    console.error('Error creating workspace:', workspaceError);
+    throw new Error('Failed to create workspace');
+  }
 
-  // Add creator as admin
-  const { error: memberError } = await supabase
-    .from('workspace_members')
-    .insert({
-      user_id: userId,
-      workspace_id: newWorkspace.id,
-      role: 'admin',
-    });
-
-  if (memberError) throw memberError;
-  return newWorkspace;
+  return workspace;
 }
 
 export async function getWorkspace(

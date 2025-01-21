@@ -1,22 +1,22 @@
 # Workspace Management Implementation Plan
 
 ## 1. Initial Workspace Selection/Landing Page (`_index.tsx`)
-- [ ] Implement loader to fetch user's workspaces
-- [ ] Check user's profile completion status
-- [ ] Build workspace selection UI
-  - [ ] List of user's workspaces
-  - [ ] Create workspace button
-  - [ ] Join workspace button
-- [ ] Add navigation logic to create/join pages
+- [x] Implement loader to fetch user's workspaces
+- [x] Check user's profile completion status
+- [x] Build workspace selection UI
+  - [x] List of user's workspaces
+  - [x] Create workspace button
+  - [x] Join workspace button
+- [x] Add navigation logic to create/join pages
 - [ ] Implement workspace selection handler
 
 ## 2. Profile Completion Dialog Component
-- [ ] Create reusable dialog component
-- [ ] Add form for full name and avatar
-- [ ] Implement avatar upload
-- [ ] Add profile update mutation
-- [ ] Add validation
-- [ ] Style with shadcn components
+- [x] Create reusable dialog component
+- [x] Add form for full name and avatar
+- [x] Implement avatar upload
+- [x] Add profile update mutation
+- [x] Add validation
+- [x] Style with shadcn components
 
 ## 3. Workspace Creation (`workspace.new.tsx`)
 - [ ] Create workspace form
