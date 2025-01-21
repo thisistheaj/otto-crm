@@ -1,41 +1,73 @@
-# Workspace Management Implementation Plan
+# Support Ticket and Chat Implementation Plan
 
-## 1. Initial Workspace Selection/Landing Page (`_index.tsx`)
-- [x] Implement loader to fetch user's workspaces
-- [x] Check user's profile completion status
-- [x] Build workspace selection UI
-  - [x] List of user's workspaces
-  - [x] Create workspace button
-  - [x] Join workspace button
-- [x] Add navigation logic to create/join pages
-- [x] Implement workspace selection handler
-
-## 2. Profile Completion Dialog Component
-- [x] Create reusable dialog component
-- [x] Add form for full name and avatar
-- [x] Implement avatar upload
-- [x] Add profile update mutation
-- [x] Add validation
+## 1. Workspace Support Portal (`support.$workspaceSlug.tsx`)
+- [x] Create layout with navigation
+- [x] Add workspace validation and data loading
+- [x] Add error boundary for invalid workspaces
 - [x] Style with shadcn components
 
-## 3. Workspace Creation (`workspace.new.tsx`)
-- [x] Create workspace form
-- [x] Implement workspace creation mutation
-- [x] Add automatic admin role assignment
-- [x] Add validation
-- [x] Implement redirect to workspace dashboard
-- [x] Add error handling
+## 2. New Ticket Creation (`support.$workspaceSlug.ticket.new.tsx`)
+- [x] Build ticket creation form using shadcn components
+  - [x] Subject field
+  - [x] Description field
+  - [x] Email field with validation
+- [x] Implement ticket creation action
+  - [x] Create ticket record (priority defaults to 'medium')
+  - [x] Initialize associated chat room
+  - [x] Generate unique ticket ID
+- [x] Add form validation
+  - [x] Required email validation
+  - [x] Required subject/description
+- [x] Implement redirect to ticket detail/chat page
+- [x] Add loading states and error handling
 
-## 4. Workspace Join (`workspace.join.tsx`)
-- [x] Implement invite link handling
-- [x] Create workspace member mutation
-- [x] Add validation for invite
-- [x] Implement redirect to workspace
-- [x] Add error handling
+## 3. Ticket Detail View (`support.$workspaceSlug.ticket.$ticketId.tsx`)
+- [ ] Create ticket detail layout
+- [ ] Implement loader for ticket data
+  - [ ] Validate workspace exists
+  - [ ] Validate ticket exists
+- [ ] Display ticket status and details
+- [ ] Add chat access button/link
+- [ ] Handle invalid ticket IDs
+- [ ] Style with shadcn components
+
+## 4. Ticket Chat Interface (`support.$workspaceSlug.ticket.$ticketId.chat.tsx`)
+- [x] Build real-time chat interface
+- [x] Implement chat loader for history
+- [ ] Configure Supabase real-time permissions for chat room
+- [x] Create message input component
+- [ ] Add typing indicators
+- [x] Handle message sending/receiving
+- [x] Display ticket context in chat
+- [x] Add loading states and error handling
+
+## Database Changes
+- [x] Add tickets table
+  - [x] ticket_id (UUID)
+  - [x] workspace_id (FK)
+  - [x] subject
+  - [x] description
+  - [x] status
+  - [x] priority (default: 'medium')
+  - [x] created_at
+  - [x] chat_room_id (FK)
+  - [x] email
+
+- [x] Add chat_rooms table
+  - [x] room_id (UUID)
+  - [x] ticket_id (FK)
+  - [x] status
+  - [x] created_at
+
+- [x] Add messages table
+  - [x] message_id (UUID)
+  - [x] room_id (FK)
+  - [x] content
+  - [x] sender_type (enum: 'customer', 'agent')
+  - [x] created_at
 
 ## Notes
-- Minimize database schema changes
-- Reuse existing components where possible
-- Follow shadcn design patterns
-- Ensure proper error handling and loading states
+- Focus on minimal viable implementation
+- Ensure proper real-time updates
+- Maintain consistent UI/UX with shadcn
 - Add appropriate TypeScript types 
