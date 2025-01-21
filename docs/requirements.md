@@ -6,12 +6,14 @@
 As a user, I can sign up and create an account
 - [ ] Email verification required
 - [ ] Password strength requirements enforced
-- [ ] Profile information collected
+- [ ] Profile information collected (full name and avatar required)
 
-As a user, I can create or join workspaces
-- [ ] Workspace creation requires company details
-- [ ] Join via invite link or email
-- [ ] Switch between workspaces easily
+As a user, I can manage my workspace access
+- [ ] View list of workspaces I'm a member of
+- [ ] Create a new workspace (automatically added as admin)
+- [ ] Join existing workspaces via invite
+- [ ] Be redirected to workspace's main page after selection/creation/joining
+- [ ] Complete profile (full name and avatar) before accessing workspace
 
 ### Workspace Settings
 As an admin, I can manage workspace configuration
@@ -20,6 +22,7 @@ As an admin, I can manage workspace configuration
 - [ ] Configure workspace preferences
 - [ ] Set business hours
 - [ ] Configure notification preferences
+- [ ] Switch between workspaces easily
 
 ### Ticket Management
 As a customer, I can create a support ticket
