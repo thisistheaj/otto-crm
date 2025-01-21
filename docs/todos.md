@@ -27,11 +27,11 @@
 - [x] Add error handling
 
 ## 4. Workspace Join (`workspace.join.tsx`)
-- [ ] Implement invite link handling
-- [ ] Create workspace member mutation
-- [ ] Add validation for invite
-- [ ] Implement redirect to workspace
-- [ ] Add error handling
+- [x] Implement invite link handling
+- [x] Create workspace member mutation
+- [x] Add validation for invite
+- [x] Implement redirect to workspace
+- [x] Add error handling
 
 ## Notes
 - Minimize database schema changes

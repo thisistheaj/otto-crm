@@ -63,4 +63,22 @@ export async function getWorkspace(
 
   if (error) throw error;
   return workspace;
+}
+
+export async function joinWorkspaceWithCode(
+  supabase: SupabaseClient<Database>,
+  code: string,
+  userId: string
+) {
+  const { data: workspace, error } = await supabase.rpc('join_workspace_with_code', {
+    code,
+    user_id: userId
+  });
+
+  if (error) {
+    console.error('Error joining workspace:', error);
+    throw new Error(error.message);
+  }
+
+  return workspace;
 } 
