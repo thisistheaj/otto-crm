@@ -14,9 +14,10 @@ import {
 import { useEffect, useState } from "react";
 import { createBrowserClient } from "@supabase/auth-helpers-remix";
 import { createServerSupabase } from "./utils/supabase.server";
-import "./globals.css";
+import styles from "./globals.css";
 
 export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: styles },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
@@ -62,7 +63,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="min-h-screen bg-background font-sans antialiased">
+      <body className="min-h-screen bg-[hsl(var(--background))] text-[hsl(var(--foreground))] font-sans antialiased">
         <Outlet context={{ supabase, session }} />
         <ScrollRestoration />
         <Scripts />
