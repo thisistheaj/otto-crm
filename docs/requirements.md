@@ -26,24 +26,24 @@ As an admin, I can manage workspace configuration
 
 ### Ticket Management
 As a customer, I can create a support ticket
-- [ ] Submit via web form
+- [x] Submit via web form
 - [ ] Receive confirmation email
-- [ ] Get unique tracking number
+- [x] Get unique tracking number
 
 As an agent, I can view and manage assigned tickets
-- [ ] See ticket queue
-- [ ] Update ticket status
+- [x] See ticket queue
+- [x] Update ticket status
 - [ ] Add internal notes
-- [ ] Communicate with customer
+- [x] Communicate with customer
 
 ### Real-time Chat
 As a customer, I can engage in live chat
 - [ ] See agent availability
 - [ ] Receive typing indicators
-- [ ] View message history
+- [x] View message history
 
 As an agent, I can handle chat sessions
-- [ ] Switch between conversations
+- [x] Switch between conversations
 - [ ] Use quick responses
 
 ### Chat Transfer System

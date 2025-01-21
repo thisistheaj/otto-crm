@@ -21,15 +21,15 @@
 - [x] Implement redirect to ticket detail/chat page
 - [x] Add loading states and error handling
 
-## 3. Ticket Detail View (`support.$workspaceSlug.ticket.$ticketId.tsx`)
-- [ ] Create ticket detail layout
-- [ ] Implement loader for ticket data
-  - [ ] Validate workspace exists
-  - [ ] Validate ticket exists
-- [ ] Display ticket status and details
-- [ ] Add chat access button/link
-- [ ] Handle invalid ticket IDs
-- [ ] Style with shadcn components
+## 3. Ticket Detail View (`support.$workspaceSlug.ticket.$ticketId._index.tsx`)
+- [x] Create ticket detail layout
+- [x] Implement loader for ticket data
+  - [x] Validate workspace exists
+  - [x] Validate ticket exists
+- [x] Display ticket status and details
+- [x] Add chat access button/link
+- [x] Handle invalid ticket IDs
+- [x] Style with shadcn components
 
 ## 4. Ticket Chat Interface (`support.$workspaceSlug.ticket.$ticketId.chat.tsx`)
 - [x] Build real-time chat interface
@@ -67,7 +67,6 @@
   - [x] created_at
 
 ## Notes
-- Focus on minimal viable implementation
-- Ensure proper real-time updates
-- Maintain consistent UI/UX with shadcn
-- Add appropriate TypeScript types 
+- [x] Focus on minimal viable implementation
+- [x] Maintain consistent UI/UX with shadcn
+- [x] Add appropriate TypeScript types 
