@@ -33,11 +33,11 @@
 │   │   ├── auth.login.tsx
 │   │   ├── auth.logout.tsx
 │   │   ├── auth.signup.tsx
-│   │   ├── support.$workspaceSlug.chat.tsx
-│   │   ├── support.$workspaceSlug.knowledge.tsx
-│   │   ├── support.$workspaceSlug.ticket.$ticketId.tsx
-│   │   ├── support.$workspaceSlug.ticket.new.tsx
 │   │   ├── support.$workspaceSlug.tsx    # Customer support portal
+│   │   ├── support.$workspaceSlug.knowledge.tsx
+│   │   ├── support.$workspaceSlug.ticket.new.tsx
+│   │   ├── support.$workspaceSlug.ticket.$ticketId.tsx
+│   │   ├── support.$workspaceSlug.ticket.$ticketId.chat.tsx
 │   │   ├── support.tsx                   # Support portal workspace selector
 │   │   ├── workspace.$workspaceId.agents.tsx
 │   │   ├── workspace.$workspaceId.analytics.tsx

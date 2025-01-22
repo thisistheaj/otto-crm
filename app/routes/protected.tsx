@@ -14,9 +14,9 @@ import { useState } from "react";
 export const loader = async ({ request }: { request: Request }) => {
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user) {
     return redirect("/login", { headers: response.headers });
   }
 
@@ -30,10 +30,10 @@ export const loader = async ({ request }: { request: Request }) => {
   const { data: files } = await supabase
     .storage
     .from('user-files')
-    .list(session.user.id);
+    .list(user.id);
 
   return json({ 
-    email: session.user.email,
+    email: user.email,
     notes: notes || [],
     files: files || [],
   }, { 
@@ -44,9 +44,9 @@ export const loader = async ({ request }: { request: Request }) => {
 export const action = async ({ request }: { request: Request }) => {
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user }, error } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user || error) {
     return redirect("/login", { headers: response.headers });
   }
 
@@ -63,7 +63,7 @@ export const action = async ({ request }: { request: Request }) => {
         { 
           title, 
           content,
-          user_id: session.user.id 
+          user_id: user.id 
         }
       ]);
 
@@ -79,7 +79,7 @@ export const action = async ({ request }: { request: Request }) => {
       .from('notes')
       .delete()
       .eq('id', noteId)
-      .eq('user_id', session.user.id);
+      .eq('user_id', user.id);
 
     if (error) {
       return json({ error: error.message }, { headers: response.headers });
@@ -92,7 +92,7 @@ export const action = async ({ request }: { request: Request }) => {
     const { error } = await supabase
       .storage
       .from('user-files')
-      .upload(`${session.user.id}/${file.name}`, file);
+      .upload(`${user.id}/${file.name}`, file);
 
     if (error) {
       return json({ error: error.message }, { headers: response.headers });
@@ -105,7 +105,7 @@ export const action = async ({ request }: { request: Request }) => {
     const { error } = await supabase
       .storage
       .from('user-files')
-      .remove([`${session.user.id}/${filePath}`]);
+      .remove([`${user.id}/${filePath}`]);
 
     if (error) {
       return json({ error: error.message }, { headers: response.headers });
@@ -139,8 +139,10 @@ export default function Protected() {
         </CardFooter>
       </Card>
 
-      {actionData?.error && (
+      {/* @ts-ignore */}
+      {actionData?.error  && (
         <Alert variant="destructive">
+          {/* @ts-ignore */}
           <AlertDescription>{actionData.error}</AlertDescription>
         </Alert>
       )}

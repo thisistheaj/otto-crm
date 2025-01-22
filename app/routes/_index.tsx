@@ -18,9 +18,9 @@ import { Loader2 } from "lucide-react";
 export async function action({ request }: { request: Request }) {
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user }, error } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user || error) {
     return redirect("/login");
   }
 
@@ -28,7 +28,7 @@ export async function action({ request }: { request: Request }) {
   const fullName = formData.get("full_name") as string;
   const avatarUrl = formData.get("avatar_url") as string;
 
-  await updateProfile(supabase, session.user.id, {
+  await updateProfile(supabase, user.id, {
     full_name: fullName,
     ...(avatarUrl && { avatar_url: avatarUrl }),
     updated_at: new Date().toISOString(),
@@ -40,9 +40,9 @@ export async function action({ request }: { request: Request }) {
 export const loader = async ({ request }: { request: Request }) => {
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user }, error } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user || error) {
     return json({ 
       session: null,
       workspaces: [] as WorkspaceMembershipWithWorkspace[],
@@ -54,14 +54,14 @@ export const loader = async ({ request }: { request: Request }) => {
   }
 
   const [profile, workspaces] = await Promise.all([
-    getProfile(supabase, session.user.id),
-    getWorkspaces(supabase, session.user.id)
+    getProfile(supabase, user.id),
+    getWorkspaces(supabase, user.id)
   ]);
 
-  const isComplete = await isProfileComplete(supabase, session.user.id);
+  const isComplete = await isProfileComplete(supabase, user.id);
 
   return json({ 
-    session,
+    session: { user },
     profile,
     workspaces,
     isComplete

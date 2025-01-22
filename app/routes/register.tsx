@@ -9,10 +9,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 export const loader = async ({ request }: { request: Request }) => {
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await supabase.auth.getUser();
 
   // If user is already logged in, redirect to home
-  if (session) {
+  if (user) {
     return redirect("/", { headers: response.headers });
   }
 
