@@ -1,13 +1,14 @@
 import { json } from "@remix-run/node";
-import { useLoaderData, Link, useParams } from "@remix-run/react";
+import { useLoaderData, Link, useParams, useOutletContext } from "@remix-run/react";
 import { createServerSupabase } from "~/utils/supabase.server";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import { MessageList } from "~/components/chat/message-list";
 import { MessageInput } from "~/components/chat/message-input";
 import { Button } from "~/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import type { Message } from "~/types/chat";
 import { CopyButton } from "~/components/ui/copy-button";
+import { useRealtimeMessages } from "~/hooks/use-realtime-messages";
 
 export async function loader({ request, params }: { request: Request; params: { workspaceSlug: string; ticketId: string } }) {
   const response = new Response();
@@ -99,8 +100,10 @@ export async function action({ request, params }: { request: Request; params: { 
 }
 
 export default function CustomerTicketChat() {
-  const { ticket, messages } = useLoaderData<typeof loader>();
+  const { ticket, messages: initialMessages } = useLoaderData<typeof loader>();
   const params = useParams();
+    
+  const messages = useRealtimeMessages(ticket.chat_room_id, initialMessages);
 
   return (
     <div className="p-8">

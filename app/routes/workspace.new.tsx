@@ -10,9 +10,9 @@ import { createWorkspace } from "~/models/workspace.server";
 export async function action({ request }: { request: Request }) {
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user) {
     return redirect("/login");
   }
 
@@ -21,7 +21,7 @@ export async function action({ request }: { request: Request }) {
 
   const workspace = await createWorkspace(supabase, {
     name,
-    created_by: session.user.id,
+    created_by: user.id,
   });
 
   // Redirect to the new workspace

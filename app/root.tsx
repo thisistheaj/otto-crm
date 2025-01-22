@@ -16,6 +16,15 @@ import { createBrowserClient } from "@supabase/auth-helpers-remix";
 import { createServerSupabase } from "./utils/supabase.server";
 import "~/tailwind.css";
 
+declare global {
+  interface Window {
+    env: {
+      SUPABASE_URL: string;
+      SUPABASE_ANON_KEY: string;
+    };
+  }
+}
+
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
@@ -26,44 +35,38 @@ export const loader = async ({ request }: { request: Request }) => {
 
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await supabase.auth.getUser();
   
   return json({ 
     env: {
       SUPABASE_URL: process.env.SUPABASE_URL,
       SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY
     },
-    session
+    user
   }, { headers: response.headers });
 };
 
 export default function App() {
-  const { env, session } = useLoaderData<typeof loader>();
-  const { revalidate } = useRevalidator();
-  const [supabase] = useState(() => 
-    createBrowserClient(env.SUPABASE_URL!, env.SUPABASE_ANON_KEY!)
-  );
+  const { env } = useLoaderData<typeof loader>();
+  const [supabase] = useState(() => {
+    return createBrowserClient(
+      env.SUPABASE_URL!,
+      env.SUPABASE_ANON_KEY!
+    );
+  });
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
-      revalidate();
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [supabase, revalidate]);
+    supabase.realtime.setAuth(env.SUPABASE_ANON_KEY);
+  }, [supabase, env.SUPABASE_ANON_KEY]);
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
       </head>
-      <body className="min-h-screen bg-[hsl(var(--background))] text-[hsl(var(--foreground))] font-sans antialiased">
-        <Outlet context={{ supabase, session }} />
+      <body>
+        <Outlet context={{ supabase }} />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

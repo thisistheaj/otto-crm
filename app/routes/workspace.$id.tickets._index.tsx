@@ -30,13 +30,13 @@ type TicketPriority = "low" | "medium" | "high";
 export async function loader({ request, params }: { request: Request; params: { id: string } }) {
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user) {
     throw new Response("Unauthorized", { status: 401 });
   }
 
-  const workspace = await getWorkspace(supabase, params.id, session.user.id);
+  const workspace = await getWorkspace(supabase, params.id, user.id);
   const tickets = await getWorkspaceTickets(supabase, workspace.id);
 
   return json({ 
@@ -50,9 +50,9 @@ export async function loader({ request, params }: { request: Request; params: { 
 export async function action({ request, params }: ActionFunctionArgs) {
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user) {
     throw new Response("Unauthorized", { status: 401 });
   }
 

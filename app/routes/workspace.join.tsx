@@ -11,9 +11,9 @@ import { joinWorkspaceWithCode } from "~/models/workspace.server";
 export async function action({ request }: { request: Request }) {
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user }, error } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user || error) {
     return redirect("/login");
   }
 
@@ -21,7 +21,7 @@ export async function action({ request }: { request: Request }) {
   const code = formData.get("code") as string;
 
   try {
-    const workspace = await joinWorkspaceWithCode(supabase, code, session.user.id);
+    const workspace = await joinWorkspaceWithCode(supabase, code, user.id);
     return redirect(`/workspace/${workspace.id}`, {
       headers: response.headers,
     });

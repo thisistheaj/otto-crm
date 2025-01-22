@@ -7,17 +7,19 @@ import { Badge } from "~/components/ui/badge";
 import { MessageList } from "~/components/chat/message-list";
 import { MessageInput } from "~/components/chat/message-input";
 import type { Message } from "~/types/chat";
+import { useRealtimeMessages } from "~/hooks/use-realtime-messages";
+import { useOutletContext } from "@remix-run/react";
 
 export async function loader({ request, params }: { request: Request; params: { id: string; ticketId: string } }) {
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user) {
     throw new Response("Unauthorized", { status: 401 });
   }
 
-  const workspace = await getWorkspace(supabase, params.id, session.user.id);
+  const workspace = await getWorkspace(supabase, params.id, user.id);
 
   // Get ticket with chat room - using explicit relationship
   const { data: ticket, error: ticketError } = await supabase
@@ -79,9 +81,9 @@ export async function loader({ request, params }: { request: Request; params: { 
 export async function action({ request, params }: { request: Request; params: { id: string; ticketId: string } }) {
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user) {
     throw new Response("Unauthorized", { status: 401 });
   }
 
@@ -116,7 +118,9 @@ export async function action({ request, params }: { request: Request; params: { 
 }
 
 export default function AgentTicketChat() {
-  const { workspace, ticket, messages } = useLoaderData<typeof loader>();
+  const { workspace, ticket, messages: initialMessages } = useLoaderData<typeof loader>();
+  const context = useOutletContext<ContextType>();  
+  const messages = useRealtimeMessages(ticket.chat_room_id, initialMessages);
 
   return (
     <div className="p-8">

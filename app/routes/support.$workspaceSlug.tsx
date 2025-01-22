@@ -1,28 +1,52 @@
 import { json } from "@remix-run/node";
-import { Link, Outlet, useLoaderData, useLocation } from "@remix-run/react";
-import { supabaseAdmin } from "~/utils/supabase.server";
-import { Button } from "~/components/ui/button";
+import { Outlet, useLoaderData, useLocation, useOutletContext } from "@remix-run/react";
+import { createBrowserClient } from "@supabase/auth-helpers-remix";
+import { useState } from "react";
+import { createServerSupabase } from "~/utils/supabase.server";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { TicketIcon, MessageSquare, BookOpen } from "lucide-react";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { Button } from "~/components/ui/button";
+import { Link } from "@remix-run/react";
 
-export async function loader({ params }: { params: { workspaceSlug: string } }) {
-  const { data: workspace, error } = await supabaseAdmin
+export async function loader({ request, params }: { request: Request; params: { workspaceSlug: string } }) {
+  const response = new Response();
+  const supabase = createServerSupabase({ request, response });
+
+  // Get workspace
+  const { data: workspace, error } = await supabase
     .from('workspaces')
     .select('id, name, slug')
     .eq('slug', params.workspaceSlug)
     .single();
 
   if (error || !workspace) {
+    console.error('Workspace not found');
+    console.error(error);
     throw new Response("Workspace not found", { status: 404 });
   }
 
-  return json({ workspace });
+  return json({ 
+    workspace,
+    env: {
+      SUPABASE_URL: process.env.SUPABASE_URL!,
+      SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY!
+    }
+  }, { headers: response.headers });
 }
 
 export default function SupportLayout() {
-  const { workspace } = useLoaderData<typeof loader>();
+  const { workspace, env } = useLoaderData<typeof loader>();
   const location = useLocation();
   const isRoot = location.pathname === `/support/${workspace.slug}`;
+  const rootContext = useOutletContext<{ supabase: SupabaseClient }>();
+  
+  const [supabase] = useState(() => 
+    createBrowserClient(
+      env.SUPABASE_URL,
+      env.SUPABASE_ANON_KEY
+    )
+  );
 
   return (
     <div className="min-h-screen bg-background">
@@ -92,7 +116,7 @@ export default function SupportLayout() {
             </div>
           </div>
         ) : (
-          <Outlet />
+          <Outlet context={{ supabase: supabase }} />
         )}
       </main>
     </div>

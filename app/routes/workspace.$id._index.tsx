@@ -27,13 +27,13 @@ import { Input } from "~/components/ui/input";
 export async function loader({ request, params }: { request: Request; params: { id: string } }) {
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user) {
     throw new Response("Unauthorized", { status: 401 });
   }
 
-  const workspace = await getWorkspace(supabase, params.id, session.user.id);
+  const workspace = await getWorkspace(supabase, params.id, user.id);
   
   // Get recent tickets
   const tickets = await getWorkspaceTickets(supabase, workspace.id, {

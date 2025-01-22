@@ -1,5 +1,5 @@
 import { json } from "@remix-run/node";
-import { Link, Outlet, useLoaderData } from "@remix-run/react";
+import { Link, Outlet, useLoaderData, useOutletContext } from "@remix-run/react";
 import { createServerSupabase } from "~/utils/supabase.server";
 import { getWorkspace } from "~/models/workspace.server";
 import { Button } from "~/components/ui/button";
@@ -11,23 +11,33 @@ import {
   Inbox,
   BookOpen,
 } from "lucide-react";
+import { useState } from "react";
+import { createBrowserClient } from "@supabase/auth-helpers-remix";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 export async function loader({ request, params }: { request: Request; params: { id: string } }) {
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user) {
     throw new Response("Unauthorized", { status: 401 });
   }
 
-  const workspace = await getWorkspace(supabase, params.id, session.user.id);
-  return json({ workspace }, { headers: response.headers });
+  const workspace = await getWorkspace(supabase, params.id, user.id);
+  return json({ 
+    workspace,
+    env: {
+      SUPABASE_URL: process.env.SUPABASE_URL!,
+      SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY!
+    }
+  }, { headers: response.headers });
 }
 
 export default function WorkspaceLayout() {
-  const { workspace } = useLoaderData<typeof loader>();
-
+  const { workspace, env } = useLoaderData<typeof loader>();
+  const rootContext = useOutletContext<{ supabase: SupabaseClient }>();
+  
   return (
     <div className="flex min-h-screen bg-background">
       {/* Sidebar */}
@@ -71,7 +81,7 @@ export default function WorkspaceLayout() {
 
       {/* Main content */}
       <div className="flex-1">
-        <Outlet context={{ workspace }} />
+        <Outlet context={rootContext} />
       </div>
     </div>
   );
