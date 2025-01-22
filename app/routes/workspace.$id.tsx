@@ -11,8 +11,6 @@ import {
   Inbox,
   BookOpen,
 } from "lucide-react";
-import { useState } from "react";
-import { createBrowserClient } from "@supabase/auth-helpers-remix";
 import { SupabaseClient } from "@supabase/supabase-js";
 
 export async function loader({ request, params }: { request: Request; params: { id: string } }) {

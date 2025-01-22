@@ -5,7 +5,6 @@ import { getWorkspace } from "~/models/workspace.server";
 import { getWorkspaceTickets, updateTicketStatus, updateTicketPriority } from "~/models/ticket.server";
 import { Card } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
-import { Badge } from "~/components/ui/badge";
 import {
   Table,
   TableBody,
