@@ -1,12 +1,12 @@
 import { json } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import { createServerSupabase } from "~/utils/supabase.server";
 import { getWorkspace } from "~/models/workspace.server";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
-import { Input } from "~/components/ui/input";
-import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
-import { Send } from "lucide-react";
+import { MessageList } from "~/components/chat/message-list";
+import { MessageInput } from "~/components/chat/message-input";
+import type { Message } from "~/types/chat";
 
 export async function loader({ request, params }: { request: Request; params: { id: string; ticketId: string } }) {
   const response = new Response();
@@ -55,10 +55,22 @@ export async function loader({ request, params }: { request: Request; params: { 
     console.error('Messages error:', messagesError);
   }
 
+  // Add system message for initial request
+  const allMessages: Message[] = [
+    {
+      id: 'initial-request',
+      room_id: ticket.chat_room_id,
+      content: ticket.description,
+      sender_type: 'system',
+      created_at: ticket.created_at
+    },
+    ...(messages || [])
+  ];
+
   return json({ 
     workspace, 
     ticket, 
-    messages: messages || [] 
+    messages: allMessages 
   }, { 
     headers: response.headers 
   });
@@ -113,9 +125,14 @@ export default function AgentTicketChat() {
         <CardHeader className="border-b">
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-lg font-medium">
-                {ticket.subject}
-              </CardTitle>
+              <div className="flex items-center gap-2">
+                <CardTitle className="text-lg font-medium">
+                  {ticket.subject}
+                </CardTitle>
+                <span className="text-sm text-muted-foreground">
+                  #{ticket.id}
+                </span>
+              </div>
               <CardDescription>
                 Customer: {ticket.email}
               </CardDescription>
@@ -132,51 +149,8 @@ export default function AgentTicketChat() {
         </CardHeader>
 
         <CardContent className="p-0">
-          {/* Chat messages container */}
-          <div className="h-[500px] overflow-y-auto p-4 space-y-4">
-            {/* Initial ticket message */}
-            <div className="flex justify-start">
-              <div className="rounded-lg px-4 py-2 max-w-[80%] bg-muted">
-                <p className="text-sm font-medium mb-1">Initial Request</p>
-                <p className="text-sm">{ticket.description}</p>
-              </div>
-            </div>
-
-            {/* Chat messages */}
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex ${
-                  message.sender_type === 'agent' ? 'justify-end' : 'justify-start'
-                }`}
-              >
-                <div
-                  className={`rounded-lg px-4 py-2 max-w-[80%] ${
-                    message.sender_type === 'agent'
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted'
-                  }`}
-                >
-                  <p className="text-sm">{message.content}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Message input */}
-          <div className="border-t p-4">
-            <Form method="post" className="flex gap-2">
-              <Input
-                name="message"
-                placeholder="Type your message..."
-                className="flex-1"
-                required
-              />
-              <Button type="submit" size="icon">
-                <Send className="h-4 w-4" />
-              </Button>
-            </Form>
-          </div>
+          <MessageList messages={messages} currentSenderType="agent" />
+          <MessageInput />
         </CardContent>
       </Card>
     </div>
