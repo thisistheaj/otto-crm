@@ -152,7 +152,7 @@ export default function TicketsRoute() {
                   </TableCell>
                   <TableCell>
                     <Button variant="ghost" size="sm" asChild>
-                      <Link to={`/support/${workspace.slug}/ticket/${ticket.id}/chat`}>
+                      <Link to={`/workspace/${workspace.id}/tickets/${ticket.id}/chat`}>
                         <MessageSquare className="h-4 w-4" />
                       </Link>
                     </Button>

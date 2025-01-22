@@ -110,7 +110,7 @@ export default function WorkspaceIndex() {
                     {ticket.status}
                   </Badge>
                   <Button variant="ghost" size="sm" asChild>
-                    <Link to={`/support/${workspace.slug}/ticket/${ticket.id}/chat`}>
+                    <Link to={`/workspace/${workspace.id}/tickets/${ticket.id}/chat`}>
                       <MessageSquare className="h-4 w-4" />
                     </Link>
                   </Button>
