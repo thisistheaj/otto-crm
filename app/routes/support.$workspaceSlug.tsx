@@ -2,7 +2,7 @@ import { json } from "@remix-run/node";
 import { Outlet, useLoaderData, useLocation, useOutletContext } from "@remix-run/react";
 import { createBrowserClient } from "@supabase/auth-helpers-remix";
 import { useState } from "react";
-import { createServerSupabase } from "~/utils/supabase.server";
+import { supabaseAdmin } from "~/utils/supabase.server";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { TicketIcon, MessageSquare, BookOpen } from "lucide-react";
 import { SupabaseClient } from "@supabase/supabase-js";
@@ -11,7 +11,7 @@ import { Link } from "@remix-run/react";
 
 export async function loader({ request, params }: { request: Request; params: { workspaceSlug: string } }) {
   const response = new Response();
-  const supabase = createServerSupabase({ request, response });
+  const supabase = supabaseAdmin
 
   // Get workspace
   const { data: workspace, error } = await supabase

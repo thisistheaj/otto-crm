@@ -1,6 +1,6 @@
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData, useNavigate, useParams } from "@remix-run/react";
-import { createServerSupabase } from "~/utils/supabase.server";
+import { supabaseAdmin } from "~/utils/supabase.server";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
@@ -26,7 +26,7 @@ type TicketResponse = {
 
 export async function loader({ request, params }: { request: Request; params: { workspaceSlug: string } }) {
   const response = new Response();
-  const supabase = createServerSupabase({ request, response });
+  const supabase = supabaseAdmin;
 
   // Verify workspace exists
   const { data: workspace, error } = await supabase
@@ -44,7 +44,7 @@ export async function loader({ request, params }: { request: Request; params: { 
 
 export async function action({ request, params }: { request: Request; params: { workspaceSlug: string } }) {
   const response = new Response();
-  const supabase = createServerSupabase({ request, response });
+  const supabase = supabaseAdmin;
   const formData = await request.formData();
 
   // Check if this is a ticket lookup
