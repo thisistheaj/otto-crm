@@ -78,6 +78,84 @@ export type Database = {
           joined_at?: string
         }
       }
+      tickets: {
+        Row: {
+          id: string
+          workspace_id: string
+          subject: string
+          description: string
+          email: string
+          status: string
+          priority: string
+          chat_room_id: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          workspace_id: string
+          subject: string
+          description: string
+          email: string
+          status?: string
+          priority?: string
+          chat_room_id?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          workspace_id?: string
+          subject?: string
+          description?: string
+          email?: string
+          status?: string
+          priority?: string
+          chat_room_id?: string | null
+          created_at?: string
+        }
+      }
+      chat_rooms: {
+        Row: {
+          id: string
+          ticket_id: string
+          status: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          ticket_id: string
+          status?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          ticket_id?: string
+          status?: string
+          created_at?: string
+        }
+      }
+      messages: {
+        Row: {
+          id: string
+          room_id: string
+          content: string
+          sender_type: 'customer' | 'agent'
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          room_id: string
+          content: string
+          sender_type: 'customer' | 'agent'
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          room_id?: string
+          content?: string
+          sender_type?: 'customer' | 'agent'
+          created_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never

@@ -4,16 +4,16 @@
 
 ### Authentication & Workspace Management
 As a user, I can sign up and create an account
-- [ ] Email verification required
+- [x] Email verification required
 - [ ] Password strength requirements enforced
-- [ ] Profile information collected (full name and avatar required)
+- [x] Profile information collected (full name and avatar required)
 
 As a user, I can manage my workspace access
-- [ ] View list of workspaces I'm a member of
-- [ ] Create a new workspace (automatically added as admin)
-- [ ] Join existing workspaces via invite
-- [ ] Be redirected to workspace's main page after selection/creation/joining
-- [ ] Complete profile (full name and avatar) before accessing workspace
+- [x] View list of workspaces I'm a member of
+- [x] Create a new workspace (automatically added as admin)
+- [x] Join existing workspaces via invite
+- [x] Be redirected to workspace's main page after selection/creation/joining
+- [x] Complete profile (full name and avatar) before accessing workspace
 
 ### Workspace Settings
 As an admin, I can manage workspace configuration
@@ -31,10 +31,10 @@ As a customer, I can create a support ticket
 - [x] Get unique tracking number
 
 As an agent, I can view and manage assigned tickets
-- [x] See ticket queue
-- [x] Update ticket status
+- [ ] See ticket queue
+- [ ] Update ticket status
 - [ ] Add internal notes
-- [x] Communicate with customer
+- [ ] Communicate with customer
 
 ### Real-time Chat
 As a customer, I can engage in live chat

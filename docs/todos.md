@@ -41,6 +41,32 @@
 - [x] Display ticket context in chat
 - [x] Add loading states and error handling
 
+## 5. Agent Interface Implementation
+
+### Dashboard Integration (`workspace.$workspaceId.tsx`)
+- [ ] Add tickets overview section to dashboard
+  - [ ] Show recent/urgent tickets (limit 5)
+  - [ ] Display key ticket info (subject, status, priority)
+  - [ ] Add "View All" link to full ticket list
+  - [ ] Add quick status updates via server action
+
+### Ticket Management (`workspace.$workspaceId.tickets.tsx`)
+- [ ] Create ticket list route
+  - [ ] Implement loader for server-side ticket fetching
+  - [ ] Add pagination and basic filters
+  - [ ] Create action for status updates
+- [ ] Build data table with columns:
+  - Customer email
+  - Subject
+  - Status (with dropdown to update)
+  - Priority
+  - Created at
+  - Actions (link to chat)
+- [ ] Add server-side actions for ticket updates
+  - [ ] Status update action
+  - [ ] Priority update action
+- [ ] Add navigation to existing chat interface
+
 ## Database Changes
 - [x] Add tickets table
   - [x] ticket_id (UUID)
@@ -66,7 +92,16 @@
   - [x] sender_type (enum: 'customer', 'agent')
   - [x] created_at
 
+## Database Updates Needed
+- [ ] Add server-side ticket management functions in `app/models/ticket.server.ts`:
+  - [ ] getWorkspaceTickets(workspaceId, filters)
+  - [ ] updateTicketStatus(ticketId, status)
+  - [ ] updateTicketPriority(ticketId, priority)
+
 ## Notes
 - [x] Focus on minimal viable implementation
 - [x] Maintain consistent UI/UX with shadcn
-- [x] Add appropriate TypeScript types 
+- [x] Add appropriate TypeScript types
+- [ ] Use server-side data access through Remix loaders/actions
+- [ ] Keep dashboard view lightweight and link to full management page 
+- [ ] move any applicable ticket logic from /support to app/models/ticket.server.ts 
