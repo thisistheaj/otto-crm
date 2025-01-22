@@ -139,8 +139,10 @@ export default function Protected() {
         </CardFooter>
       </Card>
 
-      {actionData?.error && (
+      {/* @ts-ignore */}
+      {actionData?.error  && (
         <Alert variant="destructive">
+          {/* @ts-ignore */}
           <AlertDescription>{actionData.error}</AlertDescription>
         </Alert>
       )}

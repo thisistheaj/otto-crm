@@ -1,15 +1,13 @@
 import { json, redirect } from "@remix-run/node";
-import { Form, useActionData, useNavigate, useParams } from "@remix-run/react";
+import { Form, useActionData } from "@remix-run/react";
 import { supabaseAdmin } from "~/utils/supabase.server";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { Textarea } from "~/components/ui/textarea";
 import { Label } from "~/components/ui/label";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import type { Database } from "~/types/database";
+import { ArrowRight } from "lucide-react";
 
-type Workspace = Database['public']['Tables']['workspaces']['Row'];
 type TicketWithWorkspace = {
   id: string;
   workspace: {
@@ -123,9 +121,7 @@ export async function action({ request, params }: { request: Request; params: { 
 }
 
 export default function NewTicket() {
-  const { workspaceSlug } = useParams();
   const actionData = useActionData<typeof action>();
-  const navigate = useNavigate();
 
   return (
     <div className="container max-w-2xl mx-auto p-8 space-y-8">

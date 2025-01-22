@@ -1,7 +1,6 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "~/types/database";
 
-type Ticket = Database["public"]["Tables"]["tickets"]["Row"];
 type TicketFilters = {
   status?: string;
   priority?: string;

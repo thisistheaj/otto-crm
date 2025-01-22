@@ -8,7 +8,6 @@ import { MessageList } from "~/components/chat/message-list";
 import { MessageInput } from "~/components/chat/message-input";
 import type { Message } from "~/types/chat";
 import { useRealtimeMessages } from "~/hooks/use-realtime-messages";
-import { useOutletContext } from "@remix-run/react";
 
 export async function loader({ request, params }: { request: Request; params: { id: string; ticketId: string } }) {
   const response = new Response();
@@ -118,8 +117,7 @@ export async function action({ request, params }: { request: Request; params: { 
 }
 
 export default function AgentTicketChat() {
-  const { workspace, ticket, messages: initialMessages } = useLoaderData<typeof loader>();
-  const context = useOutletContext<ContextType>();  
+  const { ticket, messages: initialMessages } = useLoaderData<typeof loader>();
   const messages = useRealtimeMessages(ticket.chat_room_id, initialMessages);
 
   return (

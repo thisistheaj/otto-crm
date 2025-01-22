@@ -5,7 +5,6 @@ import { useState } from "react";
 import { supabaseAdmin } from "~/utils/supabase.server";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { TicketIcon, MessageSquare, BookOpen } from "lucide-react";
-import { SupabaseClient } from "@supabase/supabase-js";
 import { Button } from "~/components/ui/button";
 import { Link } from "@remix-run/react";
 
@@ -39,7 +38,6 @@ export default function SupportLayout() {
   const { workspace, env } = useLoaderData<typeof loader>();
   const location = useLocation();
   const isRoot = location.pathname === `/support/${workspace.slug}`;
-  const rootContext = useOutletContext<{ supabase: SupabaseClient }>();
   
   const [supabase] = useState(() => 
     createBrowserClient(

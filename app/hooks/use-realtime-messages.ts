@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import type { Message } from "~/types/chat";
-import type { RealtimeChannel } from "@supabase/supabase-js";
 import { useOutletContext } from "@remix-run/react";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "~/types/database";
@@ -19,7 +18,7 @@ export function useRealtimeMessages(roomId: string, initialMessages: Message[]) 
 
     console.log('Setting up real-time subscription for room:', roomId);
 
-    const channel = supabase
+    supabase
       .channel(`messages:${roomId}`)
       .on(
         'postgres_changes',

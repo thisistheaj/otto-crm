@@ -5,24 +5,8 @@ import { getWorkspace } from "~/models/workspace.server";
 import { getWorkspaceTickets } from "~/models/ticket.server";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Badge } from "~/components/ui/badge";
-import { 
-  MessageSquare, 
-  Settings, 
-  Users, 
-  Clock,
-  Timer,
-  BarChart3,
-  MessagesSquare,
-  Inbox,
-  BookOpen,
-  Search,
-  FileText,
-  Star,
-  PlusCircle
-} from "lucide-react";
-import { Input } from "~/components/ui/input";
+import { MessageSquare, Clock } from "lucide-react";
 
 export async function loader({ request, params }: { request: Request; params: { id: string } }) {
   const response = new Response();
