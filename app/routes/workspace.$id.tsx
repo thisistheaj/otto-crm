@@ -62,9 +62,11 @@ export default function WorkspaceLayout() {
               Tickets
             </Link>
           </Button>
-          <Button variant="ghost" className="w-full justify-start">
-            <BookOpen className="mr-2 h-4 w-4" />
-            Knowledge Base
+          <Button variant="ghost" className="w-full justify-start" asChild>
+            <Link to={`/workspace/${workspace.id}/kb`}>
+              <BookOpen className="mr-2 h-4 w-4" />
+              Knowledge Base
+            </Link>
           </Button>
           <Button variant="ghost" className="w-full justify-start">
             <Users className="mr-2 h-4 w-4" />
