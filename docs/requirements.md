@@ -53,17 +53,17 @@ As a customer, I can view the knowledge base
 ### Team Settings
 
 As an admin, I can manage workspace configuration
-- [ ] get an invite link to send to new users
-- [ ] Set user roles (admin/agent)
-- [ ] Configure workspace preferences
-- [ ] delete a workspace
+- [x] get an invite link to send to new users
+- [x] Set user roles (admin/agent)
+- [x] Configure workspace preferences
+- [x] delete a workspace
 
 ### User Settings
 
 As an employee, I can edit my user settings
-- [ ] edit my profile
-- [ ] set my availability status
-- [ ] Switch between workspaces easily
+- [x] edit my profile
+- [x] set my availability status
+- [x] Switch between workspaces easily
 
 ### Naive Ticket Assignment
 
@@ -72,6 +72,36 @@ As an admin, I can configure ticket routing
 - [ ] agents can assign themselves to tickets
 - [ ] admins can manually reassign tickets to agents
 - [ ] tickets are automatically assigned to the first available agent
+
+## API 
+
+### API Routes
+
+as an engineer, i can use api routes for integrating with other services
+-[ ] get all agents/admins
+-[ ] create a new ticket
+-[ ] update a ticket
+-[ ] add a chat message to a ticket
+-[ ] update ticket status
+-[ ] get a ticket
+-[ ] get all tickets
+-[ ] get all articles
+-[ ] get all documents
+-[ ] add an article
+-[ ] add a document
+-[ ] update an article
+-[ ] delete an article
+-[ ] delete a document
+
+### Admin routes
+
+as a superuser (*not* the admin user, but a secure service account), I can do admin tasks
+- [ ] auth with ADMIN_API_KEY
+- [ ] delete all data
+- [ ] delete all files/buckets
+- [ ] seed test data
+- [ ] run a vector database indexing job
+- [ ] query the vector database
 
 ### Analytics
 
