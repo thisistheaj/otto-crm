@@ -1,6 +1,7 @@
 import { json, type ActionFunctionArgs, type LoaderFunctionArgs } from "@remix-run/node";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "~/types/database";
+import { requireApiKey } from "~/utils/api.server";
 
 const SUPABASE_URL = process.env.SUPABASE_URL!;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
@@ -15,6 +16,7 @@ type ArticleUpdate = Database["public"]["Tables"]["articles"]["Update"];
 
 // Get a single article
 export async function loader({ request, params }: LoaderFunctionArgs) {
+  requireApiKey(request);
   const { workspaceId, articleId } = params;
 
   try {
@@ -52,6 +54,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 // Update or delete article
 export async function action({ request, params }: ActionFunctionArgs) {
+  requireApiKey(request);
   if (request.method !== "PATCH" && request.method !== "DELETE") {
     return json({ error: "Method not allowed" }, { status: 405 });
   }

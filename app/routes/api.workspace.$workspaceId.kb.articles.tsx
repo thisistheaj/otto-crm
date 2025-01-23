@@ -1,6 +1,7 @@
 import { json, type LoaderFunctionArgs, type ActionFunctionArgs } from "@remix-run/node";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "~/types/database";
+import { requireApiKey } from "~/utils/api.server";
 
 const SUPABASE_URL = process.env.SUPABASE_URL!;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
@@ -15,6 +16,7 @@ type Article = Database["public"]["Tables"]["articles"]["Insert"];
 
 // Get all articles
 export async function loader({ request, params }: LoaderFunctionArgs) {
+  requireApiKey(request);
   const { workspaceId } = params;
 
   // Get query parameters for filtering
@@ -68,6 +70,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 // Create new article
 export async function action({ request, params }: ActionFunctionArgs) {
+  requireApiKey(request);
   if (request.method !== "POST") {
     return json({ error: "Method not allowed" }, { status: 405 });
   }

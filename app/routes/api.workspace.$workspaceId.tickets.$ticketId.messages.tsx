@@ -1,11 +1,13 @@
 import { json, type ActionFunctionArgs, type LoaderFunctionArgs } from "@remix-run/node";
 import { createServerSupabase } from "~/utils/supabase.server";
 import type { Database } from "~/types/database";
+import { requireApiKey } from "~/utils/api.server";
 
 type Message = Database["public"]["Tables"]["messages"]["Insert"];
 
 // Get messages for a ticket
 export async function loader({ request, params }: LoaderFunctionArgs) {
+  requireApiKey(request);
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
   const { workspaceId, ticketId } = params;
@@ -45,6 +47,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 // Add a new message
 export async function action({ request, params }: ActionFunctionArgs) {
+  requireApiKey(request);
   if (request.method !== "POST") {
     return json({ error: "Method not allowed" }, { status: 405 });
   }

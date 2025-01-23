@@ -1,6 +1,7 @@
 import { json, type LoaderFunctionArgs } from "@remix-run/node";
 import { createServerSupabase } from "~/utils/supabase.server";
 import type { Database } from "~/types/database";
+import { requireApiKey } from "~/utils/api.server";
 
 type TicketFilters = {
   status?: string;
@@ -12,6 +13,7 @@ type TicketFilters = {
 };
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
+  requireApiKey(request);
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
   const { workspaceId } = params;

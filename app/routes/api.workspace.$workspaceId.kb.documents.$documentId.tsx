@@ -1,6 +1,7 @@
 import { json, type ActionFunctionArgs, type LoaderFunctionArgs } from "@remix-run/node";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "~/types/database";
+import { requireApiKey } from "~/utils/api.server";
 
 const SUPABASE_URL = process.env.SUPABASE_URL!;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
@@ -13,6 +14,7 @@ const supabase = createClient<Database>(
 
 // Get a single document
 export async function loader({ request, params }: LoaderFunctionArgs) {
+  requireApiKey(request);
   const { workspaceId, documentId } = params;
 
   try {
@@ -54,6 +56,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 // Delete document
 export async function action({ request, params }: ActionFunctionArgs) {
+  requireApiKey(request);
   if (request.method !== "DELETE") {
     return json({ error: "Method not allowed" }, { status: 405 });
   }
