@@ -34,9 +34,8 @@
 ## 4. Ticket Chat Interface (`support.$workspaceSlug.ticket.$ticketId.chat.tsx`)
 - [x] Build real-time chat interface
 - [x] Implement chat loader for history
-- [ ] Configure Supabase real-time permissions for chat room
+- [x] Configure Supabase real-time permissions for chat room
 - [x] Create message input component
-- [ ] Add typing indicators
 - [x] Handle message sending/receiving
 - [x] Display ticket context in chat
 - [x] Add loading states and error handling
@@ -44,28 +43,28 @@
 ## 5. Agent Interface Implementation
 
 ### Dashboard Integration (`workspace.$workspaceId.tsx`)
-- [ ] Add tickets overview section to dashboard
-  - [ ] Show recent/urgent tickets (limit 5)
-  - [ ] Display key ticket info (subject, status, priority)
-  - [ ] Add "View All" link to full ticket list
-  - [ ] Add quick status updates via server action
+- [x] Add tickets overview section to dashboard
+  - [x] Show recent/urgent tickets (limit 5)
+  - [x] Display key ticket info (subject, status, priority)
+  - [x] Add "View All" link to full ticket list
+  - [x] Add quick status updates via server action
 
 ### Ticket Management (`workspace.$workspaceId.tickets.tsx`)
-- [ ] Create ticket list route
-  - [ ] Implement loader for server-side ticket fetching
-  - [ ] Add pagination and basic filters
-  - [ ] Create action for status updates
-- [ ] Build data table with columns:
-  - Customer email
-  - Subject
-  - Status (with dropdown to update)
-  - Priority
-  - Created at
-  - Actions (link to chat)
-- [ ] Add server-side actions for ticket updates
-  - [ ] Status update action
-  - [ ] Priority update action
-- [ ] Add navigation to existing chat interface
+- [x] Create ticket list route
+  - [x] Implement loader for server-side ticket fetching
+  - [x] Add pagination and basic filters
+  - [x] Create action for status updates
+- [x] Build data table with columns:
+  - [x] Customer email
+  - [x] Subject
+  - [x] Status (with dropdown to update)
+  - [x] Priority
+  - [x] Created at
+  - [x] Actions (link to chat)
+- [x] Add server-side actions for ticket updates
+  - [x] Status update action
+  - [x] Priority update action
+- [x] Add navigation to existing chat interface
 
 ## Database Changes
 - [x] Add tickets table
@@ -93,15 +92,15 @@
   - [x] created_at
 
 ## Database Updates Needed
-- [ ] Add server-side ticket management functions in `app/models/ticket.server.ts`:
-  - [ ] getWorkspaceTickets(workspaceId, filters)
-  - [ ] updateTicketStatus(ticketId, status)
-  - [ ] updateTicketPriority(ticketId, priority)
+- [x] Add server-side ticket management functions in `app/models/ticket.server.ts`:
+  - [x] getWorkspaceTickets(workspaceId, filters)
+  - [x] updateTicketStatus(ticketId, status)
+  - [x] updateTicketPriority(ticketId, priority)
 
 ## Notes
 - [x] Focus on minimal viable implementation
 - [x] Maintain consistent UI/UX with shadcn
 - [x] Add appropriate TypeScript types
-- [ ] Use server-side data access through Remix loaders/actions
-- [ ] Keep dashboard view lightweight and link to full management page 
-- [ ] move any applicable ticket logic from /support to app/models/ticket.server.ts 
+- [x] Use server-side data access through Remix loaders/actions
+- [x] Keep dashboard view lightweight and link to full management page 
+- [x] move any applicable ticket logic from /support to app/models/ticket.server.ts 
