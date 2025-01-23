@@ -21,13 +21,13 @@
 - [x] Implement delete actions
 
 ## 3. Article Creation/Editing (`workspace.$workspaceId.kb.article.$articleId.tsx`)
-- [ ] Build article editor
-  - [ ] Title field
-  - [ ] Content editor
-  - [ ] Tag input
-  - [ ] Draft/Publish toggle
-- [ ] Add save/publish actions
-- [ ] Handle validation and errors
+- [x] Build article editor
+  - [x] Title field
+  - [x] Content editor
+  - [x] Tag input
+  - [x] Draft/Publish toggle
+- [x] Add save/publish actions
+- [x] Handle validation and errors
 
 ## 4. Document Upload Dialog
 - [x] Create upload dialog component

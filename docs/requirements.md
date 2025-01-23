@@ -41,16 +41,14 @@ As an agent, I can handle chat sessions
 ### Knowledge Base
 
 As an admin/agent, I can manage knowledge base content
-- [ ] Create/edit articles
-- [ ] Upload documents
-- [ ] Organize content in categories
-- [ ] Tag content for better retrieval
-- [ ] publish articles and documents so that they are available to the customers
+- [x] Create/edit articles
+- [x] Upload documents
+- [x] publish articles and documents so that they are available to the customers
 
-As a customer, I can search the knowledge base
-- [ ] Full-text search
-- [ ] Category browsing
-- [ ] Related articles suggestions
+As a customer, I can view the knowledge base
+- [x] i can see all the articles and documents
+- [x] i can look at an article
+- [x] i can look at a document
 
 ### Team Settings
 
