@@ -77,7 +77,7 @@ As an admin, I can configure ticket routing
 
 ### API Routes
 
-as an engineer, i can use api routes for integrating with other services
+as an engineer, i can use api routes for integrating with other services (all endpoints require ADMIN_API_KEY)
 -[x] get all agents/admins
 -[x] create a new ticket
 -[x] update a ticket

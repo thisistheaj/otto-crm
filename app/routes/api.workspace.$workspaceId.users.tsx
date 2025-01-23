@@ -4,6 +4,7 @@ import type { Database } from "~/types/database";
 
 const SUPABASE_URL = process.env.SUPABASE_URL!;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const ADMIN_API_KEY = process.env.ADMIN_API_KEY!;
 
 // Create a Supabase client with the service role key
 const supabase = createClient<Database>(
@@ -13,6 +14,15 @@ const supabase = createClient<Database>(
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const { workspaceId } = params;
+  const apiKey = request.headers.get('x-api-key');
+
+  // Verify API key
+  if (!apiKey || apiKey !== ADMIN_API_KEY) {
+    return json(
+      { error: "Unauthorized" },
+      { status: 401 }
+    );
+  }
 
   try {
     // Get workspace members
