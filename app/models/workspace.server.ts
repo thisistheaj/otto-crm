@@ -81,4 +81,115 @@ export async function joinWorkspaceWithCode(
   }
 
   return workspace;
+}
+
+type WorkspaceMemberWithProfile = {
+  user_id: string;
+  role: string;
+  profiles: {
+    id: string;
+    full_name: string | null;
+    avatar_url: string | null;
+    email: string;
+    is_available: boolean;
+  };
+};
+
+export type WorkspaceMemberInfo = {
+  id: string;
+  full_name: string | null;
+  avatar_url: string | null;
+  email: string;
+  role: string;
+  is_available: boolean;
+};
+
+export async function getWorkspaceMembers(
+  supabase: SupabaseClient<Database>,
+  workspaceId: string
+): Promise<WorkspaceMemberInfo[]> {
+  // First get all workspace members
+  const { data: members, error: membersError } = await supabase
+    .from('workspace_members')
+    .select('user_id, role')
+    .eq('workspace_id', workspaceId);
+
+  if (membersError) throw membersError;
+
+  if (!members?.length) return [];
+
+  // Then get their profiles
+  const { data: profiles, error: profilesError } = await supabase
+    .from('profiles')
+    .select('*')
+    .in('id', members.map(m => m.user_id));
+
+  if (profilesError) throw profilesError;
+
+  // Combine the data
+  return members.map(member => {
+    const profile = profiles?.find(p => p.id === member.user_id);
+    return {
+      id: member.user_id,
+      full_name: profile?.full_name || null,
+      avatar_url: profile?.avatar_url || null,
+      email: profile?.email || '',
+      role: member.role,
+      is_available: profile?.is_available || false
+    };
+  });
+}
+
+export async function updateWorkspace(
+  supabase: SupabaseClient<Database>,
+  workspaceId: string,
+  data: Partial<Workspace>
+) {
+  const { error } = await supabase
+    .from('workspaces')
+    .update(data)
+    .eq('id', workspaceId);
+
+  if (error) throw error;
+}
+
+export async function deleteWorkspace(
+  supabase: SupabaseClient<Database>,
+  workspaceId: string
+) {
+  const { error } = await supabase
+    .from('workspaces')
+    .delete()
+    .eq('id', workspaceId);
+
+  if (error) throw error;
+}
+
+export async function updateMemberRole(
+  supabase: SupabaseClient<Database>,
+  workspaceId: string,
+  userId: string,
+  role: string
+) {
+  const { error } = await supabase
+    .from('workspace_members')
+    .update({ role })
+    .eq('workspace_id', workspaceId)
+    .eq('user_id', userId);
+
+  if (error) throw error;
+}
+
+export async function removeMember(
+  supabase: SupabaseClient<Database>,
+  workspaceId: string,
+  userId: string
+) {
+  const { error } = await supabase
+    .from('workspace_members')
+    .delete()
+    .eq('workspace_id', workspaceId)
+    .eq('user_id', userId);
+
+  if (error) throw error;
 } 
