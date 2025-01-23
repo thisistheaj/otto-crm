@@ -78,20 +78,20 @@ As an admin, I can configure ticket routing
 ### API Routes
 
 as an engineer, i can use api routes for integrating with other services
--[ ] get all agents/admins
--[ ] create a new ticket
--[ ] update a ticket
--[ ] add a chat message to a ticket
--[ ] update ticket status
--[ ] get a ticket
--[ ] get all tickets
--[ ] get all articles
--[ ] get all documents
--[ ] add an article
--[ ] add a document
--[ ] update an article
--[ ] delete an article
--[ ] delete a document
+-[x] get all agents/admins
+-[x] create a new ticket
+-[x] update a ticket
+-[x] add a chat message to a ticket
+-[x] update ticket status
+-[x] get a ticket
+-[x] get all tickets
+-[x] get all articles
+-[x] get all documents
+-[x] add an article
+-[x] add a document
+-[x] update an article
+-[x] delete an article
+-[x] delete a document
 
 ### Admin routes
 
