@@ -68,13 +68,17 @@ export default function WorkspaceLayout() {
               Knowledge Base
             </Link>
           </Button>
-          <Button variant="ghost" className="w-full justify-start">
-            <Users className="mr-2 h-4 w-4" />
-            Team
+          <Button variant="ghost" className="w-full justify-start" asChild>
+            <Link to={`/workspace/${workspace.id}/team`}>
+              <Users className="mr-2 h-4 w-4" />
+              Team
+            </Link>
           </Button>
-          <Button variant="ghost" className="w-full justify-start">
-            <Settings className="mr-2 h-4 w-4" />
-            Settings
+          <Button variant="ghost" className="w-full justify-start" asChild>
+            <Link to={`/workspace/${workspace.id}/settings`}>
+              <Settings className="mr-2 h-4 w-4" />
+              Settings
+            </Link>
           </Button>
         </div>
       </div>

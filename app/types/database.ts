@@ -15,18 +15,24 @@ export type Database = {
           full_name: string | null
           avatar_url: string | null
           updated_at: string
+          email: string
+          is_available: boolean
         }
         Insert: {
           id: string
           full_name?: string | null
           avatar_url?: string | null
           updated_at?: string
+          email: string
+          is_available?: boolean
         }
         Update: {
           id?: string
           full_name?: string | null
           avatar_url?: string | null
           updated_at?: string
+          email?: string
+          is_available?: boolean
         }
       }
       workspaces: {

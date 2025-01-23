@@ -14,6 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import { createBrowserClient } from "@supabase/auth-helpers-remix";
 import { createServerSupabase } from "./utils/supabase.server";
+import { Toaster } from "~/components/ui/toaster";
 import "~/tailwind.css";
 
 declare global {
@@ -67,6 +68,7 @@ export default function App() {
       </head>
       <body>
         <Outlet context={{ supabase }} />
+        <Toaster />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
