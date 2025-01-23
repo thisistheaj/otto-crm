@@ -15,14 +15,6 @@ As a user, I can manage my workspace access
 - [x] Be redirected to workspace's main page after selection/creation/joining
 - [x] Complete profile (full name and avatar) before accessing workspace
 
-### Workspace Settings
-As an admin, I can manage workspace configuration
-- [ ] Invite new users
-- [ ] Set user roles (admin/agent)
-- [ ] Configure workspace preferences
-- [ ] Set business hours
-- [ ] Configure notification preferences
-- [ ] Switch between workspaces easily
 
 ### Ticket Management
 As a customer, I can create a support ticket
@@ -31,62 +23,83 @@ As a customer, I can create a support ticket
 - [x] Get unique tracking number
 
 As an agent, I can view and manage assigned tickets
-- [ ] See ticket queue
-- [ ] Update ticket status
+- [x] See ticket queue
+- [x] Update ticket status
 - [ ] Add internal notes
-- [ ] Communicate with customer
+- [x] Communicate with customer
 
 ### Real-time Chat
 As a customer, I can engage in live chat
 - [ ] See agent availability
-- [ ] Receive typing indicators
+- [?] Receive typing indicators
 - [x] View message history
 
 As an agent, I can handle chat sessions
 - [x] Switch between conversations
 - [ ] Use quick responses
 
-### Chat Transfer System
-As an agent, I can transfer chats to other agents
-- [ ] View available agents
-- [ ] Send transfer requests
-- [ ] Accept/reject transfers
-- [ ] Transfer with context notes
-
 ### Knowledge Base
+
 As an admin/agent, I can manage knowledge base content
-- [ ] Create/edit articles
-- [ ] Upload documents
-- [ ] Organize content in categories
-- [ ] Tag content for better retrieval
+- [x] Create/edit articles
+- [x] Upload documents
+- [x] publish articles and documents so that they are available to the customers
 
-As a customer, I can search the knowledge base
-- [ ] Full-text search
-- [ ] Category browsing
-- [ ] Related articles suggestions
+As a customer, I can view the knowledge base
+- [x] i can see all the articles and documents
+- [x] i can look at an article
+- [x] i can look at a document
 
-### Routing Rules
+### Team Settings
+
+As an admin, I can manage workspace configuration
+- [ ] get an invite link to send to new users
+- [ ] Set user roles (admin/agent)
+- [ ] Configure workspace preferences
+- [ ] delete a workspace
+
+### User Settings
+
+As an employee, I can edit my user settings
+- [ ] edit my profile
+- [ ] set my availability status
+- [ ] Switch between workspaces easily
+
+### Naive Ticket Assignment
+
 As an admin, I can configure ticket routing
-- [ ] Set up routing rules
-- [ ] Define ticket categories
-- [ ] Configure SLA policies
-- [ ] Set up auto-assignment conditions
-- [ ] Define escalation paths
+- [ ] tikets can be assigned to agents
+- [ ] agents can assign themselves to tickets
+- [ ] admins can manually reassign tickets to agents
+- [ ] tickets are automatically assigned to the first available agent
 
-### AI Features
+### Analytics
+
+As an admin or agent I can view performance metrics in the dashboard
+- [ ] number of open tickets
+- [ ] see the number of tickets assigned to me
+- [ ] Ticket resolution times
+
+...TBD
+
+As an admin or agent I can view performance metrics in the metrics page
+- [ ] Ticket resolution times
+
+... TBD
+
+## AI Features
+
+### Response Assistance
+
 As an agent, I can receive AI-suggested responses
 - [ ] Context-aware suggestions
 - [ ] Edit before sending
-- [ ] Rate suggestion quality
 
-As an admin, I can train the AI system
-- [ ] Upload training documents
-- [ ] Configure response policies
-- [ ] Monitor AI performance
+AI Agent responses
+-[ ] users have the option to ask an AI while they wait in the queue
 
-### Analytics
-As an admin, I can view performance metrics
-- [ ] Ticket resolution times
-- [ ] Agent performance stats
-- [ ] Customer satisfaction scores
-- [ ] AI effectiveness metrics
+### Smart Knowledge Base
+- [ ] the knowledge base gets indexed in a vector database
+- [ ] customers can ask questions about the knowledge base
+- [ ] agents can generate articles based on the knowledge base
+- [ ] AI suggests articles to generate based on customer questions?
