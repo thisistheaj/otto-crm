@@ -1,12 +1,20 @@
 import { json, type LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { supabaseAdmin } from "~/utils/supabase.server";
+import { createClient } from "@supabase/supabase-js";
 import { PDFViewer } from "~/components/pdf-viewer";
+import type { Database } from "~/types/database";
+
+const SUPABASE_URL = process.env.SUPABASE_URL!;
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+// Create a Supabase client with the service role key
+const supabase = createClient<Database>(
+  SUPABASE_URL,
+  SUPABASE_SERVICE_ROLE_KEY
+);
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
-  const response = new Response();
-  const supabase = supabaseAdmin;
-
+  // First get the workspace ID from the slug
   const { data: workspace, error: workspaceError } = await supabase
     .from("workspaces")
     .select("*")
@@ -42,8 +50,6 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   return json({ 
     document,
     signedUrl: signedUrl.signedUrl
-  }, { 
-    headers: response.headers 
   });
 };
 

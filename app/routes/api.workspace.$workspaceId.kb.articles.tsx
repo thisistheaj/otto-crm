@@ -1,28 +1,36 @@
 import { json, type LoaderFunctionArgs, type ActionFunctionArgs } from "@remix-run/node";
-import { createServerSupabase } from "~/utils/supabase.server";
+import { createClient } from "@supabase/supabase-js";
 import type { Database } from "~/types/database";
 
-type Article = Database["public"]["Tables"]["kb_articles"]["Insert"];
+const SUPABASE_URL = process.env.SUPABASE_URL!;
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+// Create a Supabase client with the service role key
+const supabase = createClient<Database>(
+  SUPABASE_URL,
+  SUPABASE_SERVICE_ROLE_KEY
+);
+
+type Article = Database["public"]["Tables"]["articles"]["Insert"];
 
 // Get all articles
 export async function loader({ request, params }: LoaderFunctionArgs) {
-  const response = new Response();
-  const supabase = createServerSupabase({ request, response });
   const { workspaceId } = params;
 
   // Get query parameters for filtering
   const url = new URL(request.url);
   const search = url.searchParams.get("search");
-  const published = url.searchParams.get("published");
+  const status = url.searchParams.get("status");
 
   try {
     let query = supabase
-      .from("kb_articles")
+      .from("articles")
       .select(`
         id,
         title,
         content,
-        published,
+        tags,
+        status,
         created_at,
         updated_at,
         author_id,
@@ -34,8 +42,8 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     if (search) {
       query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
     }
-    if (published !== null) {
-      query = query.eq("published", published === "true");
+    if (status) {
+      query = query.eq("status", status);
     }
 
     // Always sort by updated_at desc
@@ -43,7 +51,10 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
     const { data: articles, error } = await query;
 
-    if (error) throw error;
+    if (error) {
+      console.error("Error fetching articles:", error);
+      throw error;
+    }
 
     return json({ articles });
   } catch (error) {
@@ -61,32 +72,34 @@ export async function action({ request, params }: ActionFunctionArgs) {
     return json({ error: "Method not allowed" }, { status: 405 });
   }
 
-  const response = new Response();
-  const supabase = createServerSupabase({ request, response });
   const { workspaceId } = params;
 
   try {
     const article = (await request.json()) as Partial<Article>;
     
-    if (!article.title || !article.content) {
+    if (!article.title || !article.content || !article.author_id) {
       return json({
-        error: "Missing required fields: title, content"
+        error: "Missing required fields: title, content, author_id"
       }, { status: 400 });
     }
 
     const { data, error } = await supabase
-      .from("kb_articles")
+      .from("articles")
       .insert([{
         workspace_id: workspaceId,
         title: article.title,
         content: article.content,
-        published: article.published ?? false,
+        status: article.status || "draft",
+        tags: article.tags || [],
         author_id: article.author_id
       }])
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error("Supabase error:", error);
+      throw error;
+    }
 
     return json({ article: data });
   } catch (error) {

@@ -1,27 +1,35 @@
 import { json, type ActionFunctionArgs, type LoaderFunctionArgs } from "@remix-run/node";
-import { createServerSupabase } from "~/utils/supabase.server";
+import { createClient } from "@supabase/supabase-js";
 import type { Database } from "~/types/database";
 
-type ArticleUpdate = Database["public"]["Tables"]["kb_articles"]["Update"];
+const SUPABASE_URL = process.env.SUPABASE_URL!;
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+// Create a Supabase client with the service role key
+const supabase = createClient<Database>(
+  SUPABASE_URL,
+  SUPABASE_SERVICE_ROLE_KEY
+);
+
+type ArticleUpdate = Database["public"]["Tables"]["articles"]["Update"];
 
 // Get a single article
 export async function loader({ request, params }: LoaderFunctionArgs) {
-  const response = new Response();
-  const supabase = createServerSupabase({ request, response });
   const { workspaceId, articleId } = params;
 
   try {
     const { data: article, error } = await supabase
-      .from("kb_articles")
+      .from("articles")
       .select(`
         id,
         title,
         content,
-        published,
+        status,
         created_at,
         updated_at,
         author_id,
-        workspace_id
+        workspace_id,
+        tags
       `)
       .eq("id", articleId)
       .eq("workspace_id", workspaceId)
@@ -48,15 +56,13 @@ export async function action({ request, params }: ActionFunctionArgs) {
     return json({ error: "Method not allowed" }, { status: 405 });
   }
 
-  const response = new Response();
-  const supabase = createServerSupabase({ request, response });
   const { workspaceId, articleId } = params;
 
   // Handle DELETE
   if (request.method === "DELETE") {
     try {
       const { error } = await supabase
-        .from("kb_articles")
+        .from("articles")
         .delete()
         .eq("id", articleId)
         .eq("workspace_id", workspaceId);
@@ -83,7 +89,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
     updates.updated_at = new Date().toISOString();
     
     const { data, error } = await supabase
-      .from("kb_articles")
+      .from("articles")
       .update(updates)
       .eq("id", articleId)
       .eq("workspace_id", workspaceId)

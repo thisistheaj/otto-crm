@@ -1,22 +1,24 @@
 import { json, type LoaderFunctionArgs, type ActionFunctionArgs } from "@remix-run/node";
 import { useLoaderData, useOutletContext } from "@remix-run/react";
-import { createServerSupabase } from "~/utils/supabase.server";
+import { createClient } from "@supabase/supabase-js";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { RichTextEditor } from "~/components/rich-text-editor";
 import { useState } from "react";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "~/types/database";
+
+const SUPABASE_URL = process.env.SUPABASE_URL!;
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+// Create a Supabase client with the service role key
+const supabase = createClient<Database>(
+  SUPABASE_URL,
+  SUPABASE_SERVICE_ROLE_KEY
+);
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
-  const response = new Response();
-  const supabase = createServerSupabase({ request, response });
-
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    throw new Error("Not authenticated");
-  }
-
   // If we're editing an existing article
   if (params.articleId !== "new") {
     const { data: article } = await supabase
@@ -32,8 +34,6 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     return json({ 
       article,
       workspaceId: params.id
-    }, {
-      headers: response.headers
     });
   }
 
@@ -46,8 +46,6 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
       status: "draft"
     },
     workspaceId: params.id
-  }, {
-    headers: response.headers
   });
 };
 

@@ -58,7 +58,7 @@ export type Database = {
           created_at?: string
         }
       }
-      kb_articles: {
+      articles: {
         Row: {
           id: string
           workspace_id: string
@@ -93,7 +93,7 @@ export type Database = {
           updated_at?: string
         }
       }
-      kb_documents: {
+      documents: {
         Row: {
           id: string
           workspace_id: string

@@ -1,32 +1,40 @@
 import { json, type LoaderFunctionArgs, type ActionFunctionArgs } from "@remix-run/node";
-import { createServerSupabase } from "~/utils/supabase.server";
+import { createClient } from "@supabase/supabase-js";
 import type { Database } from "~/types/database";
 
-type Document = Database["public"]["Tables"]["kb_documents"]["Insert"];
+const SUPABASE_URL = process.env.SUPABASE_URL!;
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+// Create a Supabase client with the service role key
+const supabase = createClient<Database>(
+  SUPABASE_URL,
+  SUPABASE_SERVICE_ROLE_KEY
+);
+
+type Document = Database["public"]["Tables"]["documents"]["Insert"];
 
 // Get all documents
 export async function loader({ request, params }: LoaderFunctionArgs) {
-  const response = new Response();
-  const supabase = createServerSupabase({ request, response });
   const { workspaceId } = params;
 
   // Get query parameters for filtering
   const url = new URL(request.url);
   const search = url.searchParams.get("search");
-  const published = url.searchParams.get("published");
+  const status = url.searchParams.get("status");
 
   try {
     let query = supabase
-      .from("kb_documents")
+      .from("documents")
       .select(`
         id,
         title,
-        file_url,
-        file_type,
-        published,
+        file_name,
+        file_path,
+        tags,
+        status,
         created_at,
         updated_at,
-        author_id,
+        uploader_id,
         workspace_id
       `)
       .eq("workspace_id", workspaceId);
@@ -35,8 +43,8 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     if (search) {
       query = query.ilike("title", `%${search}%`);
     }
-    if (published !== null) {
-      query = query.eq("published", published === "true");
+    if (status) {
+      query = query.eq("status", status);
     }
 
     // Always sort by updated_at desc
@@ -44,7 +52,10 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
     const { data: documents, error } = await query;
 
-    if (error) throw error;
+    if (error) {
+      console.error("Error fetching documents:", error);
+      throw error;
+    }
 
     return json({ documents });
   } catch (error) {
@@ -62,33 +73,35 @@ export async function action({ request, params }: ActionFunctionArgs) {
     return json({ error: "Method not allowed" }, { status: 405 });
   }
 
-  const response = new Response();
-  const supabase = createServerSupabase({ request, response });
   const { workspaceId } = params;
 
   try {
     const document = (await request.json()) as Partial<Document>;
     
-    if (!document.title || !document.file_url || !document.file_type) {
+    if (!document.title || !document.file_name || !document.file_path || !document.uploader_id) {
       return json({
-        error: "Missing required fields: title, file_url, file_type"
+        error: "Missing required fields: title, file_name, file_path, uploader_id"
       }, { status: 400 });
     }
 
     const { data, error } = await supabase
-      .from("kb_documents")
+      .from("documents")
       .insert([{
         workspace_id: workspaceId,
         title: document.title,
-        file_url: document.file_url,
-        file_type: document.file_type,
-        published: document.published ?? false,
-        author_id: document.author_id
+        file_name: document.file_name,
+        file_path: document.file_path,
+        status: document.status || "draft",
+        tags: document.tags || [],
+        uploader_id: document.uploader_id
       }])
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error("Supabase error:", error);
+      throw error;
+    }
 
     return json({ document: data });
   } catch (error) {
