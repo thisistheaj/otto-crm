@@ -58,6 +58,79 @@ export type Database = {
           created_at?: string
         }
       }
+      kb_articles: {
+        Row: {
+          id: string
+          workspace_id: string
+          title: string
+          content: string
+          tags: string[]
+          status: "draft" | "published"
+          author_id: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          workspace_id: string
+          title: string
+          content: string
+          tags?: string[]
+          status?: "draft" | "published"
+          author_id: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          workspace_id?: string
+          title?: string
+          content?: string
+          tags?: string[]
+          status?: "draft" | "published"
+          author_id?: string
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      kb_documents: {
+        Row: {
+          id: string
+          workspace_id: string
+          title: string
+          file_name: string
+          file_path: string
+          tags: string[]
+          status: "draft" | "published"
+          uploader_id: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          workspace_id: string
+          title: string
+          file_name: string
+          file_path: string
+          tags?: string[]
+          status?: "draft" | "published"
+          uploader_id: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          workspace_id?: string
+          title?: string
+          file_name?: string
+          file_path?: string
+          tags?: string[]
+          status?: "draft" | "published"
+          uploader_id?: string
+          created_at?: string
+          updated_at?: string
+        }
+      }
       workspace_members: {
         Row: {
           id: string
