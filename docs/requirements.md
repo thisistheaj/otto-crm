@@ -148,6 +148,8 @@ AI Agent responses
 - [ ] sticky logout
 - [ ] user profile in nav (w/ status toggle)
 
+- [ ] generate rich text for articles
+
 - [ ] separate UX for new => open
 - [ ] hide workspace name and invite from agents
 - [ ] show everyone in "team"
