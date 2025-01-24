@@ -140,7 +140,7 @@ AI Agent responses
 - [x] more statuses in mock ticket data
 - [x] realistic convos in mock ticket data
 - [x] fix article viewer
-- [ ] mock documents
+- [x] mock documents
 - [x] theming 
 
 - [ ] colors in tickets page

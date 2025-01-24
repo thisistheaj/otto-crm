@@ -60,7 +60,7 @@ export default function WorkspaceLayout() {
           </div>
         </div>
         <div className="space-y-1 mt-4 flex-1">
-          <WorkspaceNav workspaceId={workspace.id} />
+          <WorkspaceNav workspaceId={workspace.id} workspaceSlug={workspace.slug} />
         </div>
         <Button 
           variant="ghost" 

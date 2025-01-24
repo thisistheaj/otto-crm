@@ -6,14 +6,17 @@ import {
   BookOpen, 
   Users, 
   Settings,
-  BarChart3
+  BarChart3,
+  ExternalLink
 } from "lucide-react";
+import { Separator } from "~/components/ui/separator";
 
 interface WorkspaceNavProps {
   workspaceId: string;
+  workspaceSlug: string;
 }
 
-export function WorkspaceNav({ workspaceId }: WorkspaceNavProps) {
+export function WorkspaceNav({ workspaceId, workspaceSlug }: WorkspaceNavProps) {
   return (
     <nav className="grid items-start gap-2">
       <NavLink
@@ -88,6 +91,21 @@ export function WorkspaceNav({ workspaceId }: WorkspaceNavProps) {
       >
         <Settings className="mr-2 h-4 w-4" />
         <span>Settings</span>
+      </NavLink>
+
+      <Separator className="my-2" />
+      
+      <NavLink
+        to={`/support/${workspaceSlug}`}
+        className={({ isActive }) =>
+          cn(
+            "group flex items-center rounded-md px-3 py-2 text-sm font-medium bg-primary/10 text-primary hover:bg-primary/20",
+            isActive ? "bg-primary/20" : "transparent"
+          )
+        }
+      >
+        <ExternalLink className="mr-2 h-4 w-4" />
+        <span>Customer Portal</span>
       </NavLink>
     </nav>
   );
