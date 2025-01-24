@@ -7,7 +7,7 @@ export const testData = {
     "subject": "Solar Panel Installation Quote",
     "description": "Need a quote for installing solar panels on my 2000 sq ft home",
     "email": "john.doe@email.com",
-    "status": "new",
+    "status": "pending",
     "priority": "high",
     "created_at": "2024-03-22T10:00:00Z",
     "messages": []
@@ -41,8 +41,8 @@ export const testData = {
     "subject": "Billing Discrepancy",
     "description": "My energy bill doesn't reflect the solar credits correctly",
     "email": "mike.jones@email.com",
-    "status": "open",
-    "priority": "normal",
+    "status": "resolved",
+    "priority": "medium",
     "created_at": "2024-03-19T13:45:00Z",
     "messages": [
       {
@@ -66,7 +66,7 @@ export const testData = {
     "subject": "Warranty Claim",
     "description": "One panel has visible damage after recent storm",
     "email": "david.wilson@email.com",
-    "status": "open",
+    "status": "pending",
     "priority": "high",
     "created_at": "2024-03-21T07:45:00Z",
     "messages": [
@@ -86,7 +86,7 @@ export const testData = {
     "subject": "Panel Cleaning Service",
     "description": "Need to schedule routine cleaning",
     "email": "robert.taylor@email.com",
-    "status": "open",
+    "status": "resolved",
     "priority": "low",
     "created_at": "2024-03-18T10:45:00Z",
     "messages": [
@@ -107,7 +107,7 @@ export const testData = {
     "description": "Interested in adding battery backup to existing system",
     "email": "emma.white@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T09:30:00Z",
     "messages": []
   },
@@ -115,7 +115,7 @@ export const testData = {
     "subject": "Inverter Error Message",
     "description": "Getting error code E-034 on my inverter display",
     "email": "carlos.rodriguez@email.com",
-    "status": "open",
+    "status": "pending",
     "priority": "high",
     "created_at": "2024-03-21T15:20:00Z",
     "messages": [
@@ -135,7 +135,7 @@ export const testData = {
     "subject": "Annual Maintenance Check",
     "description": "Due for yearly system inspection",
     "email": "lisa.brown@email.com",
-    "status": "closed",
+    "status": "resolved",
     "priority": "low",
     "created_at": "2024-03-15T11:00:00Z",
     "messages": [
@@ -165,8 +165,8 @@ export const testData = {
     "subject": "Smart Monitoring App Issues",
     "description": "Can't access monitoring dashboard",
     "email": "peter.zhang@email.com",
-    "status": "open",
-    "priority": "normal",
+    "status": "resolved",
+    "priority": "medium",
     "created_at": "2024-03-20T13:15:00Z",
     "messages": [
       {
@@ -185,8 +185,8 @@ export const testData = {
     "subject": "Energy Usage Report",
     "description": "Need detailed production report for tax purposes",
     "email": "susan.miller@email.com",
-    "status": "closed",
-    "priority": "normal",
+    "status": "resolved",
+    "priority": "medium",
     "created_at": "2024-03-17T09:00:00Z",
     "messages": [
       {
@@ -215,7 +215,7 @@ export const testData = {
     "subject": "Panel Optimization Request",
     "description": "Interested in optimizing panel performance",
     "email": "james.wilson@email.com",
-    "status": "new",
+    "status": "pending",
     "priority": "low",
     "created_at": "2024-03-22T08:00:00Z",
     "messages": []
@@ -224,7 +224,7 @@ export const testData = {
     "subject": "Grid Connection Issue",
     "description": "System not feeding back to grid",
     "email": "maria.garcia@email.com",
-    "status": "open",
+    "status": "pending",
     "priority": "high",
     "created_at": "2024-03-21T10:00:00Z",
     "messages": [
@@ -249,8 +249,8 @@ export const testData = {
     "subject": "Solar Panel Upgrade",
     "description": "Want to add more panels to existing system",
     "email": "tom.anderson@email.com",
-    "status": "open",
-    "priority": "normal",
+    "status": "pending",
+    "priority": "medium",
     "created_at": "2024-03-19T14:00:00Z",
     "messages": [
       {
@@ -270,7 +270,7 @@ export const testData = {
     "description": "Would like to see daily energy graphs in the mobile app",
     "email": "rachel.green@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T11:30:00Z",
     "messages": [
       {
@@ -284,8 +284,8 @@ export const testData = {
     "subject": "Installation Timeline Question",
     "description": "When can installation begin after permit approval?",
     "email": "chandler.bing@email.com",
-    "status": "open",
-    "priority": "normal",
+    "status": "resolved",
+    "priority": "medium",
     "created_at": "2024-03-22T12:00:00Z",
     "messages": [
       {
@@ -304,7 +304,7 @@ export const testData = {
     "subject": "Power Outage Behavior",
     "description": "System shut down during power outage",
     "email": "monica.geller@email.com",
-    "status": "open",
+    "status": "pending",
     "priority": "high",
     "created_at": "2024-03-22T13:00:00Z",
     "messages": [
@@ -325,7 +325,7 @@ export const testData = {
     "description": "Need documentation for federal tax credit",
     "email": "ross.geller@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T14:00:00Z",
     "messages": [
       {
@@ -360,7 +360,7 @@ export const testData = {
     "description": "Need help choosing best utility rate plan",
     "email": "joey.tribbiani@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T16:00:00Z",
     "messages": [
       {
@@ -375,7 +375,7 @@ export const testData = {
     "description": "Trees growing near panels causing shade",
     "email": "gunther.coffee@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T16:30:00Z",
     "messages": [
       {
@@ -395,7 +395,7 @@ export const testData = {
     "description": "Pigeons nesting under solar panels",
     "email": "ursula.buffay@email.com",
     "status": "open",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T17:00:00Z",
     "messages": [
       {
@@ -475,7 +475,7 @@ export const testData = {
     "description": "Below guaranteed production levels",
     "email": "emily.waltham@email.com",
     "status": "open",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T19:00:00Z",
     "messages": [
       {
@@ -510,7 +510,7 @@ export const testData = {
     "description": "Adding EV charging soon",
     "email": "ben.geller@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T20:00:00Z",
     "messages": [
       {
@@ -595,7 +595,7 @@ export const testData = {
     "description": "Battery not holding charge",
     "email": "frank.buffay.jr@email.com",
     "status": "open",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T21:30:00Z",
     "messages": [
       {
@@ -620,7 +620,7 @@ export const testData = {
     "description": "Need help with HOA submission",
     "email": "mr.heckles@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T22:00:00Z",
     "messages": [
       {
@@ -675,7 +675,7 @@ export const testData = {
     "description": "Questions about state rebate program",
     "email": "alice.knight@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T23:00:00Z",
     "messages": [
       {
@@ -695,7 +695,7 @@ export const testData = {
     "description": "Temporary removal for roof repair",
     "email": "jack.geller@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T23:30:00Z",
     "messages": [
       {
@@ -714,7 +714,7 @@ export const testData = {
   articles: [
   {
     "title": "Solar Panel Maintenance Guide",
-    "content": "# Solar Panel Maintenance Guide\\n\\nRegular maintenance is key to keeping your solar panels operating at peak efficiency.\\n\\n## Cleaning Schedule\\n- Clean panels every 3-6 months\\n- More frequent cleaning in dusty areas\\n- Professional cleaning recommended\\n\\n## Performance Monitoring\\n- Check daily production numbers\\n- Compare monthly performance\\n- Report significant drops in production\\n\\n## Weather Considerations\\n- Inspect after storms\\n- Clear snow accumulation\\n- Check for debris",
+    "content": "<h1>Solar Panel Maintenance Guide</h1><p>Regular maintenance is key to keeping your solar panels operating at peak efficiency.</p><h2>Cleaning Schedule</h2><ul><li>Clean panels every 3-6 months</li><li>More frequent cleaning in dusty areas</li><li>Professional cleaning recommended</li></ul><h2>Performance Monitoring</h2><ul><li>Check daily production numbers</li><li>Compare monthly performance</li><li>Report significant drops in production</li></ul><h2>Weather Considerations</h2><ul><li>Inspect after storms</li><li>Clear snow accumulation</li><li>Check for debris</li></ul>",
     "status": "published",
     "author_id": "68312e83-93a2-48ae-90f7-124e6c01182a",
     "tags": [
@@ -725,7 +725,7 @@ export const testData = {
   },
   {
     "title": "Understanding Solar Tax Credits",
-    "content": "# Solar Investment Tax Credit Guide\\n\\n## Federal Tax Credit\\n- 30% of total system cost\\n- Valid through 2032\\n- Includes installation costs\\n\\n## State Incentives\\n- Varies by location\\n- May include rebates\\n- Property tax exemptions\\n\\n## Documentation Needed\\n- Original purchase agreement\\n- Installation receipts\\n- Certification documents",
+    "content": "<h1>Solar Investment Tax Credit Guide</h1><h2>Federal Tax Credit</h2><ul><li>30% of total system cost</li><li>Valid through 2032</li><li>Includes installation costs</li></ul><h2>State Incentives</h2><ul><li>Varies by location</li><li>May include rebates</li><li>Property tax exemptions</li></ul><h2>Documentation Needed</h2><ul><li>Original purchase agreement</li><li>Installation receipts</li><li>Certification documents</li></ul>",
     "status": "published",
     "author_id": "68312e83-93a2-48ae-90f7-124e6c01182a",
     "tags": [
@@ -736,7 +736,7 @@ export const testData = {
   },
   {
     "title": "Troubleshooting Common Issues",
-    "content": "# Common Solar System Issues and Solutions\\n\\n## Low Energy Production\\n1. Check for shading\\n2. Clean dirty panels\\n3. Monitor inverter status\\n\\n## System Monitoring\\n- App connection issues\\n- WiFi troubleshooting\\n- Data reporting delays\\n\\n## Weather Impact\\n- Cloudy day performance\\n- Storm damage assessment\\n- Temperature effects",
+    "content": "<h1>Common Solar System Issues and Solutions</h1><h2>Low Energy Production</h2><ol><li>Check for shading</li><li>Clean dirty panels</li><li>Monitor inverter status</li></ol><h2>System Monitoring</h2><ul><li>App connection issues</li><li>WiFi troubleshooting</li><li>Data reporting delays</li></ul><h2>Weather Impact</h2><ul><li>Cloudy day performance</li><li>Storm damage assessment</li><li>Temperature effects</li></ul>",
     "status": "published",
     "author_id": "68312e83-93a2-48ae-90f7-124e6c01182a",
     "tags": [
@@ -747,7 +747,7 @@ export const testData = {
   },
   {
     "title": "Battery Backup Systems",
-    "content": "# Home Battery Storage Solutions\\n\\n## Benefits\\n- Backup power during outages\\n- Store excess solar production\\n- Reduce grid dependency\\n\\n## System Types\\n- Lithium-ion batteries\\n- Lead-acid batteries\\n- Hybrid systems\\n\\n## Installation\\n- Space requirements\\n- Integration with existing solar\\n- Permit requirements",
+    "content": "<h1>Home Battery Storage Solutions</h1><h2>Benefits</h2><ul><li>Backup power during outages</li><li>Store excess solar production</li><li>Reduce grid dependency</li></ul><h2>System Types</h2><ul><li>Lithium-ion batteries</li><li>Lead-acid batteries</li><li>Hybrid systems</li></ul><h2>Installation</h2><ul><li>Space requirements</li><li>Integration with existing solar</li><li>Permit requirements</li></ul>",
     "status": "published",
     "author_id": "68312e83-93a2-48ae-90f7-124e6c01182a",
     "tags": [

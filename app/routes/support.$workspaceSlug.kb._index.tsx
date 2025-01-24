@@ -13,14 +13,6 @@ import {
 import { BookOpen, FileText } from "lucide-react";
 import type { Database } from "~/types/database";
 
-const SUPABASE_URL = process.env.SUPABASE_URL!;
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
-// Create a Supabase client with the service role key
-const supabase = createClient<Database>(
-  SUPABASE_URL,
-  SUPABASE_SERVICE_ROLE_KEY
-);
 
 const ITEMS_PER_PAGE = 5;
 const EXCERPT_LENGTH = 160;
@@ -33,6 +25,15 @@ function getExcerpt(content: string) {
 }
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
+  const SUPABASE_URL = process.env.SUPABASE_URL!;
+  const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+  // Create a Supabase client with the service role key
+  const supabase = createClient<Database>(
+    SUPABASE_URL,
+    SUPABASE_SERVICE_ROLE_KEY
+  );
+
   const url = new URL(request.url);
   const articlesPage = parseInt(url.searchParams.get("articlesPage") || "1");
   const documentsPage = parseInt(url.searchParams.get("documentsPage") || "1");
@@ -196,7 +197,7 @@ export default function WorkspaceKnowledgeBase() {
   return (
     <div>
       <div className="mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+        <h1 className="text-4xl font-bold text-gray-200 mb-4">
           Knowledge Base
         </h1>
         <p className="text-lg text-gray-600 mb-8 max-w-2xl">

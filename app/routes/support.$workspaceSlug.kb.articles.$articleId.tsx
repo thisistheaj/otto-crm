@@ -3,16 +3,17 @@ import { useLoaderData } from "@remix-run/react";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "~/types/database";
 
-const SUPABASE_URL = process.env.SUPABASE_URL!;
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
-// Create a Supabase client with the service role key
-const supabase = createClient<Database>(
-  SUPABASE_URL,
-  SUPABASE_SERVICE_ROLE_KEY
-);
-
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
+  const SUPABASE_URL = process.env.SUPABASE_URL!;
+  const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+  
+  // Create a Supabase client with the service role key
+  const supabase = createClient<Database>(
+    SUPABASE_URL,
+    SUPABASE_SERVICE_ROLE_KEY
+  );
+  
+  
   const { data: workspace, error: workspaceError } = await supabase 
     .from("workspaces")
     .select("*")
