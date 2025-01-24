@@ -133,3 +133,24 @@ AI Agent responses
 - [ ] customers can ask questions about the knowledge base
 - [ ] agents can generate articles based on the knowledge base
 - [ ] AI suggests articles to generate based on customer questions?
+
+
+### Enhancements
+
+- [ ] more statuses in mock ticket data
+- [ ] realistic convos in mock ticket data
+- [ ] fix article viewer
+- [ ] mock documents
+- [ ] colors in tickets page
+- [ ] filters in tikcets page
+- [ ] sticky logout
+- [ ] user profile in nav (w/ status toggle)
+- [ ] hide workspace name and invite from agents
+- [ ] show everyone in "team"
+- [ ] take "times" from mock data
+- [ ] assignment
+- [ ] logging (& resolution metrics)
+- [ ] pagination in tickets page
+- [ ] pagination in articles view
+- [ ] pagination in documents view
+- [ ] regenerate invite code as admin

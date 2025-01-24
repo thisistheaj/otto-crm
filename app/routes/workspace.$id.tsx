@@ -4,15 +4,9 @@ import { createServerSupabase } from "~/utils/supabase.server";
 import { getWorkspace } from "~/models/workspace.server";
 import { Button } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { 
-  MessageSquare, 
-  Settings, 
-  Users, 
-  Inbox,
-  BookOpen,
-  LogOut
-} from "lucide-react";
+import { LogOut } from "lucide-react";
 import { SupabaseClient } from "@supabase/supabase-js";
+import { WorkspaceNav } from "~/components/workspace-nav";
 
 export async function loader({ request, params }: { request: Request; params: { id: string } }) {
   const response = new Response();
@@ -66,38 +60,8 @@ export default function WorkspaceLayout() {
           </div>
         </div>
         <div className="space-y-1 mt-4 flex-1">
-          <Button variant="ghost" className="w-full justify-start" asChild>
-            <Link to={`/workspace/${workspace.id}`}>
-              <MessageSquare className="mr-2 h-4 w-4" />
-              Dashboard
-            </Link>
-          </Button>
-          <Button variant="ghost" className="w-full justify-start" asChild>
-            <Link to={`/workspace/${workspace.id}/tickets`}>
-              <Inbox className="mr-2 h-4 w-4" />
-              Tickets
-            </Link>
-          </Button>
-          <Button variant="ghost" className="w-full justify-start" asChild>
-            <Link to={`/workspace/${workspace.id}/kb`}>
-              <BookOpen className="mr-2 h-4 w-4" />
-              Knowledge Base
-            </Link>
-          </Button>
-          <Button variant="ghost" className="w-full justify-start" asChild>
-            <Link to={`/workspace/${workspace.id}/team`}>
-              <Users className="mr-2 h-4 w-4" />
-              Team
-            </Link>
-          </Button>
-          <Button variant="ghost" className="w-full justify-start" asChild>
-            <Link to={`/workspace/${workspace.id}/settings`}>
-              <Settings className="mr-2 h-4 w-4" />
-              Settings
-            </Link>
-          </Button>
+          <WorkspaceNav workspaceId={workspace.id} />
         </div>
-        
         <Button 
           variant="ghost" 
           className="w-full justify-start text-muted-foreground hover:text-foreground" 
