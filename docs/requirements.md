@@ -142,19 +142,17 @@ AI Agent responses
 - [x] fix article viewer
 - [x] mock documents
 - [x] theming 
-
 - [x] colors in tickets page
 
 - [x] filters in tikcets page
-
-- [ ] sticky logout
-- [ ] user profile in nav (w/ status toggle)
+- [x] sticky logout
+- [x] user profile in nav (w/ status toggle)
+- [x] show everyone in "team"
+- [ ] hide workspace name and invite from agents
 
 - [ ] generate rich text for articles
 
 - [ ] separate UX for new => open
-- [ ] hide workspace name and invite from agents
-- [ ] show everyone in "team"
 - [ ] take "times" from mock data
 
 ## Future work:

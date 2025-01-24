@@ -9,6 +9,7 @@ import { getWorkspace, getWorkspaces, getWorkspaceMembers, updateWorkspace, dele
 import { useToast } from "~/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
+import { supabaseAdmin } from "~/utils/supabase.server";
 
 export async function action({ request, params }: { request: Request; params: { id: string } }) {
   const response = new Response();
@@ -53,6 +54,7 @@ export async function action({ request, params }: { request: Request; params: { 
 export const loader = async ({ request, params }: { request: Request; params: { id: string } }) => {
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
+  const sbAdmin = supabaseAdmin;
   const { data: { user }, error } = await supabase.auth.getUser();
 
   if (!user || error) {
@@ -61,12 +63,12 @@ export const loader = async ({ request, params }: { request: Request; params: { 
 
   const [workspace, members] = await Promise.all([
     getWorkspace(supabase, params.id, user.id),
-    getWorkspaceMembers(supabase, params.id)
+    getWorkspaceMembers(sbAdmin, params.id)
   ]);
 
   const userRole = members.find(m => m.id === user.id)?.role;
   const isAdmin = userRole === "admin";
-
+  console.log(members);
   return json({ 
     workspace,
     members,
