@@ -1,4 +1,4 @@
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { Form, Link, useLoaderData, useNavigation, useOutletContext } from "@remix-run/react";
 import { createServerSupabase } from "~/utils/supabase.server";
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -6,7 +6,7 @@ import type { Database } from "~/types/database";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { getProfile, updateProfile } from "~/models/profile.server";
-import { getWorkspaces, getWorkspace } from "~/models/workspace.server";
+import { getWorkspaces, getWorkspace, getWorkspaceMembers, updateWorkspace, deleteWorkspace } from "~/models/workspace.server";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -14,6 +14,7 @@ import { Alert, AlertDescription } from "~/components/ui/alert";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { WorkspaceInfo } from "~/components/settings/workspace-info";
+import { supabaseAdmin } from "~/utils/supabase.server";
 
 export async function action({ request, params }: { request: Request; params: { id: string } }) {
   const response = new Response();
@@ -63,24 +64,29 @@ export const loader = async ({ request, params }: { request: Request; params: { 
     throw new Response("Unauthorized", { status: 401 });
   }
 
-  const [profile, workspaces, workspace] = await Promise.all([
+  const [profile, workspaces, workspace, members] = await Promise.all([
     getProfile(supabase, user.id),
     getWorkspaces(supabase, user.id),
-    getWorkspace(supabase, params.id, user.id)
+    getWorkspace(supabase, params.id, user.id),
+    getWorkspaceMembers(supabaseAdmin, params.id)
   ]);
+
+  const userRole = members.find(m => m.id === user.id)?.role;
+  const isAdmin = userRole === "admin";
 
   return json({ 
     profile,
     workspaces,
     workspace,
-    currentWorkspaceId: params.id
+    currentWorkspaceId: params.id,
+    isAdmin
   }, { 
     headers: response.headers 
   });
 };
 
 export default function Settings() {
-  const { profile, workspaces, workspace, currentWorkspaceId } = useLoaderData<typeof loader>();
+  const { profile, workspaces, workspace, currentWorkspaceId, isAdmin } = useLoaderData<typeof loader>();
   const { supabase } = useOutletContext<{ supabase: SupabaseClient<Database> }>();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
@@ -106,11 +112,13 @@ export default function Settings() {
       <h1 className="text-3xl font-bold mb-8">Settings</h1>
       
       <div className="space-y-6">
-        <WorkspaceInfo 
-          workspace={workspace} 
-          onUpdateName={handleUpdateName}
-          onDelete={handleDelete}
-        />
+        {isAdmin && (
+          <WorkspaceInfo 
+            workspace={workspace} 
+            onUpdateName={handleUpdateName}
+            onDelete={handleDelete}
+          />
+        )}
 
         <Card>
           <CardHeader>

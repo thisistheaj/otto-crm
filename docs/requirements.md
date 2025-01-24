@@ -148,7 +148,7 @@ AI Agent responses
 - [x] sticky logout
 - [x] user profile in nav (w/ status toggle)
 - [x] show everyone in "team"
-- [ ] hide workspace name and invite from agents
+- [x] hide workspace name and invite from agents
 
 - [ ] generate rich text for articles
 
