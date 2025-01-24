@@ -197,7 +197,7 @@ export default function WorkspaceKnowledgeBase() {
   return (
     <div>
       <div className="mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+        <h1 className="text-4xl font-bold text-gray-200 mb-4">
           Knowledge Base
         </h1>
         <p className="text-lg text-gray-600 mb-8 max-w-2xl">
