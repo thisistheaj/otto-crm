@@ -143,9 +143,9 @@ AI Agent responses
 - [x] mock documents
 - [x] theming 
 
-- [ ] colors in tickets page
+- [x] colors in tickets page
 
-- [ ] filters in tikcets page
+- [x] filters in tikcets page
 
 - [ ] sticky logout
 - [ ] user profile in nav (w/ status toggle)

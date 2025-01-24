@@ -5,6 +5,7 @@ import { getWorkspace } from "~/models/workspace.server";
 import { getWorkspaceTickets, updateTicketStatus, updateTicketPriority } from "~/models/ticket.server";
 import { Card } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
 import {
   Table,
   TableBody,
@@ -20,12 +21,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { MessageSquare, Ticket } from "lucide-react";
+import { MessageSquare, Ticket, ArrowUpDown } from "lucide-react";
 import { Link } from "@remix-run/react";
 import { cn } from "~/lib/utils";
+import { useState, useMemo } from "react";
 
 type TicketStatus = "new" | "open" | "pending" | "resolved" | "closed";
 type TicketPriority = "low" | "medium" | "high";
+type SortField = "created_at" | "status" | "priority";
+type SortOrder = "asc" | "desc";
 
 export async function loader({ request, params }: { request: Request; params: { id: string } }) {
   const response = new Response();
@@ -77,6 +81,51 @@ export default function TicketsRoute() {
   const navigation = useNavigation();
   const isUpdating = navigation.state === "submitting";
 
+  // Filter state
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState<TicketStatus | "all">("all");
+  const [priorityFilter, setPriorityFilter] = useState<TicketPriority | "all">("all");
+  const [sortField, setSortField] = useState<SortField>("created_at");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
+
+  // Filter and sort tickets
+  const filteredTickets = useMemo(() => {
+    const getPriorityValue = (priority: TicketPriority): number => {
+      switch (priority) {
+        case "high": return 3;
+        case "medium": return 2;
+        case "low": return 1;
+        default: return 0;
+      }
+    };
+
+    return tickets
+      .filter(ticket => {
+        const matchesSearch = searchTerm === "" || 
+          ticket.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          ticket.email.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesStatus = statusFilter === "all" || ticket.status === statusFilter;
+        const matchesPriority = priorityFilter === "all" || ticket.priority === priorityFilter;
+        return matchesSearch && matchesStatus && matchesPriority;
+      })
+      .sort((a, b) => {
+        if (sortField === "created_at") {
+          return sortOrder === "desc" 
+            ? new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+            : new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+        }
+        if (sortField === "priority") {
+          const aValue = getPriorityValue(a.priority as TicketPriority);
+          const bValue = getPriorityValue(b.priority as TicketPriority);
+          return sortOrder === "desc" ? aValue - bValue : bValue - aValue;
+        }
+        if (sortOrder === "desc") {
+          return b[sortField] > a[sortField] ? 1 : -1;
+        }
+        return a[sortField] > b[sortField] ? 1 : -1;
+      });
+  }, [tickets, searchTerm, statusFilter, priorityFilter, sortField, sortOrder]);
+
   const getStatusColor = (status: TicketStatus) => {
     switch (status) {
       case "new": return "text-blue-500 dark:text-blue-400";
@@ -97,23 +146,118 @@ export default function TicketsRoute() {
     }
   };
 
+  const toggleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortField(field);
+      setSortOrder("desc");
+    }
+  };
+
   return (
     <div className="p-8">
       <Card>
         <div className="p-6">
+          {/* Filtering Toolbar - simplified to one row */}
+          <div className="mb-6 flex items-center gap-4">
+            <Input
+              placeholder="Search tickets..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="max-w-xs"
+            />
+            <Select
+              value={statusFilter}
+              onValueChange={(value) => setStatusFilter(value as TicketStatus | "all")}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Filter by status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Statuses</SelectItem>
+                <SelectItem value="new" className={getStatusColor("new")}>New</SelectItem>
+                <SelectItem value="open" className={getStatusColor("open")}>Open</SelectItem>
+                <SelectItem value="pending" className={getStatusColor("pending")}>Pending</SelectItem>
+                <SelectItem value="resolved" className={getStatusColor("resolved")}>Resolved</SelectItem>
+                <SelectItem value="closed" className={getStatusColor("closed")}>Closed</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select
+              value={priorityFilter}
+              onValueChange={(value) => setPriorityFilter(value as TicketPriority | "all")}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Filter by priority" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Priorities</SelectItem>
+                <SelectItem value="low" className={getPriorityColor("low")}>Low</SelectItem>
+                <SelectItem value="medium" className={getPriorityColor("medium")}>Medium</SelectItem>
+                <SelectItem value="high" className={getPriorityColor("high")}>High</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Tickets Table with sortable headers */}
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Subject</TableHead>
                 <TableHead>Customer</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Priority</TableHead>
-                <TableHead>Created</TableHead>
+                <TableHead>
+                  <div className="flex items-center justify-between">
+                    Status
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => toggleSort("status")}
+                      className={cn(
+                        "ml-2 h-8 w-8 p-0",
+                        sortField === "status" && "text-primary"
+                      )}
+                    >
+                      <ArrowUpDown className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </TableHead>
+                <TableHead>
+                  <div className="flex items-center justify-between">
+                    Priority
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => toggleSort("priority")}
+                      className={cn(
+                        "ml-2 h-8 w-8 p-0",
+                        sortField === "priority" && "text-primary"
+                      )}
+                    >
+                      <ArrowUpDown className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </TableHead>
+                <TableHead>
+                  <div className="flex items-center justify-between">
+                    Created
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => toggleSort("created_at")}
+                      className={cn(
+                        "ml-2 h-8 w-8 p-0",
+                        sortField === "created_at" && "text-primary"
+                      )}
+                    >
+                      <ArrowUpDown className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {tickets.map((ticket) => (
+              {filteredTickets.map((ticket) => (
                 <TableRow key={ticket.id}>
                   <TableCell className="font-medium">{ticket.subject}</TableCell>
                   <TableCell className="text-muted-foreground">{ticket.email}</TableCell>
