@@ -20,8 +20,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, Ticket } from "lucide-react";
 import { Link } from "@remix-run/react";
+import { cn } from "~/lib/utils";
 
 type TicketStatus = "new" | "open" | "pending" | "resolved" | "closed";
 type TicketPriority = "low" | "medium" | "high";
@@ -76,6 +77,26 @@ export default function TicketsRoute() {
   const navigation = useNavigation();
   const isUpdating = navigation.state === "submitting";
 
+  const getStatusColor = (status: TicketStatus) => {
+    switch (status) {
+      case "new": return "text-blue-500 dark:text-blue-400";
+      case "open": return "text-yellow-500 dark:text-yellow-400";
+      case "pending": return "text-orange-500 dark:text-orange-400";
+      case "resolved": return "text-green-500 dark:text-green-400";
+      case "closed": return "text-gray-500 dark:text-gray-400";
+      default: return "";
+    }
+  };
+
+  const getPriorityColor = (priority: TicketPriority) => {
+    switch (priority) {
+      case "high": return "text-red-500 dark:text-red-400";
+      case "medium": return "text-yellow-500 dark:text-yellow-400";
+      case "low": return "text-green-500 dark:text-green-400";
+      default: return "";
+    }
+  };
+
   return (
     <div className="p-8">
       <Card>
@@ -95,7 +116,7 @@ export default function TicketsRoute() {
               {tickets.map((ticket) => (
                 <TableRow key={ticket.id}>
                   <TableCell className="font-medium">{ticket.subject}</TableCell>
-                  <TableCell>{ticket.email}</TableCell>
+                  <TableCell className="text-muted-foreground">{ticket.email}</TableCell>
                   <TableCell>
                     <Select
                       defaultValue={ticket.status}
@@ -110,15 +131,15 @@ export default function TicketsRoute() {
                       }}
                       disabled={isUpdating}
                     >
-                      <SelectTrigger className="w-32">
+                      <SelectTrigger className={cn("w-32", getStatusColor(ticket.status as TicketStatus))}>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="new">New</SelectItem>
-                        <SelectItem value="open">Open</SelectItem>
-                        <SelectItem value="pending">Pending</SelectItem>
-                        <SelectItem value="resolved">Resolved</SelectItem>
-                        <SelectItem value="closed">Closed</SelectItem>
+                        <SelectItem value="new" className={getStatusColor("new")}>New</SelectItem>
+                        <SelectItem value="open" className={getStatusColor("open")}>Open</SelectItem>
+                        <SelectItem value="pending" className={getStatusColor("pending")}>Pending</SelectItem>
+                        <SelectItem value="resolved" className={getStatusColor("resolved")}>Resolved</SelectItem>
+                        <SelectItem value="closed" className={getStatusColor("closed")}>Closed</SelectItem>
                       </SelectContent>
                     </Select>
                   </TableCell>
@@ -136,25 +157,32 @@ export default function TicketsRoute() {
                       }}
                       disabled={isUpdating}
                     >
-                      <SelectTrigger className="w-32">
+                      <SelectTrigger className={cn("w-32", getPriorityColor(ticket.priority as TicketPriority))}>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="low">Low</SelectItem>
-                        <SelectItem value="medium">Medium</SelectItem>
-                        <SelectItem value="high">High</SelectItem>
+                        <SelectItem value="low" className={getPriorityColor("low")}>Low</SelectItem>
+                        <SelectItem value="medium" className={getPriorityColor("medium")}>Medium</SelectItem>
+                        <SelectItem value="high" className={getPriorityColor("high")}>High</SelectItem>
                       </SelectContent>
                     </Select>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="text-muted-foreground">
                     {new Date(ticket.created_at).toLocaleString()}
                   </TableCell>
                   <TableCell>
-                    <Button variant="ghost" size="sm" asChild>
-                      <Link to={`/workspace/${workspace.id}/tickets/${ticket.id}/chat`}>
-                        <MessageSquare className="h-4 w-4" />
-                      </Link>
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button variant="ghost" size="sm" asChild>
+                        <Link to={`/workspace/${workspace.id}/tickets/${ticket.id}`}>
+                          <Ticket className="h-4 w-4" />
+                        </Link>
+                      </Button>
+                      <Button variant="ghost" size="sm" asChild>
+                        <Link to={`/workspace/${workspace.id}/tickets/${ticket.id}/chat`}>
+                          <MessageSquare className="h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

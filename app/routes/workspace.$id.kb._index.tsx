@@ -17,6 +17,7 @@ import { DocumentUpload } from "~/components/document-upload";
 import { PDFViewer } from "~/components/pdf-viewer";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "~/components/ui/alert-dialog";
+import { Badge } from "~/components/ui/badge";
 
 interface Document {
   id: string;
@@ -154,6 +155,14 @@ export default function KnowledgeBase() {
     }
   };
 
+  const getStatusVariant = (status: string): "default" | "secondary" | "destructive" | "outline" => {
+    switch (status) {
+      case "published": return "default";
+      case "draft": return "secondary";
+      default: return "outline";
+    }
+  };
+
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8">
       <div className="flex items-center justify-between">
@@ -211,13 +220,9 @@ export default function KnowledgeBase() {
                 </TableCell>
                 <TableCell>{item.title}</TableCell>
                 <TableCell>
-                  <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
-                    item.status === "published" 
-                      ? "bg-green-50 text-green-700" 
-                      : "bg-yellow-50 text-yellow-700"
-                  }`}>
+                  <Badge variant={getStatusVariant(item.status)}>
                     {item.status}
-                  </span>
+                  </Badge>
                 </TableCell>
                 <TableCell>
                   {item.tags?.length > 0 
