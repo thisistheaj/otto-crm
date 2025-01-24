@@ -141,13 +141,18 @@ AI Agent responses
 - [ ] realistic convos in mock ticket data
 - [ ] fix article viewer
 - [ ] mock documents
+
 - [ ] colors in tickets page
 - [ ] filters in tikcets page
 - [ ] sticky logout
 - [ ] user profile in nav (w/ status toggle)
+
 - [ ] hide workspace name and invite from agents
 - [ ] show everyone in "team"
 - [ ] take "times" from mock data
+
+## Future work:
+
 - [ ] assignment
 - [ ] logging (& resolution metrics)
 - [ ] pagination in tickets page
