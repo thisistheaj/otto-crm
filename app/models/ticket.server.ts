@@ -7,6 +7,35 @@ type TicketFilters = {
   limit?: number;
 };
 
+export type TicketStats = {
+  totalTickets: number;
+  openTickets: number;
+  highPriorityTickets: number;
+  newTickets: number;
+};
+
+export async function getTicketStats(
+  supabase: SupabaseClient<Database>,
+  workspaceId: string
+): Promise<TicketStats> {
+  const { data: tickets, error } = await supabase
+    .from("tickets")
+    .select("status, priority")
+    .eq("workspace_id", workspaceId);
+
+  if (error) {
+    console.error("Error fetching ticket stats:", error);
+    throw new Error("Failed to fetch ticket stats");
+  }
+
+  return {
+    totalTickets: tickets.length,
+    openTickets: tickets.filter(t => t.status === "open").length,
+    highPriorityTickets: tickets.filter(t => t.priority === "high").length,
+    newTickets: tickets.filter(t => t.status === "new").length,
+  };
+}
+
 export async function getWorkspaceTickets(
   supabase: SupabaseClient<Database>,
   workspaceId: string,

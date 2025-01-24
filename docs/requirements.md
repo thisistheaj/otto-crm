@@ -78,28 +78,28 @@ As an admin, I can configure ticket routing
 ### API Routes
 
 as an engineer, i can use api routes for integrating with other services (all endpoints require ADMIN_API_KEY)
--[x] get all agents/admins
--[x] create a new ticket
--[x] update a ticket
--[x] add a chat message to a ticket
--[x] update ticket status
--[x] get a ticket
--[x] get all tickets
--[x] get all articles
--[x] get all documents
--[x] add an article
--[x] add a document
--[x] update an article
--[x] delete an article
--[x] delete a document
+- [x] get all agents/admins
+- [x] create a new ticket
+- [x] update a ticket
+- [x] add a chat message to a ticket
+- [x] update ticket status
+- [x] get a ticket
+- [x] get all tickets
+- [x] get all articles
+- [x] get all documents
+- [x] add an article
+- [x] add a document
+- [x] update an article
+- [x] delete an article
+- [x] delete a document
 
 ### Admin routes
 
 as a superuser (*not* the admin user, but a secure service account), I can do admin tasks
-- [ ] auth with ADMIN_API_KEY
-- [ ] delete all data
-- [ ] delete all files/buckets
-- [ ] seed test data
+- [x] auth with ADMIN_API_KEY
+- [x] delete all data
+- [x] delete all files/buckets
+- [x] seed test data
 - [ ] run a vector database indexing job
 - [ ] query the vector database
 
@@ -110,7 +110,7 @@ As an admin or agent I can view performance metrics in the dashboard
 - [ ] see the number of tickets assigned to me
 - [ ] Ticket resolution times
 
-...TBD
+... TBD
 
 As an admin or agent I can view performance metrics in the metrics page
 - [ ] Ticket resolution times
@@ -126,7 +126,7 @@ As an agent, I can receive AI-suggested responses
 - [ ] Edit before sending
 
 AI Agent responses
--[ ] users have the option to ask an AI while they wait in the queue
+- [ ] users have the option to ask an AI while they wait in the queue
 
 ### Smart Knowledge Base
 - [ ] the knowledge base gets indexed in a vector database
