@@ -32,7 +32,7 @@ export async function loader({ request, params }: { request: Request; params: { 
       priority,
       created_at,
       chat_room_id,
-      chat_rooms!tickets_chat_room_id_fkey (
+      chat_rooms (
         id,
         status
       )

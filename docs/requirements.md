@@ -77,29 +77,29 @@ As an admin, I can configure ticket routing
 
 ### API Routes
 
-as an engineer, i can use api routes for integrating with other services
--[ ] get all agents/admins
--[ ] create a new ticket
--[ ] update a ticket
--[ ] add a chat message to a ticket
--[ ] update ticket status
--[ ] get a ticket
--[ ] get all tickets
--[ ] get all articles
--[ ] get all documents
--[ ] add an article
--[ ] add a document
--[ ] update an article
--[ ] delete an article
--[ ] delete a document
+as an engineer, i can use api routes for integrating with other services (all endpoints require ADMIN_API_KEY)
+- [x] get all agents/admins
+- [x] create a new ticket
+- [x] update a ticket
+- [x] add a chat message to a ticket
+- [x] update ticket status
+- [x] get a ticket
+- [x] get all tickets
+- [x] get all articles
+- [x] get all documents
+- [x] add an article
+- [x] add a document
+- [x] update an article
+- [x] delete an article
+- [x] delete a document
 
 ### Admin routes
 
 as a superuser (*not* the admin user, but a secure service account), I can do admin tasks
-- [ ] auth with ADMIN_API_KEY
-- [ ] delete all data
-- [ ] delete all files/buckets
-- [ ] seed test data
+- [x] auth with ADMIN_API_KEY
+- [x] delete all data
+- [x] delete all files/buckets
+- [x] seed test data
 - [ ] run a vector database indexing job
 - [ ] query the vector database
 
@@ -110,7 +110,7 @@ As an admin or agent I can view performance metrics in the dashboard
 - [ ] see the number of tickets assigned to me
 - [ ] Ticket resolution times
 
-...TBD
+... TBD
 
 As an admin or agent I can view performance metrics in the metrics page
 - [ ] Ticket resolution times
@@ -126,10 +126,36 @@ As an agent, I can receive AI-suggested responses
 - [ ] Edit before sending
 
 AI Agent responses
--[ ] users have the option to ask an AI while they wait in the queue
+- [ ] users have the option to ask an AI while they wait in the queue
 
 ### Smart Knowledge Base
 - [ ] the knowledge base gets indexed in a vector database
 - [ ] customers can ask questions about the knowledge base
 - [ ] agents can generate articles based on the knowledge base
 - [ ] AI suggests articles to generate based on customer questions?
+
+
+### Enhancements
+
+- [ ] more statuses in mock ticket data
+- [ ] realistic convos in mock ticket data
+- [ ] fix article viewer
+- [ ] mock documents
+
+- [ ] colors in tickets page
+- [ ] filters in tikcets page
+- [ ] sticky logout
+- [ ] user profile in nav (w/ status toggle)
+
+- [ ] hide workspace name and invite from agents
+- [ ] show everyone in "team"
+- [ ] take "times" from mock data
+
+## Future work:
+
+- [ ] assignment
+- [ ] logging (& resolution metrics)
+- [ ] pagination in tickets page
+- [ ] pagination in articles view
+- [ ] pagination in documents view
+- [ ] regenerate invite code as admin

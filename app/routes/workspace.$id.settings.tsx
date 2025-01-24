@@ -6,15 +6,16 @@ import type { Database } from "~/types/database";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { getProfile, updateProfile } from "~/models/profile.server";
-import { getWorkspaces } from "~/models/workspace.server";
+import { getWorkspaces, getWorkspace } from "~/models/workspace.server";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Alert, AlertDescription } from "~/components/ui/alert";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
+import { WorkspaceInfo } from "~/components/settings/workspace-info";
 
-export async function action({ request }: { request: Request }) {
+export async function action({ request, params }: { request: Request; params: { id: string } }) {
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
   const { data: { user }, error } = await supabase.auth.getUser();
@@ -24,16 +25,31 @@ export async function action({ request }: { request: Request }) {
   }
 
   const formData = await request.formData();
-  const fullName = formData.get("full_name") as string;
-  const avatarUrl = formData.get("avatar_url") as string;
-  const isAvailable = formData.get("is_available") === "true";
+  const action = formData.get("action") as string;
 
-  await updateProfile(supabase, user.id, {
-    full_name: fullName,
-    ...(avatarUrl && { avatar_url: avatarUrl }),
-    is_available: isAvailable,
-    updated_at: new Date().toISOString(),
-  });
+  switch (action) {
+    case "update_name": {
+      const name = formData.get("name") as string;
+      await updateWorkspace(supabase, params.id, { name });
+      break;
+    }
+    case "delete": {
+      await deleteWorkspace(supabase, params.id);
+      return redirect("/");
+    }
+    default: {
+      const fullName = formData.get("full_name") as string;
+      const avatarUrl = formData.get("avatar_url") as string;
+      const isAvailable = formData.get("is_available") === "true";
+
+      await updateProfile(supabase, user.id, {
+        full_name: fullName,
+        ...(avatarUrl && { avatar_url: avatarUrl }),
+        is_available: isAvailable,
+        updated_at: new Date().toISOString(),
+      });
+    }
+  }
 
   return json({ success: true }, { headers: response.headers });
 }
@@ -47,14 +63,16 @@ export const loader = async ({ request, params }: { request: Request; params: { 
     throw new Response("Unauthorized", { status: 401 });
   }
 
-  const [profile, workspaces] = await Promise.all([
+  const [profile, workspaces, workspace] = await Promise.all([
     getProfile(supabase, user.id),
-    getWorkspaces(supabase, user.id)
+    getWorkspaces(supabase, user.id),
+    getWorkspace(supabase, params.id, user.id)
   ]);
 
   return json({ 
     profile,
     workspaces,
+    workspace,
     currentWorkspaceId: params.id
   }, { 
     headers: response.headers 
@@ -62,7 +80,7 @@ export const loader = async ({ request, params }: { request: Request; params: { 
 };
 
 export default function Settings() {
-  const { profile, workspaces, currentWorkspaceId } = useLoaderData<typeof loader>();
+  const { profile, workspaces, workspace, currentWorkspaceId } = useLoaderData<typeof loader>();
   const { supabase } = useOutletContext<{ supabase: SupabaseClient<Database> }>();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
@@ -70,11 +88,30 @@ export default function Settings() {
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [avatarUrl, setAvatarUrl] = useState(profile?.avatar_url || '');
 
+  const handleUpdateName = async (name: string) => {
+    const formData = new FormData();
+    formData.append("action", "update_name");
+    formData.append("name", name);
+    await fetch("", { method: "post", body: formData });
+  };
+
+  const handleDelete = async () => {
+    const formData = new FormData();
+    formData.append("action", "delete");
+    await fetch("", { method: "post", body: formData });
+  };
+
   return (
     <div className="container py-8 max-w-2xl pl-8">
       <h1 className="text-3xl font-bold mb-8">Settings</h1>
       
       <div className="space-y-6">
+        <WorkspaceInfo 
+          workspace={workspace} 
+          onUpdateName={handleUpdateName}
+          onDelete={handleDelete}
+        />
+
         <Card>
           <CardHeader>
             <CardTitle>Profile</CardTitle>

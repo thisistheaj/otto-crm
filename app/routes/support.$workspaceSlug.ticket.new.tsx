@@ -53,7 +53,15 @@ export async function action({ request, params }: { request: Request; params: { 
       .from('tickets')
       .select(`
         id,
-        workspace:workspaces!tickets_workspace_id_fkey (
+        subject,
+        description,
+        email,
+        status,
+        priority,
+        created_at,
+        workspace:workspaces (
+          id,
+          name,
           slug
         )
       `)

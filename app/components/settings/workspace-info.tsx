@@ -10,6 +10,7 @@ interface WorkspaceInfoProps {
   workspace: {
     id: string;
     name: string;
+    join_code: string;
   };
   onUpdateName: (name: string) => void;
   onDelete: () => void;
@@ -21,8 +22,8 @@ export function WorkspaceInfo({ workspace, onUpdateName, onDelete }: WorkspaceIn
   const [showCopied, setShowCopied] = useState(false);
   const [deleteConfirmName, setDeleteConfirmName] = useState("");
 
-  const handleCopyId = () => {
-    navigator.clipboard.writeText(workspace.id);
+  const handleCopyCode = () => {
+    navigator.clipboard.writeText(workspace.join_code);
     setShowCopied(true);
     setTimeout(() => setShowCopied(false), 2000);
   };
@@ -69,10 +70,10 @@ export function WorkspaceInfo({ workspace, onUpdateName, onDelete }: WorkspaceIn
         </div>
 
         <div className="space-y-2">
-          <Label>Workspace ID</Label>
+          <Label>Join Code</Label>
           <div className="flex gap-2">
-            <Input value={workspace.id} readOnly className="flex-1 font-mono text-sm" />
-            <Button variant="outline" onClick={handleCopyId}>
+            <Input value={workspace.join_code} readOnly className="flex-1 font-mono text-sm" />
+            <Button variant="outline" onClick={handleCopyCode}>
               {showCopied ? (
                 <Check className="h-4 w-4 text-green-500" />
               ) : (
@@ -81,7 +82,7 @@ export function WorkspaceInfo({ workspace, onUpdateName, onDelete }: WorkspaceIn
             </Button>
           </div>
           <p className="text-sm text-muted-foreground">
-            Share this ID with team members so they can join your workspace
+            Share this code with team members so they can join your workspace
           </p>
         </div>
 

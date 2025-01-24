@@ -1,11 +1,18 @@
 import { json, type LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { supabaseAdmin } from "~/utils/supabase.server";
+import { createClient } from "@supabase/supabase-js";
+import type { Database } from "~/types/database";
+
+const SUPABASE_URL = process.env.SUPABASE_URL!;
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+// Create a Supabase client with the service role key
+const supabase = createClient<Database>(
+  SUPABASE_URL,
+  SUPABASE_SERVICE_ROLE_KEY
+);
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
-  const response = new Response();
-  const supabase = supabaseAdmin;
-
   const { data: workspace, error: workspaceError } = await supabase 
     .from("workspaces")
     .select("*")
@@ -28,7 +35,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     throw new Response("Article not found", { status: 404 });
   }
 
-  return json({ article }, { headers: response.headers });
+  return json({ article });
 };
 
 export default function ArticleViewer() {

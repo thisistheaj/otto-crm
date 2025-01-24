@@ -1,0 +1,11 @@
+subject	description	email	status	priority	assigned_agent_id
+Solar Panel Installation Quote	Need a quote for installing solar panels on my 2000 sq ft home	john.doe@email.com	new	high	
+System Performance Issues	My solar panels are producing less energy than expected	sarah.smith@email.com	open	high	3b05e674-adeb-4238-8dbb-82cd20589ef8
+Billing Discrepancy	My energy bill doesn't reflect the solar credits correctly	mike.jones@email.com	open	normal	912eb015-14af-497d-a7cf-6e61e4f53c49
+Maintenance Schedule	When is my next maintenance check due?	lisa.brown@email.com	open	low	4809303f-f0df-4cc6-b424-db93e62d9719
+Warranty Claim	One panel has visible damage after recent storm	david.wilson@email.com	open	high	31248daa-c8ac-47c8-981a-5554123db11a
+Installation Timeline	When can you start the installation?	emma.davis@email.com	new	normal	
+Battery Backup Questions	Interested in adding battery backup to existing system	chris.miller@email.com	new	normal	
+Panel Cleaning Service	Need to schedule routine cleaning	robert.taylor@email.com	open	low	3b05e674-adeb-4238-8dbb-82cd20589ef8
+Tax Credit Documentation	Need documentation for tax credit claim	patricia.white@email.com	closed	normal	912eb015-14af-497d-a7cf-6e61e4f53c49
+System Monitoring App Issues	Can't access my monitoring dashboard	james.garcia@email.com	open	high	4809303f-f0df-4cc6-b424-db93e62d9719 
