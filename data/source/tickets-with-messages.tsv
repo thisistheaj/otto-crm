@@ -1,66 +1,66 @@
 type	subject	description	email	status	priority	content	sender_type	created_at
-ticket	Solar Panel Installation Quote	Need a quote for installing solar panels on my 2000 sq ft home	john.doe@email.com	new	high			2024-03-22T10:00:00Z
+ticket	Solar Panel Installation Quote	Need a quote for installing solar panels on my 2000 sq ft home	john.doe@email.com	pending	high			2024-03-22T10:00:00Z
 ticket	System Performance Issues	My solar panels are producing less energy than expected	sarah.smith@email.com	open	high			2024-03-20T08:45:00Z
 message		System Performance Issues		open	high	Hello, I noticed my solar production has dropped by 30% compared to last month. Can you help?	customer	2024-03-20T09:00:00Z
 message		System Performance Issues		open	high	I'll look into your system performance right away. Can you confirm if you've noticed any physical changes to the panels?	agent	2024-03-20T09:15:00Z
 message		System Performance Issues		open	high	No physical changes that I can see, but we did have some cloudy weather	customer	2024-03-20T09:30:00Z
-ticket	Billing Discrepancy	My energy bill doesn't reflect the solar credits correctly	mike.jones@email.com	open	normal			2024-03-19T13:45:00Z
-message		Billing Discrepancy		open	normal	Hi, I've reviewed my latest energy bill and the solar credits seem lower than usual	customer	2024-03-19T14:00:00Z
-message		Billing Discrepancy		open	normal	I'll check your production data and compare it with the billing cycle. Give me a moment.	agent	2024-03-19T14:10:00Z
-message		Billing Discrepancy		open	normal	I found the issue - there was a delay in reporting your production data. I'll contact the utility company.	agent	2024-03-19T14:30:00Z
-ticket	Warranty Claim	One panel has visible damage after recent storm	david.wilson@email.com	open	high			2024-03-21T07:45:00Z
-message		Warranty Claim		open	high	I discovered damage to one of my panels after last night's storm. Attaching photos.	customer	2024-03-21T08:00:00Z
-message		Warranty Claim		open	high	I'm sorry to hear about the damage. I've reviewed the photos and this should be covered under warranty. I'll schedule an inspection.	agent	2024-03-21T08:30:00Z
-ticket	Panel Cleaning Service	Need to schedule routine cleaning	robert.taylor@email.com	open	low			2024-03-18T10:45:00Z
-message		Panel Cleaning Service		open	low	I'd like to schedule a cleaning service for my panels. They're getting dusty.	customer	2024-03-18T11:00:00Z
-message		Panel Cleaning Service		open	low	We have availability next week. Would Tuesday or Thursday morning work for you?	agent	2024-03-18T11:15:00Z
-ticket	Battery Backup Installation	Interested in adding battery backup to existing system	emma.white@email.com	new	normal			2024-03-22T09:30:00Z
-ticket	Inverter Error Message	Getting error code E-034 on my inverter display	carlos.rodriguez@email.com	open	high			2024-03-21T15:20:00Z
-message		Inverter Error Message		open	high	My inverter is showing error E-034. System is not producing power.	customer	2024-03-21T15:25:00Z
-message		Inverter Error Message		open	high	This error typically indicates a grid voltage issue. Have you noticed any power fluctuations?	agent	2024-03-21T15:40:00Z
-ticket	Annual Maintenance Check	Due for yearly system inspection	lisa.brown@email.com	closed	low			2024-03-15T11:00:00Z
-message		Annual Maintenance Check		closed	low	It's time for my annual system check. When can we schedule this?	customer	2024-03-15T11:05:00Z
-message		Annual Maintenance Check		closed	low	I can schedule you for next Wednesday at 10 AM. Would that work?	agent	2024-03-15T11:20:00Z
-message		Annual Maintenance Check		closed	low	Yes, that works perfectly. Thank you!	customer	2024-03-15T11:25:00Z
-message		Annual Maintenance Check		closed	low	Great! I've confirmed your appointment. See you then.	agent	2024-03-15T11:30:00Z
-ticket	Smart Monitoring App Issues	Can't access monitoring dashboard	peter.zhang@email.com	open	normal			2024-03-20T13:15:00Z
-message		Smart Monitoring App Issues		open	normal	I'm unable to log into the monitoring app since this morning.	customer	2024-03-20T13:20:00Z
-message		Smart Monitoring App Issues		open	normal	Let's try to troubleshoot. Have you tried clearing your app cache?	agent	2024-03-20T13:35:00Z
-ticket	Energy Usage Report	Need detailed production report for tax purposes	susan.miller@email.com	closed	normal			2024-03-17T09:00:00Z
-message		Energy Usage Report		closed	normal	I need my annual production report for tax filing.	customer	2024-03-17T09:05:00Z
-message		Energy Usage Report		closed	normal	I'll generate that report right away. Would you like it in PDF format?	agent	2024-03-17T09:15:00Z
-message		Energy Usage Report		closed	normal	Yes, PDF would be perfect.	customer	2024-03-17T09:20:00Z
-message		Energy Usage Report		closed	normal	I've attached the report. Let me know if you need anything else!	agent	2024-03-17T09:30:00Z
-ticket	Panel Optimization Request	Interested in optimizing panel performance	james.wilson@email.com	new	low			2024-03-22T08:00:00Z
-ticket	Grid Connection Issue	System not feeding back to grid	maria.garcia@email.com	open	high			2024-03-21T10:00:00Z
-message		Grid Connection Issue		open	high	My system isn't sending power back to the grid according to my meter.	customer	2024-03-21T10:05:00Z
-message		Grid Connection Issue		open	high	I'll check your system remotely. Can you confirm if your system is showing as active?	agent	2024-03-21T10:15:00Z
-message		Grid Connection Issue		open	high	Yes, the system shows as active but the meter isn't moving.	customer	2024-03-21T10:20:00Z
-ticket	Solar Panel Upgrade	Want to add more panels to existing system	tom.anderson@email.com	open	normal			2024-03-19T14:00:00Z
-message		Solar Panel Upgrade		open	normal	Looking to expand my system by 4-6 panels. Is this possible?	customer	2024-03-19T14:05:00Z
-message		Solar Panel Upgrade		open	normal	I'll review your current setup and check roof space availability.	agent	2024-03-19T14:20:00Z
-ticket	Mobile App Feature Request	Would like to see daily energy graphs in the mobile app	rachel.green@email.com	new	normal			2024-03-22T11:30:00Z
-message		Mobile App Feature Request		new	normal	I think it would be really helpful to have daily energy production graphs in the mobile app	customer	2024-03-22T11:35:00Z
-ticket	Installation Timeline Question	When can installation begin after permit approval?	chandler.bing@email.com	open	normal			2024-03-22T12:00:00Z
-message		Installation Timeline Question		open	normal	Just got my permit approved, wondering about next steps and timeline	customer	2024-03-22T12:05:00Z
-message		Installation Timeline Question		open	normal	Congratulations on the permit approval! I'll check our installation team's schedule and get back to you with specific dates.	agent	2024-03-22T12:15:00Z
-ticket	Power Outage Behavior	System shut down during power outage	monica.geller@email.com	open	high			2024-03-22T13:00:00Z
-message		Power Outage Behavior		open	high	We had a power outage and my system completely shut down. I thought it would still work?	customer	2024-03-22T13:05:00Z
-message		Power Outage Behavior		open	high	Without a battery backup system, solar panels will shut down during grid outages for safety. Would you like to discuss backup options?	agent	2024-03-22T13:20:00Z
-ticket	Tax Credit Documentation	Need documentation for federal tax credit	ross.geller@email.com	new	normal			2024-03-22T14:00:00Z
-message		Tax Credit Documentation		new	normal	Can you provide the necessary documentation for claiming the federal solar tax credit?	customer	2024-03-22T14:05:00Z
+ticket	Billing Discrepancy	My energy bill doesn't reflect the solar credits correctly	mike.jones@email.com	resolved	medium			2024-03-19T13:45:00Z
+message		Billing Discrepancy		resolved	medium	Hi, I've reviewed my latest energy bill and the solar credits seem lower than usual	customer	2024-03-19T14:00:00Z
+message		Billing Discrepancy		resolved	medium	I'll check your production data and compare it with the billing cycle. Give me a moment.	agent	2024-03-19T14:10:00Z
+message		Billing Discrepancy		resolved	medium	I found the issue - there was a delay in reporting your production data. I'll contact the utility company.	agent	2024-03-19T14:30:00Z
+ticket	Warranty Claim	One panel has visible damage after recent storm	david.wilson@email.com	pending	high			2024-03-21T07:45:00Z
+message		Warranty Claim		pending	high	I discovered damage to one of my panels after last night's storm. Attaching photos.	customer	2024-03-21T08:00:00Z
+message		Warranty Claim		pending	high	I'm sorry to hear about the damage. I've reviewed the photos and this should be covered under warranty. I'll schedule an inspection.	agent	2024-03-21T08:30:00Z
+ticket	Panel Cleaning Service	Need to schedule routine cleaning	robert.taylor@email.com	resolved	low			2024-03-18T10:45:00Z
+message		Panel Cleaning Service		resolved	low	I'd like to schedule a cleaning service for my panels. They're getting dusty.	customer	2024-03-18T11:00:00Z
+message		Panel Cleaning Service		resolved	low	We have availability next week. Would Tuesday or Thursday morning work for you?	agent	2024-03-18T11:15:00Z
+ticket	Battery Backup Installation	Interested in adding battery backup to existing system	emma.white@email.com	new	medium			2024-03-22T09:30:00Z
+ticket	Inverter Error Message	Getting error code E-034 on my inverter display	carlos.rodriguez@email.com	pending	high			2024-03-21T15:20:00Z
+message		Inverter Error Message		pending	high	My inverter is showing error E-034. System is not producing power.	customer	2024-03-21T15:25:00Z
+message		Inverter Error Message		pending	high	This error typically indicates a grid voltage issue. Have you noticed any power fluctuations?	agent	2024-03-21T15:40:00Z
+ticket	Annual Maintenance Check	Due for yearly system inspection	lisa.brown@email.com	resolved	low			2024-03-15T11:00:00Z
+message		Annual Maintenance Check		resolved	low	It's time for my annual system check. When can we schedule this?	customer	2024-03-15T11:05:00Z
+message		Annual Maintenance Check		resolved	low	I can schedule you for next Wednesday at 10 AM. Would that work?	agent	2024-03-15T11:20:00Z
+message		Annual Maintenance Check		resolved	low	Yes, that works perfectly. Thank you!	customer	2024-03-15T11:25:00Z
+message		Annual Maintenance Check		resolved	low	Great! I've confirmed your appointment. See you then.	agent	2024-03-15T11:30:00Z
+ticket	Smart Monitoring App Issues	Can't access monitoring dashboard	peter.zhang@email.com	resolved	medium			2024-03-20T13:15:00Z
+message		Smart Monitoring App Issues		resolved	medium	I'm unable to log into the monitoring app since this morning.	customer	2024-03-20T13:20:00Z
+message		Smart Monitoring App Issues		resolved	medium	Let's try to troubleshoot. Have you tried clearing your app cache?	agent	2024-03-20T13:35:00Z
+ticket	Energy Usage Report	Need detailed production report for tax purposes	susan.miller@email.com	resolved	medium			2024-03-17T09:00:00Z
+message		Energy Usage Report		resolved	medium	I need my annual production report for tax filing.	customer	2024-03-17T09:05:00Z
+message		Energy Usage Report		resolved	medium	I'll generate that report right away. Would you like it in PDF format?	agent	2024-03-17T09:15:00Z
+message		Energy Usage Report		resolved	medium	Yes, PDF would be perfect.	customer	2024-03-17T09:20:00Z
+message		Energy Usage Report		resolved	medium	I've attached the report. Let me know if you need anything else!	agent	2024-03-17T09:30:00Z
+ticket	Panel Optimization Request	Interested in optimizing panel performance	james.wilson@email.com	pending	low			2024-03-22T08:00:00Z
+ticket	Grid Connection Issue	System not feeding back to grid	maria.garcia@email.com	pending	high			2024-03-21T10:00:00Z
+message		Grid Connection Issue		pending	high	My system isn't sending power back to the grid according to my meter.	customer	2024-03-21T10:05:00Z
+message		Grid Connection Issue		pending	high	I'll check your system remotely. Can you confirm if your system is showing as active?	agent	2024-03-21T10:15:00Z
+message		Grid Connection Issue		pending	high	Yes, the system shows as active but the meter isn't moving.	customer	2024-03-21T10:20:00Z
+ticket	Solar Panel Upgrade	Want to add more panels to existing system	tom.anderson@email.com	pending	medium			2024-03-19T14:00:00Z
+message		Solar Panel Upgrade		pending	medium	Looking to expand my system by 4-6 panels. Is this possible?	customer	2024-03-19T14:05:00Z
+message		Solar Panel Upgrade		pending	medium	I'll review your current setup and check roof space availability.	agent	2024-03-19T14:20:00Z
+ticket	Mobile App Feature Request	Would like to see daily energy graphs in the mobile app	rachel.green@email.com	new	medium			2024-03-22T11:30:00Z
+message		Mobile App Feature Request		new	medium	I think it would be really helpful to have daily energy production graphs in the mobile app	customer	2024-03-22T11:35:00Z
+ticket	Installation Timeline Question	When can installation begin after permit approval?	chandler.bing@email.com	resolved	medium			2024-03-22T12:00:00Z
+message		Installation Timeline Question		resolved	medium	Just got my permit approved, wondering about next steps and timeline	customer	2024-03-22T12:05:00Z
+message		Installation Timeline Question		resolved	medium	Congratulations on the permit approval! I'll check our installation team's schedule and get back to you with specific dates.	agent	2024-03-22T12:15:00Z
+ticket	Power Outage Behavior	System shut down during power outage	monica.geller@email.com	pending	high			2024-03-22T13:00:00Z
+message		Power Outage Behavior		pending	high	We had a power outage and my system completely shut down. I thought it would still work?	customer	2024-03-22T13:05:00Z
+message		Power Outage Behavior		pending	high	Without a battery backup system, solar panels will shut down during grid outages for safety. Would you like to discuss backup options?	agent	2024-03-22T13:20:00Z
+ticket	Tax Credit Documentation	Need documentation for federal tax credit	ross.geller@email.com	new	medium			2024-03-22T14:00:00Z
+message		Tax Credit Documentation		new	medium	Can you provide the necessary documentation for claiming the federal solar tax credit?	customer	2024-03-22T14:05:00Z
 ticket	Winter Performance Check	Concerned about snow coverage	phoebe.buffay@email.com	open	low			2024-03-22T15:00:00Z
 message		Winter Performance Check		open	low	With winter approaching, should I be worried about snow covering the panels?	customer	2024-03-22T15:05:00Z
 message		Winter Performance Check		open	low	Our panels are designed to handle snow load, but I'll share some winter maintenance tips and monitoring recommendations.	agent	2024-03-22T15:20:00Z
-ticket	Rate Plan Optimization	Need help choosing best utility rate plan	joey.tribbiani@email.com	new	normal			2024-03-22T16:00:00Z
-message		Rate Plan Optimization		new	normal	My utility offers several rate plans for solar customers. Which would be best for my usage pattern?	customer	2024-03-22T16:05:00Z
-ticket	Shading Analysis Request	Trees growing near panels causing shade	gunther.coffee@email.com	new	normal			2024-03-22T16:30:00Z
-message		Shading Analysis Request		new	normal	The trees in my neighbor's yard have grown quite tall and I think they're affecting my panel performance	customer	2024-03-22T16:35:00Z
-message		Shading Analysis Request		new	normal	I'll schedule a drone inspection to analyze the shading impact and provide recommendations.	agent	2024-03-22T16:45:00Z
-ticket	Panel Critter Protection	Pigeons nesting under solar panels	ursula.buffay@email.com	open	normal			2024-03-22T17:00:00Z
-message		Panel Critter Protection		open	normal	There are pigeons nesting under my solar panels. Will this cause any issues?	customer	2024-03-22T17:05:00Z
-message		Panel Critter Protection		open	normal	Yes, this can be problematic. We can install critter guards to prevent nesting while maintaining ventilation.	agent	2024-03-22T17:15:00Z
-message		Panel Critter Protection		open	normal	How much would that cost and how long would installation take?	customer	2024-03-22T17:20:00Z
+ticket	Rate Plan Optimization	Need help choosing best utility rate plan	joey.tribbiani@email.com	new	medium			2024-03-22T16:00:00Z
+message		Rate Plan Optimization		new	medium	My utility offers several rate plans for solar customers. Which would be best for my usage pattern?	customer	2024-03-22T16:05:00Z
+ticket	Shading Analysis Request	Trees growing near panels causing shade	gunther.coffee@email.com	new	medium			2024-03-22T16:30:00Z
+message		Shading Analysis Request		new	medium	The trees in my neighbor's yard have grown quite tall and I think they're affecting my panel performance	customer	2024-03-22T16:35:00Z
+message		Shading Analysis Request		new	medium	I'll schedule a drone inspection to analyze the shading impact and provide recommendations.	agent	2024-03-22T16:45:00Z
+ticket	Panel Critter Protection	Pigeons nesting under solar panels	ursula.buffay@email.com	open	medium			2024-03-22T17:00:00Z
+message		Panel Critter Protection		open	medium	There are pigeons nesting under my solar panels. Will this cause any issues?	customer	2024-03-22T17:05:00Z
+message		Panel Critter Protection		open	medium	Yes, this can be problematic. We can install critter guards to prevent nesting while maintaining ventilation.	agent	2024-03-22T17:15:00Z
+message		Panel Critter Protection		open	medium	How much would that cost and how long would installation take?	customer	2024-03-22T17:20:00Z
 ticket	Meter Reading Discrepancy	Smart meter readings don't match app	janice.hosenstein@email.com	open	high			2024-03-22T17:30:00Z
 message		Meter Reading Discrepancy		open	high	The production numbers in my app are different from my smart meter readings	customer	2024-03-22T17:35:00Z
 message		Meter Reading Discrepancy		open	high	Let me check the data streams from both sources. There might be a sync delay.	agent	2024-03-22T17:45:00Z
@@ -69,14 +69,14 @@ message		Solar Panel Hail Damage		new	high	We just had a severe hailstorm. Shoul
 ticket	Microinverter Replacement	One panel showing zero production	carol.willick@email.com	open	high			2024-03-22T18:30:00Z
 message		Microinverter Replacement		open	high	Panel #7 is showing no production for the last 3 days	customer	2024-03-22T18:35:00Z
 message		Microinverter Replacement		open	high	I can see the issue in our monitoring system. Looks like the microinverter needs replacement.	agent	2024-03-22T18:45:00Z
-ticket	Solar Production Guarantee	Below guaranteed production levels	emily.waltham@email.com	open	normal			2024-03-22T19:00:00Z
-message		Solar Production Guarantee		open	normal	My system is producing 15% less than the guaranteed amount this quarter	customer	2024-03-22T19:05:00Z
-message		Solar Production Guarantee		open	normal	I'll analyze your production data and weather patterns to verify the shortfall.	agent	2024-03-22T19:15:00Z
+ticket	Solar Production Guarantee	Below guaranteed production levels	emily.waltham@email.com	open	medium			2024-03-22T19:00:00Z
+message		Solar Production Guarantee		open	medium	My system is producing 15% less than the guaranteed amount this quarter	customer	2024-03-22T19:05:00Z
+message		Solar Production Guarantee		open	medium	I'll analyze your production data and weather patterns to verify the shortfall.	agent	2024-03-22T19:15:00Z
 ticket	Panel Cleaning Quote	Pollen season affecting production	tag.jones@email.com	new	low			2024-03-22T19:30:00Z
 message		Panel Cleaning Quote		new	low	How much would it cost to get my panels cleaned? There's a lot of pollen buildup.	customer	2024-03-22T19:35:00Z
-ticket	System Expansion Consultation	Adding EV charging soon	ben.geller@email.com	new	normal			2024-03-22T20:00:00Z
-message		System Expansion Consultation		new	normal	Planning to get an electric vehicle. Will my current system handle the additional load?	customer	2024-03-22T20:05:00Z
-message		System Expansion Consultation		new	normal	I'll review your current system size and usage patterns to determine if an expansion is needed.	agent	2024-03-22T20:15:00Z
+ticket	System Expansion Consultation	Adding EV charging soon	ben.geller@email.com	new	medium			2024-03-22T20:00:00Z
+message		System Expansion Consultation		new	medium	Planning to get an electric vehicle. Will my current system handle the additional load?	customer	2024-03-22T20:05:00Z
+message		System Expansion Consultation		new	medium	I'll review your current system size and usage patterns to determine if an expansion is needed.	agent	2024-03-22T20:15:00Z
 ticket	WiFi Connection Lost	Solar monitoring system offline	eddie.moskowitz@email.com	open	high			2024-03-22T20:30:00Z
 message		WiFi Connection Lost		open	high	My solar monitoring system shows offline in the app since yesterday	customer	2024-03-22T20:35:00Z
 message		WiFi Connection Lost		open	high	Let's check if it's a connection issue. Can you verify if the gateway LED is green?	agent	2024-03-22T20:40:00Z
@@ -88,22 +88,22 @@ message		Roof Leak Concern		open	high	I noticed water stains on my ceiling near 
 message		Roof Leak Concern		open	high	This requires immediate attention. I'll schedule an emergency inspection for tomorrow morning.	agent	2024-03-22T21:10:00Z
 message		Roof Leak Concern		open	high	Thank you! What time should I expect the inspector?	customer	2024-03-22T21:15:00Z
 message		Roof Leak Concern		open	high	The inspector will arrive between 8-10 AM. Please provide access to both the roof and attic if possible.	agent	2024-03-22T21:20:00Z
-ticket	Battery Warranty Claim	Battery not holding charge	frank.buffay.jr@email.com	open	normal			2024-03-22T21:30:00Z
-message		Battery Warranty Claim		open	normal	My battery is only holding 60% of its original capacity after 2 years	customer	2024-03-22T21:35:00Z
-message		Battery Warranty Claim		open	normal	I'll check your battery's performance data and warranty status	agent	2024-03-22T21:40:00Z
-message		Battery Warranty Claim		open	normal	According to our records, this is covered under warranty. Would you like to proceed with a replacement?	agent	2024-03-22T21:45:00Z
-ticket	HOA Approval Process	Need help with HOA submission	mr.heckles@email.com	new	normal			2024-03-22T22:00:00Z
-message		HOA Approval Process		new	normal	My HOA requires detailed documentation for solar installation approval	customer	2024-03-22T22:05:00Z
-message		HOA Approval Process		new	normal	I'll prepare a comprehensive package including visual renderings and technical specifications	agent	2024-03-22T22:10:00Z
+ticket	Battery Warranty Claim	Battery not holding charge	frank.buffay.jr@email.com	open	medium			2024-03-22T21:30:00Z
+message		Battery Warranty Claim		open	medium	My battery is only holding 60% of its original capacity after 2 years	customer	2024-03-22T21:35:00Z
+message		Battery Warranty Claim		open	medium	I'll check your battery's performance data and warranty status	agent	2024-03-22T21:40:00Z
+message		Battery Warranty Claim		open	medium	According to our records, this is covered under warranty. Would you like to proceed with a replacement?	agent	2024-03-22T21:45:00Z
+ticket	HOA Approval Process	Need help with HOA submission	mr.heckles@email.com	new	medium			2024-03-22T22:00:00Z
+message		HOA Approval Process		new	medium	My HOA requires detailed documentation for solar installation approval	customer	2024-03-22T22:05:00Z
+message		HOA Approval Process		new	medium	I'll prepare a comprehensive package including visual renderings and technical specifications	agent	2024-03-22T22:10:00Z
 ticket	Emergency Shutdown Help	Need to shut down system for firefighters	mr.treeger@email.com	open	high			2024-03-22T22:30:00Z
 message		Emergency Shutdown Help		open	high	Firefighters need to access our roof. How do I shut down the system?	customer	2024-03-22T22:31:00Z
 message		Emergency Shutdown Help		open	high	I'll guide you through the rapid shutdown procedure right now	agent	2024-03-22T22:32:00Z
 message		Emergency Shutdown Help		open	high	First, locate the red emergency switch near your inverter	agent	2024-03-22T22:33:00Z
 message		Emergency Shutdown Help		open	high	Found it and switched it off. Anything else?	customer	2024-03-22T22:34:00Z
 message		Emergency Shutdown Help		open	high	Also turn off the solar supply main breaker in your electrical panel. Let me know when done.	agent	2024-03-22T22:35:00Z
-ticket	Energy Storage Rebate	Questions about state rebate program	alice.knight@email.com	new	normal			2024-03-22T23:00:00Z
-message		Energy Storage Rebate		new	normal	I heard our state is offering rebates for adding battery storage. Can you help me apply?	customer	2024-03-22T23:05:00Z
-message		Energy Storage Rebate		new	normal	Yes! The program just launched. Let me check your system's eligibility and get the paperwork started.	agent	2024-03-22T23:10:00Z
-ticket	Panel Removal Request	Temporary removal for roof repair	jack.geller@email.com	new	normal			2024-03-22T23:30:00Z
-message		Panel Removal Request		new	normal	Need panels temporarily removed for roof repair next month	customer	2024-03-22T23:35:00Z
-message		Panel Removal Request		new	normal	I can coordinate with your roofer. Please share their contact info and planned repair dates.	agent	2024-03-22T23:40:00Z 
+ticket	Energy Storage Rebate	Questions about state rebate program	alice.knight@email.com	new	medium			2024-03-22T23:00:00Z
+message		Energy Storage Rebate		new	medium	I heard our state is offering rebates for adding battery storage. Can you help me apply?	customer	2024-03-22T23:05:00Z
+message		Energy Storage Rebate		new	medium	Yes! The program just launched. Let me check your system's eligibility and get the paperwork started.	agent	2024-03-22T23:10:00Z
+ticket	Panel Removal Request	Temporary removal for roof repair	jack.geller@email.com	new	medium			2024-03-22T23:30:00Z
+message		Panel Removal Request		new	medium	Need panels temporarily removed for roof repair next month	customer	2024-03-22T23:35:00Z
+message		Panel Removal Request		new	medium	I can coordinate with your roofer. Please share their contact info and planned repair dates.	agent	2024-03-22T23:40:00Z 

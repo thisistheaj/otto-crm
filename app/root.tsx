@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { createBrowserClient } from "@supabase/auth-helpers-remix";
 import { createServerSupabase } from "./utils/supabase.server";
 import { Toaster } from "~/components/ui/toaster";
+import { ThemeProvider } from "~/components/theme-provider";
 import "~/tailwind.css";
 
 declare global {
@@ -47,6 +48,17 @@ export const loader = async ({ request }: { request: Request }) => {
   }, { headers: response.headers });
 };
 
+function getInitialTheme(): "light" | "dark" | "system" {
+  if (typeof window === "undefined") return "system"
+  
+  const stored = localStorage.getItem("theme")
+  if (stored === "light" || stored === "dark" || stored === "system") {
+    return stored
+  }
+  
+  return "system"
+}
+
 export default function App() {
   const { env } = useLoaderData<typeof loader>();
   const [supabase] = useState(() => {
@@ -61,14 +73,16 @@ export default function App() {
   }, [supabase, env.SUPABASE_ANON_KEY]);
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <Meta />
         <Links />
       </head>
       <body>
-        <Outlet context={{ supabase }} />
-        <Toaster />
+        <ThemeProvider defaultTheme={getInitialTheme()}>
+          <Outlet context={{ supabase }} />
+          <Toaster />
+        </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

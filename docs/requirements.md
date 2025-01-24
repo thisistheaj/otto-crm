@@ -137,16 +137,18 @@ AI Agent responses
 
 ### Enhancements
 
-- [ ] more statuses in mock ticket data
-- [ ] realistic convos in mock ticket data
-- [ ] fix article viewer
+- [x] more statuses in mock ticket data
+- [x] realistic convos in mock ticket data
+- [x] fix article viewer
 - [ ] mock documents
+- [x] theming 
 
 - [ ] colors in tickets page
 - [ ] filters in tikcets page
 - [ ] sticky logout
 - [ ] user profile in nav (w/ status toggle)
 
+- [ ] separate UX for new => open
 - [ ] hide workspace name and invite from agents
 - [ ] show everyone in "team"
 - [ ] take "times" from mock data

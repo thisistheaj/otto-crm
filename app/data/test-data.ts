@@ -7,7 +7,7 @@ export const testData = {
     "subject": "Solar Panel Installation Quote",
     "description": "Need a quote for installing solar panels on my 2000 sq ft home",
     "email": "john.doe@email.com",
-    "status": "new",
+    "status": "pending",
     "priority": "high",
     "created_at": "2024-03-22T10:00:00Z",
     "messages": []
@@ -41,8 +41,8 @@ export const testData = {
     "subject": "Billing Discrepancy",
     "description": "My energy bill doesn't reflect the solar credits correctly",
     "email": "mike.jones@email.com",
-    "status": "open",
-    "priority": "normal",
+    "status": "resolved",
+    "priority": "medium",
     "created_at": "2024-03-19T13:45:00Z",
     "messages": [
       {
@@ -66,7 +66,7 @@ export const testData = {
     "subject": "Warranty Claim",
     "description": "One panel has visible damage after recent storm",
     "email": "david.wilson@email.com",
-    "status": "open",
+    "status": "pending",
     "priority": "high",
     "created_at": "2024-03-21T07:45:00Z",
     "messages": [
@@ -86,7 +86,7 @@ export const testData = {
     "subject": "Panel Cleaning Service",
     "description": "Need to schedule routine cleaning",
     "email": "robert.taylor@email.com",
-    "status": "open",
+    "status": "resolved",
     "priority": "low",
     "created_at": "2024-03-18T10:45:00Z",
     "messages": [
@@ -107,7 +107,7 @@ export const testData = {
     "description": "Interested in adding battery backup to existing system",
     "email": "emma.white@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T09:30:00Z",
     "messages": []
   },
@@ -115,7 +115,7 @@ export const testData = {
     "subject": "Inverter Error Message",
     "description": "Getting error code E-034 on my inverter display",
     "email": "carlos.rodriguez@email.com",
-    "status": "open",
+    "status": "pending",
     "priority": "high",
     "created_at": "2024-03-21T15:20:00Z",
     "messages": [
@@ -135,7 +135,7 @@ export const testData = {
     "subject": "Annual Maintenance Check",
     "description": "Due for yearly system inspection",
     "email": "lisa.brown@email.com",
-    "status": "closed",
+    "status": "resolved",
     "priority": "low",
     "created_at": "2024-03-15T11:00:00Z",
     "messages": [
@@ -165,8 +165,8 @@ export const testData = {
     "subject": "Smart Monitoring App Issues",
     "description": "Can't access monitoring dashboard",
     "email": "peter.zhang@email.com",
-    "status": "open",
-    "priority": "normal",
+    "status": "resolved",
+    "priority": "medium",
     "created_at": "2024-03-20T13:15:00Z",
     "messages": [
       {
@@ -185,8 +185,8 @@ export const testData = {
     "subject": "Energy Usage Report",
     "description": "Need detailed production report for tax purposes",
     "email": "susan.miller@email.com",
-    "status": "closed",
-    "priority": "normal",
+    "status": "resolved",
+    "priority": "medium",
     "created_at": "2024-03-17T09:00:00Z",
     "messages": [
       {
@@ -215,7 +215,7 @@ export const testData = {
     "subject": "Panel Optimization Request",
     "description": "Interested in optimizing panel performance",
     "email": "james.wilson@email.com",
-    "status": "new",
+    "status": "pending",
     "priority": "low",
     "created_at": "2024-03-22T08:00:00Z",
     "messages": []
@@ -224,7 +224,7 @@ export const testData = {
     "subject": "Grid Connection Issue",
     "description": "System not feeding back to grid",
     "email": "maria.garcia@email.com",
-    "status": "open",
+    "status": "pending",
     "priority": "high",
     "created_at": "2024-03-21T10:00:00Z",
     "messages": [
@@ -249,8 +249,8 @@ export const testData = {
     "subject": "Solar Panel Upgrade",
     "description": "Want to add more panels to existing system",
     "email": "tom.anderson@email.com",
-    "status": "open",
-    "priority": "normal",
+    "status": "pending",
+    "priority": "medium",
     "created_at": "2024-03-19T14:00:00Z",
     "messages": [
       {
@@ -270,7 +270,7 @@ export const testData = {
     "description": "Would like to see daily energy graphs in the mobile app",
     "email": "rachel.green@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T11:30:00Z",
     "messages": [
       {
@@ -284,8 +284,8 @@ export const testData = {
     "subject": "Installation Timeline Question",
     "description": "When can installation begin after permit approval?",
     "email": "chandler.bing@email.com",
-    "status": "open",
-    "priority": "normal",
+    "status": "resolved",
+    "priority": "medium",
     "created_at": "2024-03-22T12:00:00Z",
     "messages": [
       {
@@ -304,7 +304,7 @@ export const testData = {
     "subject": "Power Outage Behavior",
     "description": "System shut down during power outage",
     "email": "monica.geller@email.com",
-    "status": "open",
+    "status": "pending",
     "priority": "high",
     "created_at": "2024-03-22T13:00:00Z",
     "messages": [
@@ -325,7 +325,7 @@ export const testData = {
     "description": "Need documentation for federal tax credit",
     "email": "ross.geller@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T14:00:00Z",
     "messages": [
       {
@@ -360,7 +360,7 @@ export const testData = {
     "description": "Need help choosing best utility rate plan",
     "email": "joey.tribbiani@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T16:00:00Z",
     "messages": [
       {
@@ -375,7 +375,7 @@ export const testData = {
     "description": "Trees growing near panels causing shade",
     "email": "gunther.coffee@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T16:30:00Z",
     "messages": [
       {
@@ -395,7 +395,7 @@ export const testData = {
     "description": "Pigeons nesting under solar panels",
     "email": "ursula.buffay@email.com",
     "status": "open",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T17:00:00Z",
     "messages": [
       {
@@ -475,7 +475,7 @@ export const testData = {
     "description": "Below guaranteed production levels",
     "email": "emily.waltham@email.com",
     "status": "open",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T19:00:00Z",
     "messages": [
       {
@@ -510,7 +510,7 @@ export const testData = {
     "description": "Adding EV charging soon",
     "email": "ben.geller@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T20:00:00Z",
     "messages": [
       {
@@ -595,7 +595,7 @@ export const testData = {
     "description": "Battery not holding charge",
     "email": "frank.buffay.jr@email.com",
     "status": "open",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T21:30:00Z",
     "messages": [
       {
@@ -620,7 +620,7 @@ export const testData = {
     "description": "Need help with HOA submission",
     "email": "mr.heckles@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T22:00:00Z",
     "messages": [
       {
@@ -675,7 +675,7 @@ export const testData = {
     "description": "Questions about state rebate program",
     "email": "alice.knight@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T23:00:00Z",
     "messages": [
       {
@@ -695,7 +695,7 @@ export const testData = {
     "description": "Temporary removal for roof repair",
     "email": "jack.geller@email.com",
     "status": "new",
-    "priority": "normal",
+    "priority": "medium",
     "created_at": "2024-03-22T23:30:00Z",
     "messages": [
       {
