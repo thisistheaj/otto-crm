@@ -1,0 +1,16 @@
+type	subject	description	email	status	priority	content	sender_type	created_at
+ticket	Solar Panel Installation Quote	Need a quote for installing solar panels on my 2000 sq ft home	john.doe@email.com	new	high			2024-03-22T10:00:00Z
+ticket	System Performance Issues	My solar panels are producing less energy than expected	sarah.smith@email.com	open	high			2024-03-20T08:45:00Z
+message		System Performance Issues		open	high	Hello, I noticed my solar production has dropped by 30% compared to last month. Can you help?	customer	2024-03-20T09:00:00Z
+message		System Performance Issues		open	high	I'll look into your system performance right away. Can you confirm if you've noticed any physical changes to the panels?	agent	2024-03-20T09:15:00Z
+message		System Performance Issues		open	high	No physical changes that I can see, but we did have some cloudy weather	customer	2024-03-20T09:30:00Z
+ticket	Billing Discrepancy	My energy bill doesn't reflect the solar credits correctly	mike.jones@email.com	open	normal			2024-03-19T13:45:00Z
+message		Billing Discrepancy		open	normal	Hi, I've reviewed my latest energy bill and the solar credits seem lower than usual	customer	2024-03-19T14:00:00Z
+message		Billing Discrepancy		open	normal	I'll check your production data and compare it with the billing cycle. Give me a moment.	agent	2024-03-19T14:10:00Z
+message		Billing Discrepancy		open	normal	I found the issue - there was a delay in reporting your production data. I'll contact the utility company.	agent	2024-03-19T14:30:00Z
+ticket	Warranty Claim	One panel has visible damage after recent storm	david.wilson@email.com	open	high			2024-03-21T07:45:00Z
+message		Warranty Claim		open	high	I discovered damage to one of my panels after last night's storm. Attaching photos.	customer	2024-03-21T08:00:00Z
+message		Warranty Claim		open	high	I'm sorry to hear about the damage. I've reviewed the photos and this should be covered under warranty. I'll schedule an inspection.	agent	2024-03-21T08:30:00Z
+ticket	Panel Cleaning Service	Need to schedule routine cleaning	robert.taylor@email.com	open	low			2024-03-18T10:45:00Z
+message		Panel Cleaning Service		open	low	I'd like to schedule a cleaning service for my panels. They're getting dusty.	customer	2024-03-18T11:00:00Z
+message		Panel Cleaning Service		open	low	We have availability next week. Would Tuesday or Thursday morning work for you?	agent	2024-03-18T11:15:00Z 

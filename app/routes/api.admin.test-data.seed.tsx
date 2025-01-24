@@ -50,8 +50,8 @@ export async function action({ request }: ActionFunctionArgs) {
         testData.articles.map(article => ({
           ...article,
           workspace_id: TEST_DATA_WORKSPACE_ID,
-          created_at: article.created_at || new Date().toISOString(),
-          updated_at: article.updated_at || new Date().toISOString()
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
         }))
       )
       .select();
@@ -66,8 +66,8 @@ export async function action({ request }: ActionFunctionArgs) {
         testData.documents.map(document => ({
           ...document,
           workspace_id: TEST_DATA_WORKSPACE_ID,
-          created_at: document.created_at || new Date().toISOString(),
-          updated_at: document.updated_at || new Date().toISOString()
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
         }))
       )
       .select();
@@ -75,24 +75,28 @@ export async function action({ request }: ActionFunctionArgs) {
     if (documentsError) throw documentsError;
     summary.documents = documents?.length ?? 0;
 
-    // 3. Create tickets with chat rooms
-    const { data: tickets, error: ticketsError } = await supabase
-      .from("tickets")
-      .insert(
-        testData.tickets.map(ticket => ({
-          ...ticket,
+    // 3. Process tickets and their messages
+    for (const ticketData of testData.tickets) {
+      // Create ticket
+      const { data: ticket, error: ticketError } = await supabase
+        .from("tickets")
+        .insert({
           workspace_id: TEST_DATA_WORKSPACE_ID,
-          created_at: ticket.created_at || new Date().toISOString()
-        }))
-      )
-      .select();
-    
-    if (ticketsError) throw ticketsError;
-    summary.tickets = tickets?.length ?? 0;
+          subject: ticketData.subject,
+          description: ticketData.description,
+          email: ticketData.email,
+          status: ticketData.status,
+          priority: ticketData.priority,
+          created_at: new Date().toISOString()
+        })
+        .select()
+        .single();
 
-    // 4. Create chat rooms for each ticket
-    const chatRoomPromises = tickets?.map(async ticket => {
-      const { data: room, error: roomError } = await supabase
+      if (ticketError) throw ticketError;
+      summary.tickets++;
+
+      // Create chat room for this ticket
+      const { data: chatRoom, error: chatRoomError } = await supabase
         .from("chat_rooms")
         .insert({
           ticket_id: ticket.id,
@@ -102,54 +106,31 @@ export async function action({ request }: ActionFunctionArgs) {
         .select()
         .single();
 
-      if (roomError) throw roomError;
+      if (chatRoomError) throw chatRoomError;
+      summary.chatRooms++;
 
       // Update ticket with chat room id
-      const { error: updateError } = await supabase
+      await supabase
         .from("tickets")
-        .update({ chat_room_id: room.id })
+        .update({ chat_room_id: chatRoom.id })
         .eq("id", ticket.id);
 
-      if (updateError) throw updateError;
+      // Create messages for this ticket
+      if (ticketData.messages?.length) {
+        const { error: messagesError } = await supabase
+          .from("messages")
+          .insert(
+            ticketData.messages.map(message => ({
+              room_id: chatRoom.id,
+              content: message.content,
+              sender_type: message.sender_type,
+              created_at: message.created_at || new Date().toISOString()
+            }))
+          );
 
-      return room;
-    }) ?? [];
-
-    const chatRooms = await Promise.all(chatRoomPromises);
-    summary.chatRooms = chatRooms.length;
-
-    // 5. Create messages (using the first chat room for our test messages)
-    if (chatRooms.length > 0) {
-      const firstRoom = chatRooms[0];
-      console.log("Using first chat room for messages:", firstRoom);
-      if (!firstRoom?.id) {
-        console.error("First room is missing ID:", firstRoom);
-        throw new Error("Failed to get chat room ID for messages");
+        if (messagesError) throw messagesError;
+        summary.messages += ticketData.messages.length;
       }
-
-      // Create messages for the first chat room
-      const messagesToCreate = testData.messages.map(message => {
-        // Ignore the placeholder room_id from test data
-        const { room_id: _, ...messageWithoutRoomId } = message;
-        return {
-          ...messageWithoutRoomId,
-          room_id: firstRoom.id,
-          created_at: message.created_at || new Date().toISOString()
-        };
-      });
-      console.log("Creating messages:", messagesToCreate);
-
-      const { data: messages, error: messagesError } = await supabase
-        .from("messages")
-        .insert(messagesToCreate)
-        .select();
-      
-      if (messagesError) {
-        console.error("Error creating messages:", messagesError);
-        throw messagesError;
-      }
-      console.log("Created messages:", messages);
-      summary.messages = messages?.length ?? 0;
     }
 
     return json({

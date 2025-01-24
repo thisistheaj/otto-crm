@@ -8,122 +8,99 @@ export const testData = {
     "description": "Need a quote for installing solar panels on my 2000 sq ft home",
     "email": "john.doe@email.com",
     "status": "new",
-    "priority": "high"
+    "priority": "high",
+    "created_at": "2024-03-22T10:00:00Z",
+    "messages": []
   },
   {
     "subject": "System Performance Issues",
     "description": "My solar panels are producing less energy than expected",
     "email": "sarah.smith@email.com",
     "status": "open",
-    "priority": "high"
+    "priority": "high",
+    "created_at": "2024-03-20T08:45:00Z",
+    "messages": [
+      {
+        "content": "Hello, I noticed my solar production has dropped by 30% compared to last month. Can you help?",
+        "sender_type": "customer",
+        "created_at": "2024-03-20T09:00:00Z"
+      },
+      {
+        "content": "I'll look into your system performance right away. Can you confirm if you've noticed any physical changes to the panels?",
+        "sender_type": "agent",
+        "created_at": "2024-03-20T09:15:00Z"
+      },
+      {
+        "content": "No physical changes that I can see, but we did have some cloudy weather",
+        "sender_type": "customer",
+        "created_at": "2024-03-20T09:30:00Z"
+      }
+    ]
   },
   {
     "subject": "Billing Discrepancy",
     "description": "My energy bill doesn't reflect the solar credits correctly",
     "email": "mike.jones@email.com",
     "status": "open",
-    "priority": "normal"
-  },
-  {
-    "subject": "Maintenance Schedule",
-    "description": "When is my next maintenance check due?",
-    "email": "lisa.brown@email.com",
-    "status": "open",
-    "priority": "low"
+    "priority": "normal",
+    "created_at": "2024-03-19T13:45:00Z",
+    "messages": [
+      {
+        "content": "Hi, I've reviewed my latest energy bill and the solar credits seem lower than usual",
+        "sender_type": "customer",
+        "created_at": "2024-03-19T14:00:00Z"
+      },
+      {
+        "content": "I'll check your production data and compare it with the billing cycle. Give me a moment.",
+        "sender_type": "agent",
+        "created_at": "2024-03-19T14:10:00Z"
+      },
+      {
+        "content": "I found the issue - there was a delay in reporting your production data. I'll contact the utility company.",
+        "sender_type": "agent",
+        "created_at": "2024-03-19T14:30:00Z"
+      }
+    ]
   },
   {
     "subject": "Warranty Claim",
     "description": "One panel has visible damage after recent storm",
     "email": "david.wilson@email.com",
     "status": "open",
-    "priority": "high"
-  },
-  {
-    "subject": "Installation Timeline",
-    "description": "When can you start the installation?",
-    "email": "emma.davis@email.com",
-    "status": "new",
-    "priority": "normal"
-  },
-  {
-    "subject": "Battery Backup Questions",
-    "description": "Interested in adding battery backup to existing system",
-    "email": "chris.miller@email.com",
-    "status": "new",
-    "priority": "normal"
+    "priority": "high",
+    "created_at": "2024-03-21T07:45:00Z",
+    "messages": [
+      {
+        "content": "I discovered damage to one of my panels after last night's storm. Attaching photos.",
+        "sender_type": "customer",
+        "created_at": "2024-03-21T08:00:00Z"
+      },
+      {
+        "content": "I'm sorry to hear about the damage. I've reviewed the photos and this should be covered under warranty. I'll schedule an inspection.",
+        "sender_type": "agent",
+        "created_at": "2024-03-21T08:30:00Z"
+      }
+    ]
   },
   {
     "subject": "Panel Cleaning Service",
     "description": "Need to schedule routine cleaning",
     "email": "robert.taylor@email.com",
     "status": "open",
-    "priority": "low"
-  },
-  {
-    "subject": "Tax Credit Documentation",
-    "description": "Need documentation for tax credit claim",
-    "email": "patricia.white@email.com",
-    "status": "closed",
-    "priority": "normal"
-  },
-  {
-    "subject": "System Monitoring App Issues",
-    "description": "Can't access my monitoring dashboard",
-    "email": "james.garcia@email.com",
-    "status": "open",
-    "priority": "high"
-  }
-],
-  messages: [
-  {
-    "content": "Hello, I noticed my solar production has dropped by 30% compared to last month. Can you help?",
-    "sender_type": "customer",
-    "room_id": "placeholder-room-id"
-  },
-  {
-    "content": "I'll look into your system performance right away. Can you confirm if you've noticed any physical changes to the panels?",
-    "sender_type": "agent",
-    "room_id": "placeholder-room-id"
-  },
-  {
-    "content": "No physical changes that I can see, but we did have some cloudy weather",
-    "sender_type": "customer",
-    "room_id": "placeholder-room-id"
-  },
-  {
-    "content": "Hi, I've reviewed my latest energy bill and the solar credits seem lower than usual",
-    "sender_type": "customer",
-    "room_id": "placeholder-room-id"
-  },
-  {
-    "content": "I'll check your production data and compare it with the billing cycle. Give me a moment.",
-    "sender_type": "agent",
-    "room_id": "placeholder-room-id"
-  },
-  {
-    "content": "I found the issue - there was a delay in reporting your production data. I'll contact the utility company.",
-    "sender_type": "agent",
-    "room_id": "placeholder-room-id"
-  },
-  {
-    "content": "I discovered damage to one of my panels after last night's storm. Attaching photos.",
-    "sender_type": "customer",
-    "room_id": "placeholder-room-id"
-  },
-  {
-    "content": "I'm sorry to hear about the damage. I've reviewed the photos and this should be covered under warranty. I'll schedule an inspection.",
-    "sender_type": "agent",
-    "room_id": "placeholder-room-id"
-  },
-  {
-    "content": "I'd like to schedule a cleaning service for my panels. They're getting dusty.",
-    "sender_type": "customer",
-    "room_id": "placeholder-room-id"
-  },
-  {
-    "content": "We have availability next week. Would Tuesday or Thursday morning work for you?",
-    "sender_type": "agent",
-    "room_id": "placeholder-room-id"
+    "priority": "low",
+    "created_at": "2024-03-18T10:45:00Z",
+    "messages": [
+      {
+        "content": "I'd like to schedule a cleaning service for my panels. They're getting dusty.",
+        "sender_type": "customer",
+        "created_at": "2024-03-18T11:00:00Z"
+      },
+      {
+        "content": "We have availability next week. Would Tuesday or Thursday morning work for you?",
+        "sender_type": "agent",
+        "created_at": "2024-03-18T11:15:00Z "
+      }
+    ]
   }
 ],
   articles: [
@@ -168,7 +145,7 @@ export const testData = {
     "tags": [
       "battery",
       "storage",
-      "installation "
+      "installation"
     ]
   }
 ],
@@ -218,7 +195,7 @@ export const testData = {
     "tags": [
       "maintenance",
       "schedule",
-      "technical "
+      "technical"
     ]
   }
 ]

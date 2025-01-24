@@ -16,29 +16,50 @@ function parseTsvFile(filename: string) {
   })
 }
 
+// Parse tickets and messages into a hierarchical structure
+function parseTicketsWithMessages(rows: any[]) {
+  const tickets: any[] = []
+
+  for (let i = 0; i < rows.length; i++) {
+    let row = rows[i];
+    if (row.type === 'ticket') {
+      tickets.push({
+        subject: row.subject,
+        description: row.description,
+        email: row.email,
+        status: row.status,
+        priority: row.priority,
+        created_at: row.created_at,
+        messages: []
+      })
+    }
+    if (row.type === 'message') {
+        tickets[tickets.length - 1].messages.push({
+            content: row.content,
+            sender_type: row.sender_type,
+            created_at: row.created_at
+        })
+    }
+  }
+
+  return tickets
+}
+
 // Main build function
 async function buildTestData() {
-  // Parse all TSV files
-  const tickets = parseTsvFile('tickets.tsv').map((ticket: any) => ({
-    subject: ticket.subject,
-    description: ticket.description,
-    email: ticket.email,
-    status: ticket.status,
-    priority: ticket.priority,
-    workspace_id: TEST_DATA_WORKSPACE_ID
-  }))
-  const messages = parseTsvFile('messages.tsv').map((message: any) => ({
-    content: message.content,
-    sender_type: message.sender_type,
-    room_id: "placeholder-room-id",
-  }))
+  // Parse tickets with messages
+  const ticketsWithMessages = parseTicketsWithMessages(
+    parseTsvFile('tickets-with-messages.tsv')
+  )
+
+  // Parse other files
   const articles = parseTsvFile('articles.tsv').map((article: any) => ({
     ...article,
-    tags: article.tags.split(',')
+    tags: article.tags.split(',').map((t: string) => t.trim())
   }))
   const documents = parseTsvFile('documents.tsv').map((document: any) => ({
     ...document,
-    tags: document.tags.split(','),
+    tags: document.tags.split(',').map((t: string) => t.trim()),
     workspace_id: TEST_DATA_WORKSPACE_ID
   }))
 
@@ -47,8 +68,7 @@ async function buildTestData() {
 // Edit source files in data/source/ instead
 
 export const testData = {
-  tickets: ${JSON.stringify(tickets, null, 2)},
-  messages: ${JSON.stringify(messages, null, 2)},
+  tickets: ${JSON.stringify(ticketsWithMessages, null, 2)},
   articles: ${JSON.stringify(articles, null, 2)},
   documents: ${JSON.stringify(documents, null, 2)}
 } as const

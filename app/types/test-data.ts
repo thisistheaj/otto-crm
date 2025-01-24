@@ -6,25 +6,23 @@ type DBMessage = Database["public"]["Tables"]["messages"]["Insert"];
 type DBArticle = Database["public"]["Tables"]["articles"]["Insert"];
 type DBDocument = Database["public"]["Tables"]["documents"]["Insert"];
 
-// Ticket with required fields for test data
+// Message with required fields for test data
+export type TestMessage = Required<Pick<DBMessage,
+  | "content"
+  | "sender_type"
+>> & {
+  created_at?: string;
+};
+
+// Ticket with required fields for test data and messages array
 export type TestTicket = Required<Pick<DBTicket, 
   | "subject" 
   | "description" 
   | "email" 
   | "status" 
   | "priority"
-  | "workspace_id"
 >> & {
-  created_at?: string;
-};
-
-// Message with required fields for test data
-export type TestMessage = Required<Pick<DBMessage,
-  | "content"
-  | "sender_type"
-  | "room_id"
->> & {
-  created_at?: string;
+  messages: TestMessage[];
 };
 
 // Article with required fields for test data
@@ -35,7 +33,7 @@ export type TestArticle = Required<Pick<DBArticle,
 >> & {
   status: "published";
   author_id: string;
-  tags: never[];
+  tags: string[];
   created_at?: string;
   updated_at?: string;
 };
@@ -57,7 +55,6 @@ export type TestDocument = Required<Pick<DBDocument,
 // The full test data structure
 export type TestData = {
   tickets: TestTicket[];
-  messages: TestMessage[];
   articles: TestArticle[];
   documents: TestDocument[];
 };
