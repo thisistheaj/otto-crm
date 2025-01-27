@@ -133,10 +133,10 @@ High level todos:
     * we should try langchain for this project and see if it is unecassary in the future
 
 * Setup (Monday / Tuesday ?)
-- [ ] connect to a  vector db
-- [ ] get data into vector db
+- [x] connect to a  vector db
+- [x] get data into vector db
 - [ ] generate relvant test data to the tasks 
-- [ ] connect langhain
+- [x] connect langhain
 - [ ] connect langsmith
 
 * Implement (Tuesday / Wednesday ?)

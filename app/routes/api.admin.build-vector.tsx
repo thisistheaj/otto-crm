@@ -2,6 +2,10 @@ import { json } from "@remix-run/node";
 import type { ActionFunctionArgs } from "@remix-run/node";
 import { supabaseAdmin } from "~/utils/supabase.server";
 import { OpenAI } from "openai";
+import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
+import { writeFileSync, unlinkSync } from "fs";
+import { join } from "path";
+import { tmpdir } from "os";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
@@ -25,9 +29,43 @@ const getArticleContent = (article: any) => {
   return `${article.title}\n\n${article.content}`;
 };
 
-// Get text content from a document
-const getDocumentContent = (document: any) => {
-  return `${document.title}\n\n${document.file_name}`;
+// Get text content from a document by downloading and parsing the PDF
+const getDocumentContent = async (document: any) => {
+  try {
+    // Download the PDF from Supabase storage
+    const { data: fileData, error: downloadError } = await supabaseAdmin
+      .storage
+      .from('kb-documents')
+      .download(document.file_path);
+
+    if (downloadError) throw downloadError;
+    if (!fileData) throw new Error('No file data received');
+
+    // Create a temporary file
+    const tempPath = join(tmpdir(), `${document.id}.pdf`);
+    const arrayBuffer = await fileData.arrayBuffer();
+    writeFileSync(tempPath, Buffer.from(arrayBuffer));
+    
+    try {
+      // Create a PDFLoader instance
+      const loader = new PDFLoader(tempPath);
+      
+      // Load and parse the PDF
+      const docs = await loader.load();
+      
+      // Combine all pages into one text
+      const fullText = docs.map(doc => doc.pageContent).join('\n\n');
+      
+      return `${document.title}\n\n${fullText}`;
+    } finally {
+      // Clean up temporary file
+      unlinkSync(tempPath);
+    }
+  } catch (error) {
+    console.error(`Error processing PDF ${document.title}:`, error);
+    // Return a minimal content if we can't process the PDF
+    return `${document.title}\n\nUnable to process PDF content`;
+  }
 };
 
 // Create embedding for text using OpenAI
@@ -89,7 +127,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
     // Process documents
     for (const document of documents) {
-      const content = getDocumentContent(document);
+      const content = await getDocumentContent(document);
       const embedding = await createEmbedding(content);
       
       const { error: insertError } = await supabaseAdmin
