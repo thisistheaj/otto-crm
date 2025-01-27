@@ -137,7 +137,7 @@ High level todos:
 - [x] get data into vector db
 - [ ] generate relvant test data to the tasks 
 - [x] connect langhain
-- [ ] connect langsmith
+- [x] connect langsmith
 
 * Implement (Tuesday / Wednesday ?)
 - [ ] implement: kb

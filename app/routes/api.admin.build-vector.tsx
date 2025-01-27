@@ -1,17 +1,19 @@
 import { json } from "@remix-run/node";
 import type { ActionFunctionArgs } from "@remix-run/node";
-import { supabaseAdmin } from "~/utils/supabase.server";
-import { OpenAI } from "openai";
-import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { writeFileSync, unlinkSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
+import { OpenAI } from "openai";
+import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
+import { traceable } from "langsmith/traceable";
+import { supabaseAdmin } from "~/utils/supabase.server";
 
+// Initialize OpenAI client
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-// Validate the request has the admin API key
+// Utility functions
 const validateAdminRequest = (request: Request) => {
   const authHeader = request.headers.get("authorization");
   if (!authHeader) {
@@ -24,79 +26,67 @@ const validateAdminRequest = (request: Request) => {
   }
 };
 
-// Get text content from an article
 const getArticleContent = (article: any) => {
   return `${article.title}\n\n${article.content}`;
 };
 
-// Get text content from a document by downloading and parsing the PDF
-const getDocumentContent = async (document: any) => {
-  try {
-    // Download the PDF from Supabase storage
-    const { data: fileData, error: downloadError } = await supabaseAdmin
-      .storage
-      .from('kb-documents')
-      .download(document.file_path);
-
-    if (downloadError) throw downloadError;
-    if (!fileData) throw new Error('No file data received');
-
-    // Create a temporary file
-    const tempPath = join(tmpdir(), `${document.id}.pdf`);
-    const arrayBuffer = await fileData.arrayBuffer();
-    writeFileSync(tempPath, Buffer.from(arrayBuffer));
-    
+// Traced functions for LangSmith observability
+const getDocumentContent = traceable(
+  async (document: any) => {
     try {
-      // Create a PDFLoader instance
-      const loader = new PDFLoader(tempPath);
+      // Download the PDF from Supabase storage
+      const { data: fileData, error: downloadError } = await supabaseAdmin
+        .storage
+        .from('kb-documents')
+        .download(document.file_path);
+
+      if (downloadError) throw downloadError;
+      if (!fileData) throw new Error('No file data received');
+
+      // Create a temporary file
+      const tempPath = join(tmpdir(), `${document.id}.pdf`);
+      const arrayBuffer = await fileData.arrayBuffer();
+      writeFileSync(tempPath, Buffer.from(arrayBuffer));
       
-      // Load and parse the PDF
-      const docs = await loader.load();
-      
-      // Combine all pages into one text
-      const fullText = docs.map(doc => doc.pageContent).join('\n\n');
-      
-      return `${document.title}\n\n${fullText}`;
-    } finally {
-      // Clean up temporary file
-      unlinkSync(tempPath);
+      try {
+        const loader = new PDFLoader(tempPath);
+        const docs = await loader.load();
+        const fullText = docs.map(doc => doc.pageContent).join('\n\n');
+        return `${document.title}\n\n${fullText}`;
+      } finally {
+        unlinkSync(tempPath);
+      }
+    } catch (error) {
+      console.error(`Error processing PDF ${document.title}:`, error);
+      return `${document.title}\n\nUnable to process PDF content`;
     }
-  } catch (error) {
-    console.error(`Error processing PDF ${document.title}:`, error);
-    // Return a minimal content if we can't process the PDF
-    return `${document.title}\n\nUnable to process PDF content`;
-  }
-};
+  },
+  { name: "PDF Processing", run_type: "tool" }
+);
 
-// Create embedding for text using OpenAI
-const createEmbedding = async (text: string) => {
-  const response = await openai.embeddings.create({
-    model: "text-embedding-ada-002",
-    input: text,
-  });
-  return response.data[0].embedding;
-};
+const createEmbedding = traceable(
+  async (text: string) => {
+    const response = await openai.embeddings.create({
+      model: "text-embedding-ada-002",
+      input: text,
+    });
+    return response.data[0].embedding;
+  },
+  { name: "Create Embedding", run_type: "tool" }
+);
 
-export const action = async ({ request }: ActionFunctionArgs) => {
-  // Validate admin request
-  validateAdminRequest(request);
+const buildVectorDatabase = traceable(
+  async (request: Request) => {
+    validateAdminRequest(request);
 
-  try {
-    // Get all published articles
-    const { data: articles, error: articlesError } = await supabaseAdmin
-      .from("articles")
-      .select("*")
-      .eq("status", "published");
+    // Get all published content
+    const [articles, documents] = await Promise.all([
+      supabaseAdmin.from("articles").select("*").eq("status", "published"),
+      supabaseAdmin.from("documents").select("*").eq("status", "published")
+    ]);
 
-    if (articlesError) throw articlesError;
-
-    // Get all published documents
-    const { data: documents, error: documentsError } = await supabaseAdmin
-      .from("documents")
-      .select("*")
-      .eq("status", "published");
-
-    if (documentsError) throw documentsError;
+    if (articles.error) throw articles.error;
+    if (documents.error) throw documents.error;
 
     // Clear existing embeddings
     const { error: deleteError } = await supabaseAdmin
@@ -107,7 +97,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     if (deleteError) throw deleteError;
 
     // Process articles
-    for (const article of articles) {
+    for (const article of articles.data) {
       const content = getArticleContent(article);
       const embedding = await createEmbedding(content);
       
@@ -126,7 +116,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     }
 
     // Process documents
-    for (const document of documents) {
+    for (const document of documents.data) {
       const content = await getDocumentContent(document);
       const embedding = await createEmbedding(content);
       
@@ -144,16 +134,48 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       if (insertError) throw insertError;
     }
 
-    return json({ 
+    return { 
       success: true,
       counts: {
-        articles: articles.length,
-        documents: documents.length
+        articles: articles.data.length,
+        documents: documents.data.length
       }
-    });
+    };
+  },
+  { name: "Build Vector Database", run_type: "chain" }
+);
 
+// Route handler
+export const action = async ({ request }: ActionFunctionArgs) => {
+  console.log('LangSmith Environment:', {
+    LANGSMITH_API_KEY: process.env.LANGSMITH_API_KEY?.slice(0, 4) + '...' || '[MISSING]',
+    LANGSMITH_ENDPOINT: process.env.LANGSMITH_ENDPOINT || 'https://api.smith.langchain.com',
+    LANGSMITH_PROJECT: process.env.LANGSMITH_PROJECT || 'otto-crm',
+    NODE_ENV: process.env.NODE_ENV
+  });
+
+  try {
+    const result = await buildVectorDatabase(request);
+    return json(result);
   } catch (error: unknown) {
     console.error("Error building vector database:", error);
+    
+    if (error instanceof Error) {
+      console.error('Detailed error information:', {
+        name: error.name,
+        message: error.message,
+        status: (error as any).status,
+        response: (error as any).response?.data || (error as any).response,
+        stack: error.stack,
+        cause: error.cause,
+        config: {
+          apiKey: process.env.LANGSMITH_API_KEY ? '[PRESENT]' : '[MISSING]',
+          endpoint: process.env.LANGSMITH_ENDPOINT,
+          projectName: process.env.LANGSMITH_PROJECT
+        }
+      });
+    }
+
     return json({ 
       success: false, 
       error: error instanceof Error ? error.message : "Unknown error" 
