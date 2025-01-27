@@ -121,6 +121,34 @@ As an admin or agent I can view performance metrics in the metrics page
 
 ### Response Assistance
 
+High level todos:
+
+* Design
+- [x] examine agentic features
+    * RAG => should be able to get info from relevant docs with citations
+    * tool use => should be able to use our API to update ticket status & priority 
+- [x] choose a vector db (supabase / chroma)
+    * supabase is easier to setup
+- [x] decide on langchain or not?
+    * we should try langchain for this project and see if it is unecassary in the future
+
+* Setup (Monday / Tuesday ?)
+- [ ] connect to a  vector db
+- [ ] get data into vector db
+- [ ] generate relvant test data to the tasks 
+- [ ] connect langhain
+- [ ] connect langsmith
+
+* Implement (Tuesday / Wednesday ?)
+- [ ] implement: kb
+- [ ] implement: chat suggestions
+- [ ] implement: auto-responder
+
+* Measure (Thursday / Friday ?)
+- [ ] determine metrics
+- [ ] test in langsmith
+- [ ] record video with narrative 
+
 As an agent, I can receive AI-suggested responses
 - [ ] Context-aware suggestions
 - [ ] Edit before sending
