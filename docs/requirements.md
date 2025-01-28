@@ -100,19 +100,14 @@ as a superuser (*not* the admin user, but a secure service account), I can do ad
 - [x] delete all data
 - [x] delete all files/buckets
 - [x] seed test data
-- [ ] run a vector database indexing job
+- [x] run a vector database indexing job
 - [ ] query the vector database
 
 ### Analytics
 
 As an admin or agent I can view performance metrics in the dashboard
-- [ ] number of open tickets
+- [x] number of open tickets
 - [ ] see the number of tickets assigned to me
-- [ ] Ticket resolution times
-
-... TBD
-
-As an admin or agent I can view performance metrics in the metrics page
 - [ ] Ticket resolution times
 
 ... TBD
@@ -135,14 +130,14 @@ High level todos:
 * Setup (Monday / Tuesday ?)
 - [x] connect to a  vector db
 - [x] get data into vector db
-- [ ] generate relvant test data to the tasks 
 - [x] connect langhain
 - [x] connect langsmith
 
 * Implement (Tuesday / Wednesday ?)
-- [ ] implement: kb
 - [ ] implement: chat suggestions
-- [ ] implement: auto-responder
+- [ ] generate relvant test data to the tasks 
+- [ ] implement: kb => chat redirect
+- [ ] implement: auto-responder?
 
 * Measure (Thursday / Friday ?)
 - [ ] determine metrics
@@ -178,7 +173,7 @@ AI Agent responses
 - [x] show everyone in "team"
 - [x] hide workspace name and invite from agents
 
-- [ ] generate rich text for articles
+- [ ] generate rich text for articles (in mock data)
 
 - [ ] separate UX for new => open
 - [ ] take "times" from mock data
