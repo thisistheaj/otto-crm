@@ -1,75 +1,58 @@
 # RAG Query API Implementation Plan
 
 ## Tech Stack
-- Supabase with pgvector for embedding storage and similarity search
-- LangChain for RAG pipeline orchestration
-- LangSmith for observability and debugging
-- OpenAI for embeddings (text-embedding-ada-002) and chat completion (gpt-4)
+- [x] Supabase with pgvector for embedding storage and similarity search
+- [x] LangChain for RAG pipeline orchestration
+- [x] LangSmith for observability and debugging
+- [x] OpenAI for embeddings (text-embedding-ada-002) and chat completion (gpt-4)
 
 ## 1. Setup and Infrastructure
-- [ ] Create new API route `api.admin.ask.tsx`
-- [ ] Set up TypeScript interfaces for request/response types
-- [ ] Add necessary LangChain imports and chain components
-- [ ] Configure LangSmith tracing for the new route
+- [x] Create new API route `api.admin.ask.tsx`
+- [x] Set up TypeScript interfaces for request/response types
+- [x] Add necessary LangChain imports and chain components
+- [x] Configure LangSmith tracing for the new route
 
 ## 2. Query Rewriting Chain
-- [ ] Create a LangChain chain for query rewriting
-  - [ ] Design system prompt for query rewriting
-  - [ ] Implement message history truncation (last 5 messages)
-  - [ ] Create prompt template for query synthesis
-  - [ ] Add output parser for structured query
-- [ ] Add tracing and metrics for query rewriting
-  - [ ] Track token usage
-  - [ ] Track latency
-  - [ ] Log original vs rewritten queries
+- [x] Create a LangChain chain for query rewriting
+  - [x] Design system prompt for query rewriting
+  - [x] Implement message history truncation
+  - [x] Create prompt template for query synthesis
+  - [x] Add output parser for structured query
+- [x] Add tracing and metrics for query rewriting
+  - [x] Track token usage (via LangSmith)
+  - [x] Track latency (via LangSmith)
+  - [x] Log original vs rewritten queries
 
 ## 3. Vector Search Implementation
-- [ ] Create Supabase vector search utility
-  - [ ] Implement similarity search function
-  - [ ] Add configurable top-k parameter
-  - [ ] Add metadata filtering (by workspace)
-- [ ] Format search results
-  - [ ] Extract relevant snippets
-  - [ ] Include source metadata
-  - [ ] Structure citations
+- [x] Create Supabase vector search utility
+  - [x] Implement similarity search function
+  - [x] Add configurable top-k parameter
+  - [x] Add metadata filtering (by workspace)
+- [x] Format search results
+  - [x] Extract relevant snippets
+  - [x] Include source metadata
+  - [x] Structure citations
 
 ## 4. Response Generation Chain
-- [ ] Create main RAG chain
-  - [ ] Design system prompt for e-commerce support context
-  - [ ] Create prompt template incorporating:
-    - [ ] Message history
-    - [ ] Retrieved context
-    - [ ] Rewritten query
-  - [ ] Implement structured output parser
-    - [ ] Response content
-    - [ ] Citations
-    - [ ] Confidence score
-    - [ ] Follow-up suggestions
+- [x] Create main RAG chain
+  - [x] Design system prompt for e-commerce support context
+  - [x] Create prompt template incorporating:
+    - [x] Message history
+    - [x] Retrieved context
+    - [x] Rewritten query
+  - [x] Implement structured output parser
+    - [x] Response content
+    - [x] Citations
+    - [x] Follow-up suggestions
 
 ## 5. API Integration
-- [ ] Implement request validation
-  - [ ] Admin API key check
-  - [ ] Message history format validation
-  - [ ] Input sanitization
-- [ ] Create response formatter
-  - [ ] Implement full response structure
-  - [ ] Add timing metrics
-  - [ ] Include token usage stats
-  - [ ] Format error responses
-
-## 6. Testing and Debugging
-- [ ] Create test cases
-  - [ ] Basic query tests
-  - [ ] Complex conversation scenarios
-  - [ ] Error handling cases
-- [ ] Set up LangSmith datasets
-  - [ ] Example conversations
-  - [ ] Expected outputs
-  - [ ] Edge cases
-- [ ] Add logging and monitoring
-  - [ ] Query rewriting performance
-  - [ ] Vector search metrics
-  - [ ] Response quality metrics
+- [x] Implement request validation
+  - [x] Admin API key check
+  - [x] Message history format validation
+  - [x] Input sanitization
+- [x] Create response formatter
+  - [x] Implement full response structure
+  - [x] Format error responses
 
 ## Implementation Notes
 
@@ -92,7 +75,6 @@ Rewrite the last query to be more comprehensive and specific.
 
 ### Vector Search Parameters
 - Initial top-k: 3 documents
-- Similarity threshold: 0.8
 - Context window: 1000 tokens per document
 
 ### Response Structure
@@ -101,56 +83,15 @@ interface AskResponse {
   response: {
     content: string;
     citations: Citation[];
-    confidence: number;
     suggested_followups: string[];
   };
-  query_info: QueryInfo;
   metadata: ResponseMetadata;
 }
 ```
 
-## 6. Testing and Debugging
-- [ ] Create test cases with sample conversations
-- [ ] Add LangSmith traces for:
-  - [ ] Query rewriting performance
-  - [ ] Vector search accuracy
-  - [ ] Response quality
-  - [ ] Token usage optimization
-
-## 7. Prompt Engineering
-### Query Rewriter Prompt
-- [ ] Design prompt that:
-  - [ ] Extracts key topics from conversation
-  - [ ] Handles pronoun resolution
-  - [ ] Maintains e-commerce context
-  - [ ] Optimizes for vector search
-
-### Response Generator Prompt
-- [ ] Design prompt that:
-  - [ ] Uses retrieved context effectively
-  - [ ] Maintains conversation flow
-  - [ ] Formats citations consistently
-  - [ ] Generates helpful follow-ups
-
-## 8. Configuration
-- [ ] Add environment variables:
-  - [ ] OPENAI_API_KEY (existing)
-  - [ ] VECTOR_SEARCH_TOP_K
-  - [ ] MAX_HISTORY_MESSAGES
-  - [ ] CONFIDENCE_THRESHOLD
-
-## Implementation Order
-1. Set up basic route and type definitions
-2. Implement query rewriting chain
-3. Add vector search functionality
-4. Create response generation chain
-5. Add LangSmith tracing
-6. Test and optimize prompts
-7. Add configuration options
-
-## Notes
-- Start with higher temperatures for testing query rewriting
-- Use LangSmith to compare different prompt versions
-- Consider caching frequent queries
-- Monitor token usage and adjust as needed
-- Test with various conversation scenarios
+## Configuration
+- [x] Add environment variables:
+  - [x] OPENAI_API_KEY (existing)
+  - [x] ADMIN_API_KEY
+  - [x] LANGSMITH_API_KEY
+  - [x] LANGSMITH_PROJECT
