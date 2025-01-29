@@ -9,7 +9,7 @@ import { MessageList } from "~/components/chat/message-list";
 import { MessageInput } from "~/components/chat/message-input";
 import { SuggestionDialog } from "~/components/chat/suggestion-dialog";
 import type { Message } from "~/types/chat";
-import type { RagResponse } from "~/types/rag";
+import type { RagResponse, Citation } from "~/types/rag";
 import { useRealtimeMessages } from "~/hooks/use-realtime-messages";
 import { useState, useRef, useEffect } from "react";
 import { getRagSuggestion } from "~/utils/rag.server";
@@ -99,12 +99,23 @@ export async function action({ request, params }: { request: Request; params: { 
     // First get the ticket to get the chat_room_id and description
     const { data: ticket } = await supabase
       .from('tickets')
-      .select('chat_room_id, description, created_at')
+      .select('chat_room_id, description, created_at, workspace_id')
       .eq('id', params.ticketId)
       .single();
 
     if (!ticket?.chat_room_id) {
       throw new Response("Ticket not found", { status: 404 });
+    }
+
+    // Get workspace info
+    const { data: workspace } = await supabase
+      .from('workspaces')
+      .select('id, slug')
+      .eq('id', ticket.workspace_id)
+      .single();
+
+    if (!workspace) {
+      throw new Response("Workspace not found", { status: 404 });
     }
 
     // Get messages using chat_room_id
@@ -135,7 +146,10 @@ export async function action({ request, params }: { request: Request; params: { 
     console.log(formattedMessages);
 
     // Get suggestion using RAG
-    const suggestion = await getRagSuggestion(formattedMessages);
+    const suggestion = await getRagSuggestion(formattedMessages, {
+      workspaceId: workspace.id,
+      workspaceSlug: workspace.slug
+    });
     return json(suggestion);
   }
 
@@ -176,7 +190,7 @@ export default function AgentTicketChat() {
 
   // Add state for suggestion handling
   const [suggestion, setSuggestion] = useState<string | null>(null);
-  const [citations, setCitations] = useState<any[]>([]);
+  const [citations, setCitations] = useState<Citation[]>([]);
   const [lastFetchTime, setLastFetchTime] = useState<number | null>(null);
 
   // Function to get suggestion
@@ -200,7 +214,7 @@ export default function AgentTicketChat() {
   }, [fetcher.data, fetcher.state, lastFetchTime]);
 
   // Function to use suggestion
-  function useSuggestion(text: string) {
+  function useSuggestion(text: string, selectedCitations: Citation[]) {
     if (inputRef.current) {
       inputRef.current.value = text;
       inputRef.current.focus();
@@ -267,8 +281,8 @@ export default function AgentTicketChat() {
             citations={citations}
             isOpen={!!suggestion}
             onClose={closeSuggestion}
-            onUse={(text) => {
-              useSuggestion(text);
+            onUse={(text, selectedCitations) => {
+              useSuggestion(text, selectedCitations);
               closeSuggestion();
             }}
           />

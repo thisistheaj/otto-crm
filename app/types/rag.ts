@@ -9,6 +9,8 @@ export interface Citation {
   content_type: string;
   content_id: string;
   excerpt: string;
+  url: string;
+  title: string;
 }
 
 export interface RagResponse {

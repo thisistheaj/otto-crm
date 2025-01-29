@@ -9,22 +9,43 @@ import {
 } from "~/components/ui/dialog";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Badge } from "~/components/ui/badge";
-
-interface Citation {
-  content_type: string;
-  content_id: string;
-  excerpt: string;
-}
+import { Checkbox } from "~/components/ui/checkbox";
+import { useState, useEffect } from "react";
+import type { Citation } from "~/types/rag";
 
 interface SuggestionDialogProps {
   suggestion: string;
   citations: Citation[];
   isOpen: boolean;
   onClose: () => void;
-  onUse: (text: string) => void;
+  onUse: (text: string, selectedCitations: Citation[]) => void;
 }
 
 export function SuggestionDialog({ suggestion, citations, isOpen, onClose, onUse }: SuggestionDialogProps) {
+  const [selectedCitations, setSelectedCitations] = useState<Set<string>>(new Set());
+
+  // Reset selections when dialog opens with new suggestion
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedCitations(new Set());
+    }
+  }, [isOpen]);
+
+  const handleUse = () => {
+    const selected = citations.filter(citation => 
+      selectedCitations.has(`${citation.content_type}:${citation.content_id}`)
+    );
+
+    let finalText = suggestion;
+    if (selected.length > 0) {
+      finalText += "\n\nHelpful Resources:\n" + selected.map(citation => 
+        `- ${citation.title}: ${citation.url}`
+      ).join("\n");
+    }
+
+    onUse(finalText, selected);
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl">
@@ -45,16 +66,44 @@ export function SuggestionDialog({ suggestion, citations, isOpen, onClose, onUse
           <div className="space-y-2">
             <h4 className="text-sm font-medium">Sources</h4>
             <div className="space-y-2">
-              {citations.map((citation, index) => (
-                <div key={index} className="rounded-lg border p-3 text-sm">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Badge variant="outline">
-                      {citation.content_type}:{citation.content_id}
-                    </Badge>
+              {citations.map((citation) => {
+                const id = `${citation.content_type}:${citation.content_id}`;
+                return (
+                  <div key={id} className="rounded-lg border p-3 text-sm">
+                    <div className="flex items-start gap-2">
+                      <Checkbox
+                        id={id}
+                        checked={selectedCitations.has(id)}
+                        onCheckedChange={(checked) => {
+                          const newSelected = new Set(selectedCitations);
+                          if (checked) {
+                            newSelected.add(id);
+                          } else {
+                            newSelected.delete(id);
+                          }
+                          setSelectedCitations(newSelected);
+                        }}
+                      />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Badge variant="outline">
+                            {citation.content_type}:{citation.content_id}
+                          </Badge>
+                        </div>
+                        <a 
+                          href={citation.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-primary hover:underline font-medium"
+                        >
+                          {citation.title}
+                        </a>
+                        <p className="text-muted-foreground mt-1">{citation.excerpt}</p>
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-muted-foreground">{citation.excerpt}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
@@ -63,7 +112,7 @@ export function SuggestionDialog({ suggestion, citations, isOpen, onClose, onUse
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={() => onUse(suggestion)}>
+          <Button onClick={handleUse}>
             Use Suggestion
           </Button>
         </DialogFooter>

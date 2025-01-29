@@ -138,11 +138,26 @@ export const processQuery = async (
     chat_history: history
   });
 
-  const citations: Citation[] = (response.sourceDocuments || []).map((doc: Document) => ({
-    content_type: doc.metadata.content_type,
-    content_id: doc.metadata.content_id,
-    excerpt: doc.pageContent.slice(0, 150) + "..."
-  }));
+  const citations: Citation[] = (response.sourceDocuments || []).map((doc: Document) => {
+    const isArticle = doc.metadata.content_type === "article";
+    const workspaceId = doc.metadata.workspace_id;
+
+    // Build URL based on content type
+    const url = isArticle
+      ? `/support/${workspaceId}/kb/articles/${doc.metadata.content_id}`
+      : `${process.env.SUPABASE_URL}/storage/v1/object/public/kb-documents/${workspaceId}/${doc.metadata.content_id}`;
+
+    return {
+      content_type: doc.metadata.content_type,
+      content_id: doc.metadata.content_id,
+      excerpt: doc.pageContent.slice(0, 150) + "...",
+      url,
+      title: doc.metadata.title || (isArticle 
+        ? `Article ${doc.metadata.content_id}`
+        : doc.metadata.content_id.split('/').pop()?.replace('.pdf', '') || doc.metadata.content_id
+      )
+    };
+  });
 
   return {
     content: response.answer,
@@ -150,7 +165,10 @@ export const processQuery = async (
   };
 };
 
-export async function getRagSuggestion(messages: { role: string; content: string }[]): Promise<RagResponse> {
+export async function getRagSuggestion(
+  messages: { role: string; content: string }[],
+  workspace: { workspaceId: string; workspaceSlug: string }
+): Promise<RagResponse> {
   // Initialize models
   const embeddings = new OpenAIEmbeddings();
   const chatModel = new ChatOpenAI({
@@ -225,12 +243,26 @@ export async function getRagSuggestion(messages: { role: string; content: string
     chat_history: chatHistory,
   });
 
-  // Format citations
-  const citations = docs.map((doc: Document) => ({
-    content_type: doc.metadata.content_type,
-    content_id: doc.metadata.content_id,
-    excerpt: doc.pageContent.slice(0, 150) + "...",
-  }));
+  // Format citations with URLs and titles
+  const citations = docs.map((doc: Document) => {
+    const isArticle = doc.metadata.content_type === "article";
+
+    // Build URL based on content type - both now use workspace slug
+    const url = isArticle
+      ? `/support/${workspace.workspaceSlug}/kb/articles/${doc.metadata.content_id}`
+      : `/support/${workspace.workspaceSlug}/kb/documents/${doc.metadata.content_id}`;
+
+    return {
+      content_type: doc.metadata.content_type,
+      content_id: doc.metadata.content_id,
+      excerpt: doc.pageContent.slice(0, 150) + "...",
+      url,
+      title: doc.metadata.title || (isArticle 
+        ? `Article ${doc.metadata.content_id}`
+        : doc.metadata.content_id.split('/').pop()?.replace('.pdf', '') || doc.metadata.content_id
+      )
+    };
+  });
 
   return {
     content,
