@@ -1,35 +1,26 @@
-import { Form, useSubmit } from "@remix-run/react";
-import { Input } from "~/components/ui/input";
+import { forwardRef } from "react";
+import { Form } from "@remix-run/react";
 import { Button } from "~/components/ui/button";
-import { Send } from "lucide-react";
-import { useRef } from "react";
+import { Textarea } from "~/components/ui/textarea";
 
-export function MessageInput() {
-  const submit = useSubmit();
-  const formRef = useRef<HTMLFormElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+interface MessageInputProps {
+  className?: string;
+}
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    submit(event.currentTarget, { method: "post" });
-    formRef.current?.reset();
-    inputRef.current?.focus();
-  };
-
-  return (
-    <div className="border-t p-4">
-      <Form ref={formRef} onSubmit={handleSubmit} method="post" className="flex gap-2">
-        <Input
-          ref={inputRef}
-          name="message"
-          placeholder="Type your message..."
-          className="flex-1"
-          required
-        />
-        <Button type="submit" size="icon">
-          <Send className="h-4 w-4" />
-        </Button>
+export const MessageInput = forwardRef<HTMLTextAreaElement, MessageInputProps>(
+  function MessageInput({ className }, ref) {
+    return (
+      <Form method="post" className={className}>
+        <div className="flex items-end gap-2 p-4 border-t">
+          <Textarea
+            ref={ref}
+            name="message"
+            placeholder="Type your message..."
+            className="min-h-[80px]"
+          />
+          <Button type="submit">Send</Button>
+        </div>
       </Form>
-    </div>
-  );
-} 
+    );
+  }
+); 

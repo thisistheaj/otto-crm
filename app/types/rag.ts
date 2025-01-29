@@ -1,27 +1,24 @@
 import { HumanMessage, AIMessage } from "@langchain/core/messages";
 
 export interface Message {
-  role: "user" | "assistant";
+  role: "user" | "assistant" | "system";
   content: string;
 }
 
 export interface Citation {
-  title: string;
-  content_type: "article" | "document";
+  content_type: string;
   content_id: string;
   excerpt: string;
 }
 
-export interface RAGResponse {
+export interface RagResponse {
   content: string;
   citations: Citation[];
 }
 
-// Convert our message format to LangChain's format
-export const convertToLangChainHistory = (messages: Message[]) => {
-  return messages.map(msg => 
-    msg.role === "user" 
-      ? new HumanMessage(msg.content)
-      : new AIMessage(msg.content)
-  );
-}; 
+export function convertToLangChainHistory(messages: { role: string; content: string }[]): Message[] {
+  return messages.map(msg => ({
+    role: msg.role === "agent" ? "assistant" : "user",
+    content: msg.content
+  })) as Message[];
+} 

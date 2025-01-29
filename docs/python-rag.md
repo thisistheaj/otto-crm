@@ -152,7 +152,7 @@ import os
 app = Flask(__name__)
 rag_chain = RAGChain(create_client(
     os.getenv("SUPABASE_URL"),
-    os.getenv("SUPABASE_SERVICE_KEY")
+    os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 ))
 
 def require_api_key(f):
