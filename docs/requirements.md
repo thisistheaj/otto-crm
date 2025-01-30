@@ -5,7 +5,6 @@
 ### Authentication & Workspace Management
 As a user, I can sign up and create an account
 - [x] Email verification required
-- [ ] Password strength requirements enforced
 - [x] Profile information collected (full name and avatar required)
 
 As a user, I can manage my workspace access
@@ -19,24 +18,21 @@ As a user, I can manage my workspace access
 ### Ticket Management
 As a customer, I can create a support ticket
 - [x] Submit via web form
-- [ ] Receive confirmation email
 - [x] Get unique tracking number
 
 As an agent, I can view and manage assigned tickets
 - [x] See ticket queue
 - [x] Update ticket status
-- [ ] Add internal notes
 - [x] Communicate with customer
 
 ### Real-time Chat
 As a customer, I can engage in live chat
-- [ ] See agent availability
 - [?] Receive typing indicators
 - [x] View message history
 
 As an agent, I can handle chat sessions
 - [x] Switch between conversations
-- [ ] Use quick responses
+- [x] Use quick responses
 
 ### Knowledge Base
 
@@ -64,14 +60,6 @@ As an employee, I can edit my user settings
 - [x] edit my profile
 - [x] set my availability status
 - [x] Switch between workspaces easily
-
-### Naive Ticket Assignment
-
-As an admin, I can configure ticket routing
-- [ ] tikets can be assigned to agents
-- [ ] agents can assign themselves to tickets
-- [ ] admins can manually reassign tickets to agents
-- [ ] tickets are automatically assigned to the first available agent
 
 ## API 
 
@@ -101,16 +89,12 @@ as a superuser (*not* the admin user, but a secure service account), I can do ad
 - [x] delete all files/buckets
 - [x] seed test data
 - [x] run a vector database indexing job
-- [ ] query the vector database
+- [x] query the vector database
 
 ### Analytics
 
 As an admin or agent I can view performance metrics in the dashboard
 - [x] number of open tickets
-- [ ] see the number of tickets assigned to me
-- [ ] Ticket resolution times
-
-... TBD
 
 ## AI Features
 
@@ -127,36 +111,38 @@ High level todos:
 - [x] decide on langchain or not?
     * we should try langchain for this project and see if it is unecassary in the future
 
-* Setup (Monday / Tuesday ?)
+* AI Setup (Monday / Tuesday ?)
 - [x] connect to a  vector db
 - [x] get data into vector db
 - [x] connect langhain
 - [x] connect langsmith
 
-* Implement (Tuesday / Wednesday ?)
-- [x] implement: chat suggestions
-- [ ] generate relvant test data to the tasks 
-- [ ] implement: kb => chat redirect
-- [ ] implement: auto-responder?
+* UI enhancements: 
+- [x] new chats move to open when responding
+- [x] pending chats allow user to resolve
+- [ ] better chat messsages (richtext or separate links?)
+- [ ] sort by priority by default
+- [ ] can create ticket from textbox in KB
 
-* Measure (Thursday / Friday ?)
+* Implement AI Features
+- [x] implement: chat suggestions
+- [ ] agentic decision making / tool use
+    - [ ] agent can set ticket to pending 
+    - [ ] agent decides between: (ask a question | update ticket status)
+
+* Test &Measure
+- [ ] generate relvant test data to the tasks 
 - [ ] determine metrics
 - [ ] test in langsmith
 - [ ] record video with narrative 
 
 As an agent, I can receive AI-suggested responses
-- [ ] Context-aware suggestions
-- [ ] Edit before sending
-
-AI Agent responses
-- [ ] users have the option to ask an AI while they wait in the queue
+- [x] Context-aware suggestions
+- [x] Edit before sending
 
 ### Smart Knowledge Base
-- [ ] the knowledge base gets indexed in a vector database
-- [ ] customers can ask questions about the knowledge base
-- [ ] agents can generate articles based on the knowledge base
-- [ ] AI suggests articles to generate based on customer questions?
-
+- [x] the knowledge base gets indexed in a vector database
+- [x] customers can ask questions about the knowledge base
 
 ### Enhancements
 
@@ -173,16 +159,4 @@ AI Agent responses
 - [x] show everyone in "team"
 - [x] hide workspace name and invite from agents
 
-- [ ] generate rich text for articles (in mock data)
 
-- [ ] separate UX for new => open
-- [ ] take "times" from mock data
-
-## Future work:
-
-- [ ] assignment
-- [ ] logging (& resolution metrics)
-- [ ] pagination in tickets page
-- [ ] pagination in articles view
-- [ ] pagination in documents view
-- [ ] regenerate invite code as admin

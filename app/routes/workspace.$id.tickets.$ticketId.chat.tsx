@@ -13,6 +13,8 @@ import type { RagResponse, Citation } from "~/types/rag";
 import { useRealtimeMessages } from "~/hooks/use-realtime-messages";
 import { useState, useRef, useEffect } from "react";
 import { getRagSuggestion } from "~/utils/rag.server";
+import { updateTicketStatus } from "~/models/ticket.server";
+import { AlertCircle } from "lucide-react";
 
 export async function loader({ request, params }: { request: Request; params: { id: string; ticketId: string } }) {
   const response = new Response();
@@ -61,6 +63,13 @@ export async function loader({ request, params }: { request: Request; params: { 
     console.error('Messages error:', messagesError);
   }
 
+  // Get agent profile
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('full_name')
+    .eq('id', user.id)
+    .single();
+
   // Add system message for initial request
   const allMessages: Message[] = [
     {
@@ -76,7 +85,8 @@ export async function loader({ request, params }: { request: Request; params: { 
   return json({ 
     workspace, 
     ticket, 
-    messages: allMessages 
+    messages: allMessages,
+    profile
   }, { 
     headers: response.headers 
   });
@@ -94,6 +104,40 @@ export async function action({ request, params }: { request: Request; params: { 
 
   const formData = await request.formData();
   const intent = formData.get("intent");
+
+  if (intent === "open_ticket") {
+    // First get the ticket to get the chat_room_id
+    const { data: ticket } = await supabase
+      .from('tickets')
+      .select('chat_room_id, workspace_id')
+      .eq('id', params.ticketId)
+      .single();
+
+    if (!ticket?.chat_room_id) {
+      throw new Response("Ticket not found", { status: 404 });
+    }
+
+    // Get agent's full name
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('full_name')
+      .eq('id', user.id)
+      .single();
+
+    // Update ticket status to open
+    await updateTicketStatus(supabase, params.ticketId, "open");
+
+    // Send greeting message
+    await supabase
+      .from('messages')
+      .insert({
+        room_id: ticket.chat_room_id,
+        content: `Hi 👋 I'm ${profile?.full_name} and I'm here to help!`,
+        sender_type: 'agent'
+      });
+
+    return json({ success: true });
+  }
 
   if (intent === "get-suggestion") {
     // First get the ticket to get the chat_room_id and description
@@ -125,9 +169,6 @@ export async function action({ request, params }: { request: Request; params: { 
       .eq('room_id', ticket.chat_room_id)
       .order('created_at', { ascending: true });
 
-    console.log('messages from room:', ticket.chat_room_id);
-    console.log(messages);
-
     // Format messages for RAG, including initial ticket description as system message
     const formattedMessages = [
       // Add initial ticket description as system message
@@ -141,9 +182,6 @@ export async function action({ request, params }: { request: Request; params: { 
         content: m.content
       })) || [])
     ];
-
-    console.log('formattedMessages with system message:');
-    console.log(formattedMessages);
 
     // Get suggestion using RAG
     const suggestion = await getRagSuggestion(formattedMessages, {
@@ -183,9 +221,10 @@ export async function action({ request, params }: { request: Request; params: { 
 }
 
 export default function AgentTicketChat() {
-  const { ticket, messages: initialMessages } = useLoaderData<typeof loader>();
+  const { ticket, messages: initialMessages, profile } = useLoaderData<typeof loader>();
   const messages = useRealtimeMessages(ticket.chat_room_id, initialMessages);
   const fetcher = useFetcher<RagResponse>();
+  const submit = useSubmit();
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   // Add state for suggestion handling
@@ -228,6 +267,13 @@ export default function AgentTicketChat() {
     setLastFetchTime(null);
   }
 
+  // Function to open ticket
+  function openTicket() {
+    const formData = new FormData();
+    formData.append("intent", "open_ticket");
+    submit(formData, { method: "post" });
+  }
+
   return (
     <div className="p-8">
       <Card>
@@ -261,19 +307,50 @@ export default function AgentTicketChat() {
         <CardContent className="p-0">
           <MessageList messages={messages} currentSenderType="agent" />
           
-          {/* Add suggestion button */}
-          <div className="px-4 pt-4">
-            <Button
-              variant="outline"
-              className="w-full mb-2"
-              onClick={getSuggestion}
-              disabled={isLoading}
-            >
-              {isLoading ? "Getting suggestion..." : "Get Suggestion"}
-            </Button>
-          </div>
-          
-          <MessageInput ref={inputRef} />
+          {ticket.status === "new" ? (
+            <div className="p-4">
+              <Button
+                className="w-full"
+                onClick={openTicket}
+              >
+                Open Ticket
+              </Button>
+            </div>
+          ) : ticket.status === "resolved" || ticket.status === "closed" ? (
+            <div className="p-4 space-y-4">
+              <div className="text-center text-sm text-muted-foreground">
+                This ticket is {ticket.status}
+              </div>
+              <Button
+                className="w-full"
+                variant="outline"
+                onClick={() => {
+                  const formData = new FormData();
+                  formData.append("intent", "open_ticket");
+                  submit(formData, { method: "post" });
+                }}
+              >
+                <AlertCircle className="h-4 w-4 mr-2" />
+                Reopen Ticket
+              </Button>
+            </div>
+          ) : (
+            <>
+              {/* Add suggestion button */}
+              <div className="px-4 pt-4">
+                <Button
+                  variant="outline"
+                  className="w-full mb-2"
+                  onClick={getSuggestion}
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Getting suggestion..." : "Get Suggestion"}
+                </Button>
+              </div>
+              
+              <MessageInput ref={inputRef} />
+            </>
+          )}
 
           {/* Add suggestion dialog */}
           <SuggestionDialog
