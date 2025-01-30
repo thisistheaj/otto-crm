@@ -32,7 +32,7 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
     content,
     editorProps: {
       attributes: {
-        class: 'prose prose-sm max-w-none focus:outline-none',
+        class: 'prose max-w-none text-gray-100 [&_ol]:list-decimal [&_ul]:list-disc [&_h2]:text-gray-100 [&_strong]:text-gray-100',
       },
     },
     onUpdate: ({ editor }) => {

@@ -44,9 +44,9 @@ export default function ArticleViewer() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-white rounded-lg">
+      <div className="rounded-lg">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">{article.title}</h1>
+          <h1 className="text-3xl font-bold text-gray-100 mb-4">{article.title}</h1>
           <div className="flex items-center text-sm text-gray-500">
             <span>Last updated: {new Date(article.updated_at).toLocaleDateString()}</span>
             {article.tags?.length > 0 && (
@@ -68,7 +68,7 @@ export default function ArticleViewer() {
         </div>
 
         <div 
-          className="prose max-w-none"
+          className="dark prose max-w-none text-gray-100 [&_h2]:text-gray-100 [&_strong]:text-gray-100"
           dangerouslySetInnerHTML={{ __html: article.content }}
         />
       </div>
