@@ -1,5 +1,5 @@
 import { json, type LoaderFunctionArgs } from "@remix-run/node";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { useLoaderData, useSearchParams, Link } from "@remix-run/react";
 import { createClient } from "@supabase/supabase-js";
 import {
   Pagination,
@@ -10,8 +10,11 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "~/components/ui/pagination";
-import { BookOpen, FileText } from "lucide-react";
+import { BookOpen, FileText, Search, MessageCircleQuestion } from "lucide-react";
 import type { Database } from "~/types/database";
+import { Input } from "~/components/ui/input";
+import { Button } from "~/components/ui/button";
+import { useState } from "react";
 
 
 const ITEMS_PER_PAGE = 5;
@@ -181,6 +184,7 @@ function PaginationSection({
 export default function WorkspaceKnowledgeBase() {
   const { articles, documents, workspaceSlug, pagination } = useLoaderData<typeof loader>();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleArticlesPageChange = (page: number) => {
     const newParams = new URLSearchParams(searchParams);
@@ -194,8 +198,22 @@ export default function WorkspaceKnowledgeBase() {
     setSearchParams(newParams);
   };
 
+  // Filter function
+  const filterItems = (items: any[], fields: string[]) => {
+    if (!searchQuery) return items;
+    const query = searchQuery.toLowerCase();
+    return items.filter(item => 
+      fields.some(field => 
+        item[field]?.toString().toLowerCase().includes(query)
+      )
+    );
+  };
+
+  const filteredArticles = filterItems(articles, ['title', 'excerpt']);
+  const filteredDocuments = filterItems(documents, ['title']);
+
   return (
-    <div>
+    <div className="relative min-h-screen pb-16">
       <div className="mb-12">
         <h1 className="text-4xl font-bold text-gray-200 mb-4">
           Knowledge Base
@@ -203,6 +221,17 @@ export default function WorkspaceKnowledgeBase() {
         <p className="text-lg text-gray-600 mb-8 max-w-2xl">
           Browse our documentation and learn more about our platform.
         </p>
+        
+        {/* Search Input */}
+        <div className="relative max-w-md">
+          <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search articles and documents..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-8"
+          />
+        </div>
       </div>
 
       {/* Articles Section */}
@@ -212,7 +241,7 @@ export default function WorkspaceKnowledgeBase() {
           <h2 className="text-2xl font-semibold">Articles</h2>
         </div>
         <div className="space-y-12">
-          {articles.map((article) => (
+          {filteredArticles.map((article) => (
             <article key={article.id} className="group">
               <div className="flex-1 space-y-2">
                 <h3 className="text-xl font-semibold">
@@ -232,19 +261,21 @@ export default function WorkspaceKnowledgeBase() {
               </div>
             </article>
           ))}
-          {articles.length === 0 && (
+          {filteredArticles.length === 0 && (
             <div className="text-center py-12 text-gray-500">
-              No articles available
+              {searchQuery ? "No matching articles found" : "No articles available"}
             </div>
           )}
         </div>
-        <div className="mt-8">
-          <PaginationSection 
-            totalPages={pagination.articles.totalPages}
-            currentPage={pagination.articles.currentPage}
-            onPageChange={handleArticlesPageChange}
-          />
-        </div>
+        {!searchQuery && (
+          <div className="mt-8">
+            <PaginationSection 
+              totalPages={pagination.articles.totalPages}
+              currentPage={pagination.articles.currentPage}
+              onPageChange={handleArticlesPageChange}
+            />
+          </div>
+        )}
       </section>
 
       {/* Documents Section */}
@@ -254,7 +285,7 @@ export default function WorkspaceKnowledgeBase() {
           <h2 className="text-2xl font-semibold">Documents</h2>
         </div>
         <div className="space-y-8">
-          {documents.map((document) => (
+          {filteredDocuments.map((document) => (
             <article key={document.id} className="group">
               <div className="flex-1 space-y-2">
                 <h3 className="text-xl font-semibold">
@@ -271,20 +302,36 @@ export default function WorkspaceKnowledgeBase() {
               </div>
             </article>
           ))}
-          {documents.length === 0 && (
+          {filteredDocuments.length === 0 && (
             <div className="text-center py-12 text-gray-500">
-              No documents available
+              {searchQuery ? "No matching documents found" : "No documents available"}
             </div>
           )}
         </div>
-        <div className="mt-8">
-          <PaginationSection 
-            totalPages={pagination.documents.totalPages}
-            currentPage={pagination.documents.currentPage}
-            onPageChange={handleDocumentsPageChange}
-          />
-        </div>
+        {!searchQuery && (
+          <div className="mt-8">
+            <PaginationSection 
+              totalPages={pagination.documents.totalPages}
+              currentPage={pagination.documents.currentPage}
+              onPageChange={handleDocumentsPageChange}
+            />
+          </div>
+        )}
       </section>
+
+      {/* Floating Action Button */}
+      <div className="fixed bottom-8 right-8">
+        <Button
+          asChild
+          size="lg"
+          className="rounded-full shadow-lg"
+        >
+          <Link to={`/support/${workspaceSlug}/ticket/new`}>
+            <MessageCircleQuestion className="h-5 w-5 mr-2" />
+            Ask a question
+          </Link>
+        </Button>
+      </div>
     </div>
   );
 } 

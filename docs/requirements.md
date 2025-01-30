@@ -121,7 +121,6 @@ High level todos:
 - [x] new chats move to open when responding
 - [x] pending chats allow user to resolve
 - [x] better chat messsages (richtext or separate links?)
-- [ ] sort by priority by default
 - [ ] can create ticket from textbox in KB
 
 * Implement AI Features
