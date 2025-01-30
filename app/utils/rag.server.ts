@@ -257,9 +257,9 @@ export async function getRagSuggestion(
       content_id: doc.metadata.content_id,
       excerpt: doc.pageContent.slice(0, 150) + "...",
       url,
-      title: doc.metadata.title || (isArticle 
-        ? `Article ${doc.metadata.content_id}`
-        : doc.metadata.content_id.split('/').pop()?.replace('.pdf', '') || doc.metadata.content_id
+      title: doc.metadata.content_title || (isArticle 
+        ? "Untitled Article"
+        : "Untitled Document"
       )
     };
   });

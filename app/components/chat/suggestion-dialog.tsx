@@ -13,6 +13,13 @@ import { Checkbox } from "~/components/ui/checkbox";
 import { useState, useEffect } from "react";
 import type { Citation } from "~/types/rag";
 
+// Helper function to strip HTML tags
+function stripHtml(html: string) {
+  const tmp = document.createElement("DIV");
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || "";
+}
+
 interface SuggestionDialogProps {
   suggestion: string;
   citations: Citation[];
@@ -39,8 +46,8 @@ export function SuggestionDialog({ suggestion, citations, isOpen, onClose, onUse
     let finalText = suggestion;
     if (selected.length > 0) {
       finalText += "\n\nHelpful Resources:\n" + selected.map(citation => 
-        `- ${citation.title}: ${citation.url}`
-      ).join("\n");
+        `- ${citation.title}\n  ${window.location.origin}${citation.url}`
+      ).join("\n\n");
     }
 
     onUse(finalText, selected);
@@ -66,8 +73,10 @@ export function SuggestionDialog({ suggestion, citations, isOpen, onClose, onUse
           <div className="space-y-2">
             <h4 className="text-sm font-medium">Sources</h4>
             <div className="space-y-2">
-              {citations.map((citation) => {
+              {citations.map(citation => {
                 const id = `${citation.content_type}:${citation.content_id}`;
+                const cleanExcerpt = stripHtml(citation.excerpt);
+                
                 return (
                   <div key={id} className="rounded-lg border p-3 text-sm">
                     <div className="flex items-start gap-2">
@@ -85,20 +94,23 @@ export function SuggestionDialog({ suggestion, citations, isOpen, onClose, onUse
                         }}
                       />
                       <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <Badge variant="outline">
-                            {citation.content_type}:{citation.content_id}
-                          </Badge>
-                        </div>
                         <a 
                           href={citation.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-primary hover:underline font-medium"
+                          className="inline-flex items-center gap-2 group"
                         >
-                          {citation.title}
+                          <Badge 
+                            variant="outline" 
+                            className="group-hover:border-primary"
+                          >
+                            {citation.content_type}
+                          </Badge>
+                          <span className="text-primary hover:underline font-medium">
+                            {citation.title}
+                          </span>
                         </a>
-                        <p className="text-muted-foreground mt-1">{citation.excerpt}</p>
+                        <p className="text-muted-foreground mt-1">{cleanExcerpt}</p>
                       </div>
                     </div>
                   </div>

@@ -134,7 +134,7 @@ High level todos:
 - [x] connect langsmith
 
 * Implement (Tuesday / Wednesday ?)
-- [ ] implement: chat suggestions
+- [x] implement: chat suggestions
 - [ ] generate relvant test data to the tasks 
 - [ ] implement: kb => chat redirect
 - [ ] implement: auto-responder?

@@ -122,3 +122,11 @@ export async function action({ request, params }) {
 - Keeps related code together
 - Minimal new components needed
 - No changes to database required 
+
+
+# TODO:
+- [x] fix document rendering
+- [x] fix coloration of articles
+- [ ] handle links in messages
+- [ ] better links in suggestions
+- [ ] create ticket from knowledge base
