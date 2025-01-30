@@ -120,7 +120,7 @@ High level todos:
 * UI enhancements: 
 - [x] new chats move to open when responding
 - [x] pending chats allow user to resolve
-- [ ] better chat messsages (richtext or separate links?)
+- [x] better chat messsages (richtext or separate links?)
 - [ ] sort by priority by default
 - [ ] can create ticket from textbox in KB
 

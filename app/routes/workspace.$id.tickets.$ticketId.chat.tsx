@@ -208,14 +208,22 @@ export async function action({ request, params }: { request: Request; params: { 
     throw new Response("Ticket not found", { status: 404 });
   }
 
-  // Create message
-  await supabase
-    .from('messages')
-    .insert({
-      room_id: ticket.chat_room_id,
-      content: message.trim(),
-      sender_type: 'agent'
-    });
+  // Split message on newlines and filter out empty lines
+  const messages = message
+    .split('\n')
+    .map(line => line.trim())
+    .filter(line => line.length > 0);
+
+  // Create messages in sequence
+  for (const content of messages) {
+    await supabase
+      .from('messages')
+      .insert({
+        room_id: ticket.chat_room_id,
+        content,
+        sender_type: 'agent'
+      });
+  }
 
   return json({ success: true }, { headers: response.headers });
 }
