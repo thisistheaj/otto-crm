@@ -46,8 +46,8 @@ export function SuggestionDialog({ suggestion, citations, isOpen, onClose, onUse
     let finalText = suggestion;
     if (selected.length > 0) {
       finalText += "\n\nHelpful Resources:\n" + selected.map(citation => 
-        `- ${citation.title}\n  ${window.location.origin}${citation.url}`
-      ).join("\n\n");
+        `[${citation.title}](${window.location.origin}${citation.url})`
+      ).join("\n");
     }
 
     onUse(finalText, selected);
