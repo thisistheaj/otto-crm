@@ -1,67 +1,97 @@
-# Settings Implementation Plan
+# RAG Query API Implementation Plan
 
-## 1. Routes Setup
-- [x] Create team settings route (`workspace.$id.team.tsx`)
-  - [x] Add "Team" link to workspace sidebar
-- [x] Create user settings route (`workspace.$id.settings.tsx`)
-  - [x] Update "Settings" link in workspace sidebar
+## Tech Stack
+- [x] Supabase with pgvector for embedding storage and similarity search
+- [x] LangChain for RAG pipeline orchestration
+- [x] LangSmith for observability and debugging
+- [x] OpenAI for embeddings (text-embedding-ada-002) and chat completion (gpt-4)
 
-## 2. Team Page (`workspace.$id.team.tsx`)
-### Features
-- [x] Workspace Management
-  - [x] Display workspace info and ID (for invites)
-  - [x] Copy workspace ID button
-  - [x] Add workspace name editing
-  - [x] Add workspace deletion with confirmation
-- [x] Member Management
-  - [x] List all workspace members
-  - [x] Update member roles (admin/agent)
-  - [x] Remove members
-  - [x] Show member status (online/offline)
+## 1. Setup and Infrastructure
+- [x] Create new API route `api.admin.ask.tsx`
+- [x] Set up TypeScript interfaces for request/response types
+- [x] Add necessary LangChain imports and chain components
+- [x] Configure LangSmith tracing for the new route
 
-## 3. Settings Page (`workspace.$id.settings.tsx`)
-### Features
-- [x] Profile Management
-  - [x] Edit name and avatar (reuse components from _index.tsx)
-  - [x] Update email preferences (removed as per request)
-- [x] Availability Settings
-  - [x] Simple online/offline toggle
-- [x] Workspace Quick Switcher
-  - [x] List joined workspaces
-  - [x] Quick workspace switching UI
+## 2. Query Rewriting Chain
+- [x] Create a LangChain chain for query rewriting
+  - [x] Design system prompt for query rewriting
+  - [x] Implement message history truncation
+  - [x] Create prompt template for query synthesis
+  - [x] Add output parser for structured query
+- [x] Add tracing and metrics for query rewriting
+  - [x] Track token usage (via LangSmith)
+  - [x] Track latency (via LangSmith)
+  - [x] Log original vs rewritten queries
 
-## 4. Components to Create
-- [x] `components/settings/member-list.tsx`
-  - [x] Member table with role selector
-  - [x] Remove member button
-  - [x] Status indicator
-- [x] `components/settings/workspace-info.tsx`
-  - [x] Workspace name editor
-  - [x] Copy workspace ID button
-  - [x] Delete workspace button
-- [x] `components/settings/workspace-delete-dialog.tsx` (integrated into workspace-info)
-  - [x] Confirmation dialog
-  - [x] Name confirmation input
-- [x] `components/settings/availability-toggle.tsx` (integrated into settings page)
-  - [x] Simple online/offline toggle
+## 3. Vector Search Implementation
+- [x] Create Supabase vector search utility
+  - [x] Implement similarity search function
+  - [x] Add configurable top-k parameter
+  - [x] Add metadata filtering (by workspace)
+- [x] Format search results
+  - [x] Extract relevant snippets
+  - [x] Include source metadata
+  - [x] Structure citations
 
-## 5. Server-Side Implementation
-- [x] Update `models/workspace.server.ts`
-  - [x] Add workspace update/delete functions
-  - [x] Add member role management functions
-- [x] Update `models/profile.server.ts`
-  - [x] Add availability toggle function
+## 4. Response Generation Chain
+- [x] Create main RAG chain
+  - [x] Design system prompt for e-commerce support context
+  - [x] Create prompt template incorporating:
+    - [x] Message history
+    - [x] Retrieved context
+    - [x] Rewritten query
+  - [x] Implement structured output parser
+    - [x] Response content
+    - [x] Citations
+    - [x] Follow-up suggestions
 
-## Implementation Order
-1. ✅ Update workspace sidebar with new navigation
-2. ✅ User settings page (reusing _index.tsx components)
-3. ✅ Team page with member management
-4. ✅ Workspace management (name edit, delete)
-5. ✅ Simple availability toggle
+## 5. API Integration
+- [x] Implement request validation
+  - [x] Admin API key check
+  - [x] Message history format validation
+  - [x] Input sanitization
+- [x] Create response formatter
+  - [x] Implement full response structure
+  - [x] Format error responses
 
-## Notes
-- ✅ No database changes required
-- ✅ No real-time updates needed
-- ✅ Reuse profile components from _index.tsx
-- ✅ Simple invite system using workspace ID
-- ✅ Split into two distinct pages instead of tabs
+## Implementation Notes
+
+### Query Rewriting Prompt Design
+```typescript
+const queryRewritingPrompt = `
+Given the following conversation history, rewrite the last query to be more specific and include relevant context from previous messages.
+Focus on:
+- Key topics and entities mentioned
+- Implicit context from previous messages
+- Specific details about products or services
+- Customer intent and background
+
+Conversation History:
+{messages}
+
+Rewrite the last query to be more comprehensive and specific.
+`
+```
+
+### Vector Search Parameters
+- Initial top-k: 3 documents
+- Context window: 1000 tokens per document
+
+### Response Structure
+```typescript
+interface AskResponse {
+  response: {
+    content: string;
+    citations: Citation[];
+    suggested_followups: string[];
+  };
+  metadata: ResponseMetadata;
+}
+```
+
+## Configuration
+- [x] Add environment variables:
+  - [x] OPENAI_API_KEY (existing)
+  - [x] ADMIN_API_KEY
+  - [x] LANGSMITH_API_KEY
+  - [x] LANGSMITH_PROJECT

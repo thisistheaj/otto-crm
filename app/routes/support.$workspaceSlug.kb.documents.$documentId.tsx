@@ -56,11 +56,11 @@ export default function DocumentViewer() {
   const { document, signedUrl } = useLoaderData<typeof loader>();
 
   return (
-    <div className="light h-full bg-white rounded-2xl">
+    <div className="h-full rounded-2xl">
       <div className="max-w-5xl mx-auto p-6">
-        <div className="bg-white rounded-lg shadow-sm">
+        <div className="rounded-lg shadow-sm">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">{document.title}</h1>
+            <h1 className="text-3xl font-bold text-gray-100 mb-4">{document.title}</h1>
             <div className="flex items-center text-sm text-gray-500">
               <span>Last updated: {new Date(document.updated_at).toLocaleDateString()}</span>
               {document.tags?.length > 0 && (
@@ -81,7 +81,7 @@ export default function DocumentViewer() {
             </div>
           </div>
 
-          <div className="h-[800px] border border-gray-200 rounded-lg bg-white">
+          <div className="border rounded-lg bg-white p-4">
             <PDFViewer url={signedUrl} />
           </div>
         </div>

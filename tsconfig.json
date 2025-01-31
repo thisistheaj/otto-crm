@@ -5,7 +5,6 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
-    "module": "ES2022",
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "target": "ES2022",
@@ -17,6 +16,8 @@
       "~/*": ["./app/*"]
     },
     "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "module": "ES2022",
     "noEmit": true
   }
 }
