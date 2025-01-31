@@ -1,132 +1,113 @@
-# Ticket Response Suggestions Feature
+# Support Ticket Test Data Initiative
 
 ## Overview
-Add a "Get Suggestion" feature to the ticket chat interface that uses our RAG system to generate contextually relevant response suggestions for agents.
+Create high-quality test data for support tickets, focusing on 'new' status tickets to test our LLM Agent's RAG capabilities.
+
+## Requirements
+- [x] 30 'new' status tickets
+- [x] Each ticket has 1 customer message, 0 agent responses
+- [x] Questions mostly align with existing documentation
+- [x] Some questions intentionally unanswerable
+- [x] Data matches TSV format
+
+## Current Documentation Sources
+- Articles (articles.tsv)
+  - Solar Panel Maintenance Guide
+  - Understanding Solar Tax Credits
+  - Troubleshooting Common Issues
+  - Battery Backup Systems
+
+- Documents (markdown files)
+  - Installation Guide
+  - Maintenance Schedule
+  - System Specifications
+  - Warranty Terms
 
 ## Implementation Plan
 
-### 1. Backend Changes
-- [ ] Create new route action in `@workspace.$id.tickets.$ticketId.chat.tsx`
-  - More appropriate than new API endpoint since:
-    - Already has access to workspace/ticket context
-    - Can reuse existing auth checks
-    - Keeps related code together
-    - Simpler than adding new API route
+### 1. Document Analysis
+- [x] Review all documentation sources
+- [x] Create list of key topics covered
+- [x] Identify gaps in documentation for unanswerable queries
+- [x] Map common customer question types to docs
 
-### 2. UI Components
-- [ ] Add suggestion button above message input
-  ```tsx
-  <Button 
-    variant="outline"
-    className="mb-2"
-    onClick={() => getSuggestion()}
-  >
-    Get Suggestion
-  </Button>
-  ```
-- [ ] Create SuggestionDialog component
-  ```tsx
-  // components/chat/suggestion-dialog.tsx
-  interface SuggestionDialogProps {
-    suggestion: string;
-    citations: Citation[];
-    isOpen: boolean;
-    onClose: () => void;
-    onUse: (text: string) => void;
-  }
-  ```
-- [ ] Add loading state to button
-- [ ] Add error handling UI
+### 2. Question Generation
+- [x] Create 25 questions based on documentation
+  - [x] Installation questions (5)
+  - [x] Maintenance questions (5)
+  - [x] Warranty questions (5)
+  - [x] Technical specifications (5)
+  - [x] Financial/billing questions (5)
+- [x] Create 5 unanswerable questions
+  - [x] Edge cases
+  - [x] Out of scope queries
+  - [x] Questions about undocumented features
 
-### 3. State Management
-- [ ] Add suggestion state to chat page
-  ```tsx
-  const [suggestion, setSuggestion] = useState<string | null>(null);
-  const [citations, setCitations] = useState<Citation[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  ```
+### 3. Data Preparation
+- [x] Format all tickets in TSV schema
+- [x] Ensure proper status flags
+- [x] Validate message counts
+- [x] Check data integrity
 
-### 4. Action Implementation
-```tsx
-// In @workspace.$id.tickets.$ticketId.chat.tsx
-export async function action({ request, params }) {
-  const formData = await request.formData();
-  const intent = formData.get("intent");
-
-  if (intent === "get-suggestion") {
-    // Get messages from database
-    const messages = await getTicketMessages(params.ticketId);
-    
-    // Format for RAG
-    const formattedMessages = messages.map(m => ({
-      role: m.sender_type === "agent" ? "assistant" : "user",
-      content: m.content
-    }));
-
-    // Get suggestion using RAG
-    const suggestion = await getRagSuggestion(formattedMessages);
-    
-    return json(suggestion);
-  }
-}
-```
-
-### 5. Integration
-- [ ] Add fetch function
-  ```tsx
-  async function getSuggestion() {
-    setIsLoading(true);
-    const formData = new FormData();
-    formData.append("intent", "get-suggestion");
-    
-    try {
-      const response = await submit(formData, {
-        method: "post"
-      });
-      setSuggestion(response.content);
-      setCitations(response.citations);
-    } catch (error) {
-      // Handle error
-    } finally {
-      setIsLoading(false);
-    }
-  }
-  ```
-- [ ] Wire up suggestion dialog to message input
-  ```tsx
-  function useSuggestion(text: string) {
-    // Set text in message input
-    setInputValue(text);
-    // Close dialog
-    setSuggestion(null);
-  }
-  ```
-
-### 6. Testing
-- [ ] Test with various conversation lengths
-- [ ] Test with different types of tickets
-- [ ] Test error scenarios
-- [ ] Test suggestion usage flow
+### 4. Quality Assurance
+- [x] Verify question distribution
+- [x] Check documentation coverage
+- [x] Validate TSV format
+- [x] Test data loading
 
 ## Success Criteria
-1. Agent can request suggestions with one click
-2. Suggestions are contextually relevant to conversation
-3. Citations are provided for verification
-4. Agent can easily use or modify suggestions
-5. Feature works within existing auth/security model
-6. Performance is acceptable (< 2s for suggestion)
+1. [x] 30 new tickets created
+2. [x] Each ticket has exactly 1 customer message
+3. [x] Questions cover full range of documentation
+4. [x] Include realistic unanswerable queries
+5. [x] Data matches existing TSV format
+6. [x] Questions are realistic and varied
 
 ## Notes
-- Using route action instead of API endpoint simplifies implementation
-- Reuses existing auth/security model
-- Keeps related code together
-- Minimal new components needed
-- No changes to database required 
+- Focus on common customer pain points
+- Include both simple and complex queries
+- Maintain realistic language and tone
+- Ensure questions reflect actual customer behavior
 
+## Summary of Created Test Data
+1. Installation Questions (5)
+   - Roof assessment
+   - Installation timeline
+   - Safety requirements
+   - Documentation
+   - System commissioning
 
-# TODO:
-- [x] fix document rendering
-- [x] fix coloration of articles
-- [ ] handle links in messages
-- [ ] better links in suggestions
-- [ ] create ticket from knowledge base
+2. Maintenance Questions (5)
+   - Cleaning schedule
+   - Performance monitoring
+   - Winter preparation
+   - Annual inspection
+   - System analysis
+
+3. Warranty Questions (5)
+   - Warranty transfer
+   - Performance claims
+   - Extended options
+   - Component replacement
+   - Maintenance requirements
+
+4. Technical Questions (5)
+   - Panel efficiency
+   - Inverter compatibility
+   - Temperature impact
+   - Monitoring capabilities
+   - Wind resistance
+
+5. Financial Questions (5)
+   - Tax credits
+   - Production estimates
+   - System sizing
+   - State rebates
+   - Performance guarantees
+
+6. Unanswerable Questions (5)
+   - Smart home integration
+   - International warranty
+   - Custom panel design
+   - Mobile app features
+   - Cryptocurrency mining

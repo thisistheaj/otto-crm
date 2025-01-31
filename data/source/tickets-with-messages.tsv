@@ -14,7 +14,6 @@ message		Warranty Claim		pending	high	I'm sorry to hear about the damage. I've r
 ticket	Panel Cleaning Service	Need to schedule routine cleaning	robert.taylor@email.com	resolved	low			2024-03-18T10:45:00Z
 message		Panel Cleaning Service		resolved	low	I'd like to schedule a cleaning service for my panels. They're getting dusty.	customer	2024-03-18T11:00:00Z
 message		Panel Cleaning Service		resolved	low	We have availability next week. Would Tuesday or Thursday morning work for you?	agent	2024-03-18T11:15:00Z
-ticket	Battery Backup Installation	Interested in adding battery backup to existing system	emma.white@email.com	new	medium			2024-03-22T09:30:00Z
 ticket	Inverter Error Message	Getting error code E-034 on my inverter display	carlos.rodriguez@email.com	pending	high			2024-03-21T15:20:00Z
 message		Inverter Error Message		pending	high	My inverter is showing error E-034. System is not producing power.	customer	2024-03-21T15:25:00Z
 message		Inverter Error Message		pending	high	This error typically indicates a grid voltage issue. Have you noticed any power fluctuations?	agent	2024-03-21T15:40:00Z
@@ -39,24 +38,15 @@ message		Grid Connection Issue		pending	high	Yes, the system shows as active but
 ticket	Solar Panel Upgrade	Want to add more panels to existing system	tom.anderson@email.com	pending	medium			2024-03-19T14:00:00Z
 message		Solar Panel Upgrade		pending	medium	Looking to expand my system by 4-6 panels. Is this possible?	customer	2024-03-19T14:05:00Z
 message		Solar Panel Upgrade		pending	medium	I'll review your current setup and check roof space availability.	agent	2024-03-19T14:20:00Z
-ticket	Mobile App Feature Request	Would like to see daily energy graphs in the mobile app	rachel.green@email.com	new	medium			2024-03-22T11:30:00Z
-message		Mobile App Feature Request		new	medium	I think it would be really helpful to have daily energy production graphs in the mobile app	customer	2024-03-22T11:35:00Z
 ticket	Installation Timeline Question	When can installation begin after permit approval?	chandler.bing@email.com	resolved	medium			2024-03-22T12:00:00Z
 message		Installation Timeline Question		resolved	medium	Just got my permit approved, wondering about next steps and timeline	customer	2024-03-22T12:05:00Z
 message		Installation Timeline Question		resolved	medium	Congratulations on the permit approval! I'll check our installation team's schedule and get back to you with specific dates.	agent	2024-03-22T12:15:00Z
 ticket	Power Outage Behavior	System shut down during power outage	monica.geller@email.com	pending	high			2024-03-22T13:00:00Z
 message		Power Outage Behavior		pending	high	We had a power outage and my system completely shut down. I thought it would still work?	customer	2024-03-22T13:05:00Z
 message		Power Outage Behavior		pending	high	Without a battery backup system, solar panels will shut down during grid outages for safety. Would you like to discuss backup options?	agent	2024-03-22T13:20:00Z
-ticket	Tax Credit Documentation	Need documentation for federal tax credit	ross.geller@email.com	new	medium			2024-03-22T14:00:00Z
-message		Tax Credit Documentation		new	medium	Can you provide the necessary documentation for claiming the federal solar tax credit?	customer	2024-03-22T14:05:00Z
 ticket	Winter Performance Check	Concerned about snow coverage	phoebe.buffay@email.com	open	low			2024-03-22T15:00:00Z
 message		Winter Performance Check		open	low	With winter approaching, should I be worried about snow covering the panels?	customer	2024-03-22T15:05:00Z
 message		Winter Performance Check		open	low	Our panels are designed to handle snow load, but I'll share some winter maintenance tips and monitoring recommendations.	agent	2024-03-22T15:20:00Z
-ticket	Rate Plan Optimization	Need help choosing best utility rate plan	joey.tribbiani@email.com	new	medium			2024-03-22T16:00:00Z
-message		Rate Plan Optimization		new	medium	My utility offers several rate plans for solar customers. Which would be best for my usage pattern?	customer	2024-03-22T16:05:00Z
-ticket	Shading Analysis Request	Trees growing near panels causing shade	gunther.coffee@email.com	new	medium			2024-03-22T16:30:00Z
-message		Shading Analysis Request		new	medium	The trees in my neighbor's yard have grown quite tall and I think they're affecting my panel performance	customer	2024-03-22T16:35:00Z
-message		Shading Analysis Request		new	medium	I'll schedule a drone inspection to analyze the shading impact and provide recommendations.	agent	2024-03-22T16:45:00Z
 ticket	Panel Critter Protection	Pigeons nesting under solar panels	ursula.buffay@email.com	open	medium			2024-03-22T17:00:00Z
 message		Panel Critter Protection		open	medium	There are pigeons nesting under my solar panels. Will this cause any issues?	customer	2024-03-22T17:05:00Z
 message		Panel Critter Protection		open	medium	Yes, this can be problematic. We can install critter guards to prevent nesting while maintaining ventilation.	agent	2024-03-22T17:15:00Z
@@ -64,19 +54,12 @@ message		Panel Critter Protection		open	medium	How much would that cost and how 
 ticket	Meter Reading Discrepancy	Smart meter readings don't match app	janice.hosenstein@email.com	open	high			2024-03-22T17:30:00Z
 message		Meter Reading Discrepancy		open	high	The production numbers in my app are different from my smart meter readings	customer	2024-03-22T17:35:00Z
 message		Meter Reading Discrepancy		open	high	Let me check the data streams from both sources. There might be a sync delay.	agent	2024-03-22T17:45:00Z
-ticket	Solar Panel Hail Damage	Recent hailstorm in area	richard.burke@email.com	new	high			2024-03-22T18:00:00Z
-message		Solar Panel Hail Damage		new	high	We just had a severe hailstorm. Should I be concerned about damage to my panels?	customer	2024-03-22T18:05:00Z
 ticket	Microinverter Replacement	One panel showing zero production	carol.willick@email.com	open	high			2024-03-22T18:30:00Z
 message		Microinverter Replacement		open	high	Panel #7 is showing no production for the last 3 days	customer	2024-03-22T18:35:00Z
 message		Microinverter Replacement		open	high	I can see the issue in our monitoring system. Looks like the microinverter needs replacement.	agent	2024-03-22T18:45:00Z
 ticket	Solar Production Guarantee	Below guaranteed production levels	emily.waltham@email.com	open	medium			2024-03-22T19:00:00Z
 message		Solar Production Guarantee		open	medium	My system is producing 15% less than the guaranteed amount this quarter	customer	2024-03-22T19:05:00Z
 message		Solar Production Guarantee		open	medium	I'll analyze your production data and weather patterns to verify the shortfall.	agent	2024-03-22T19:15:00Z
-ticket	Panel Cleaning Quote	Pollen season affecting production	tag.jones@email.com	new	low			2024-03-22T19:30:00Z
-message		Panel Cleaning Quote		new	low	How much would it cost to get my panels cleaned? There's a lot of pollen buildup.	customer	2024-03-22T19:35:00Z
-ticket	System Expansion Consultation	Adding EV charging soon	ben.geller@email.com	new	medium			2024-03-22T20:00:00Z
-message		System Expansion Consultation		new	medium	Planning to get an electric vehicle. Will my current system handle the additional load?	customer	2024-03-22T20:05:00Z
-message		System Expansion Consultation		new	medium	I'll review your current system size and usage patterns to determine if an expansion is needed.	agent	2024-03-22T20:15:00Z
 ticket	WiFi Connection Lost	Solar monitoring system offline	eddie.moskowitz@email.com	open	high			2024-03-22T20:30:00Z
 message		WiFi Connection Lost		open	high	My solar monitoring system shows offline in the app since yesterday	customer	2024-03-22T20:35:00Z
 message		WiFi Connection Lost		open	high	Let's check if it's a connection issue. Can you verify if the gateway LED is green?	agent	2024-03-22T20:40:00Z
@@ -92,18 +75,69 @@ ticket	Battery Warranty Claim	Battery not holding charge	frank.buffay.jr@email.c
 message		Battery Warranty Claim		open	medium	My battery is only holding 60% of its original capacity after 2 years	customer	2024-03-22T21:35:00Z
 message		Battery Warranty Claim		open	medium	I'll check your battery's performance data and warranty status	agent	2024-03-22T21:40:00Z
 message		Battery Warranty Claim		open	medium	According to our records, this is covered under warranty. Would you like to proceed with a replacement?	agent	2024-03-22T21:45:00Z
-ticket	HOA Approval Process	Need help with HOA submission	mr.heckles@email.com	new	medium			2024-03-22T22:00:00Z
-message		HOA Approval Process		new	medium	My HOA requires detailed documentation for solar installation approval	customer	2024-03-22T22:05:00Z
-message		HOA Approval Process		new	medium	I'll prepare a comprehensive package including visual renderings and technical specifications	agent	2024-03-22T22:10:00Z
 ticket	Emergency Shutdown Help	Need to shut down system for firefighters	mr.treeger@email.com	open	high			2024-03-22T22:30:00Z
 message		Emergency Shutdown Help		open	high	Firefighters need to access our roof. How do I shut down the system?	customer	2024-03-22T22:31:00Z
 message		Emergency Shutdown Help		open	high	I'll guide you through the rapid shutdown procedure right now	agent	2024-03-22T22:32:00Z
 message		Emergency Shutdown Help		open	high	First, locate the red emergency switch near your inverter	agent	2024-03-22T22:33:00Z
 message		Emergency Shutdown Help		open	high	Found it and switched it off. Anything else?	customer	2024-03-22T22:34:00Z
 message		Emergency Shutdown Help		open	high	Also turn off the solar supply main breaker in your electrical panel. Let me know when done.	agent	2024-03-22T22:35:00Z
-ticket	Energy Storage Rebate	Questions about state rebate program	alice.knight@email.com	new	medium			2024-03-22T23:00:00Z
-message		Energy Storage Rebate		new	medium	I heard our state is offering rebates for adding battery storage. Can you help me apply?	customer	2024-03-22T23:05:00Z
-message		Energy Storage Rebate		new	medium	Yes! The program just launched. Let me check your system's eligibility and get the paperwork started.	agent	2024-03-22T23:10:00Z
-ticket	Panel Removal Request	Temporary removal for roof repair	jack.geller@email.com	new	medium			2024-03-22T23:30:00Z
-message		Panel Removal Request		new	medium	Need panels temporarily removed for roof repair next month	customer	2024-03-22T23:35:00Z
-message		Panel Removal Request		new	medium	I can coordinate with your roofer. Please share their contact info and planned repair dates.	agent	2024-03-22T23:40:00Z 
+ticket	Roof Assessment for Installation	Need to know if my roof is suitable for solar panels	sarah.wilson@email.com	new	medium			2024-03-25T09:00:00Z
+message		Roof Assessment for Installation		new	medium	Hi, I'm interested in installing solar panels but my roof is 12 years old. Do you need to inspect it first? What's the assessment process like?	customer	2024-03-25T09:00:00Z
+ticket	Installation Timeline Question	Questions about installation process duration	mike.roberts@email.com	new	medium			2024-03-25T09:15:00Z
+message		Installation Timeline Question		new	medium	Could you provide a detailed timeline for the installation process? I need to plan ahead for time off work. Also, what preparations do I need to make before the installation team arrives?	customer	2024-03-25T09:15:00Z
+ticket	Safety Equipment Requirements	Questions about required safety equipment	david.chen@email.com	new	medium			2024-03-25T09:30:00Z
+message		Safety Equipment Requirements		new	medium	I'm reviewing the installation guide and noticed the safety equipment requirements. Does your team provide all the necessary safety equipment, or do I need to arrange anything specifically for the installation?	customer	2024-03-25T09:30:00Z
+ticket	Post-Installation Documentation	Question about required documentation	lisa.patel@email.com	new	low			2024-03-25T09:45:00Z
+message		Post-Installation Documentation		new	low	What documentation will I receive after the installation is complete? I want to make sure I have everything needed for insurance and warranty purposes.	customer	2024-03-25T09:45:00Z
+ticket	System Commissioning Process	Questions about system activation	james.taylor@email.com	new	medium			2024-03-25T10:00:00Z
+message		System Commissioning Process		new	medium	Can you explain the commissioning process after installation? How long does it typically take to get the system up and running, and what steps are involved in the final testing?	customer	2024-03-25T10:00:00Z
+ticket	Panel Cleaning Schedule	Question about maintenance requirements	emma.garcia@email.com	new	low			2024-03-25T10:15:00Z
+message		Panel Cleaning Schedule		new	low	How often should I have my solar panels cleaned? I live in an area with lots of pollen in spring, and I want to make sure I'm maintaining them properly.	customer	2024-03-25T10:15:00Z
+ticket	Performance Monitoring Question	Help with monitoring system	ryan.murphy@email.com	new	medium			2024-03-25T10:30:00Z
+message		Performance Monitoring Question		new	medium	I noticed my daily production numbers seem lower than usual. How can I tell if this is due to weather or if there's a maintenance issue that needs attention?	customer	2024-03-25T10:30:00Z
+ticket	Winter Maintenance Preparation	Questions about winter care	sophia.lee@email.com	new	medium			2024-03-25T10:45:00Z
+message		Winter Maintenance Preparation		new	medium	With winter approaching, what maintenance steps should I take to prepare my solar system? I'm particularly concerned about snow accumulation and cold weather impact.	customer	2024-03-25T10:45:00Z
+ticket	Annual Inspection Requirements	Question about professional maintenance	marcus.brown@email.com	new	low			2024-03-25T11:00:00Z
+message		Annual Inspection Requirements		new	low	The maintenance schedule mentions annual professional inspections. What exactly is checked during these inspections, and how do I schedule one?	customer	2024-03-25T11:00:00Z
+ticket	System Performance Analysis	Request for performance review	hannah.white@email.com	new	medium			2024-03-25T11:15:00Z
+message		System Performance Analysis		new	medium	Is there a way to get a comprehensive analysis of my system's performance over the past few months? I'd like to understand if it's operating at optimal efficiency.	customer	2024-03-25T11:15:00Z
+ticket	Warranty Transfer Process	Question about transferring warranty	alex.rodriguez@email.com	new	medium			2024-03-25T11:30:00Z
+message		Warranty Transfer Process		new	medium	I'm selling my house next month. What's the process for transferring the solar system warranty to the new owners? Are there any fees or paperwork involved?	customer	2024-03-25T11:30:00Z
+ticket	Performance Warranty Claim	Question about production guarantee	jordan.kim@email.com	new	high			2024-03-25T11:45:00Z
+message		Performance Warranty Claim		new	high	My system's production seems to be below the guaranteed minimum output. How do I initiate a performance warranty claim, and what documentation do I need to provide?	customer	2024-03-25T11:45:00Z
+ticket	Extended Warranty Options	Questions about warranty extension	rachel.thompson@email.com	new	low			2024-03-25T12:00:00Z
+message		Extended Warranty Options		new	low	I see that extended warranty options are available for the inverter. What are the costs and benefits of extending the warranty beyond the standard 12 years?	customer	2024-03-25T12:00:00Z
+ticket	Component Replacement Coverage	Question about warranty coverage	chris.martinez@email.com	new	medium			2024-03-25T12:15:00Z
+message		Component Replacement Coverage		new	medium	One of my solar panels has a small crack. Does the warranty cover this type of damage? What's the process for getting it inspected and potentially replaced?	customer	2024-03-25T12:15:00Z
+ticket	Warranty Maintenance Requirements	Question about warranty conditions	olivia.anderson@email.com	new	medium			2024-03-25T12:30:00Z
+message		Warranty Maintenance Requirements		new	medium	I want to make sure I'm not voiding my warranty. What maintenance records do I need to keep, and are there specific requirements for maintaining warranty coverage?	customer	2024-03-25T12:30:00Z
+ticket	Panel Efficiency Ratings	Question about panel specifications	kevin.zhang@email.com	new	medium			2024-03-25T12:45:00Z
+message		Panel Efficiency Ratings		new	medium	I'm comparing your panels with another company. Can you explain what the 21.4% efficiency rating means in practical terms? How does this translate to actual power production?	customer	2024-03-25T12:45:00Z
+ticket	Inverter System Compatibility	Question about technical specs	nina.patel@email.com	new	medium			2024-03-25T13:00:00Z
+message		Inverter System Compatibility		new	medium	I'm planning to add more panels in the future. Is the 7.6kW inverter system sufficient for expansion? What's the maximum number of panels it can handle?	customer	2024-03-25T13:00:00Z
+ticket	Temperature Impact on Performance	Technical performance question	thomas.wilson@email.com	new	medium			2024-03-25T13:15:00Z
+message		Temperature Impact on Performance		new	medium	The specs show an operating temperature range of -40°C to +85°C. How does extreme heat affect the system's performance? We get very hot summers here.	customer	2024-03-25T13:15:00Z
+ticket	Monitoring System Capabilities	Question about monitoring features	maria.sanchez@email.com	new	low			2024-03-25T13:30:00Z
+message		Monitoring System Capabilities		new	low	What data points does the monitoring system track? I'm particularly interested in the granularity of the data and if it can show panel-level performance.	customer	2024-03-25T13:30:00Z
+ticket	Wind Load Resistance	Question about system durability	robert.clark@email.com	new	high			2024-03-25T13:45:00Z
+message		Wind Load Resistance		new	high	I see the mounting system is rated for 140 mph winds. We get occasional strong storms - can you explain the testing process for these ratings and what happens in extreme weather?	customer	2024-03-25T13:45:00Z
+ticket	Federal Tax Credit Calculation	Question about tax incentives	peter.wong@email.com	new	medium			2024-03-25T14:00:00Z
+message		Federal Tax Credit Calculation		new	medium	I'm trying to understand the 30% federal tax credit. Does this apply to the total system cost including installation? What documentation will I need for my tax return?	customer	2024-03-25T14:00:00Z
+ticket	Energy Production Estimates	Question about ROI calculations	amanda.jones@email.com	new	medium			2024-03-25T14:15:00Z
+message		Energy Production Estimates		new	medium	How accurate are the energy production estimates? I'd like to understand the methodology used to calculate the 1,300-1,600 kWh per kW installed figure.	customer	2024-03-25T14:15:00Z
+ticket	System Sizing and Cost	Question about system options	diego.torres@email.com	new	medium			2024-03-25T14:30:00Z
+message		System Sizing and Cost		new	medium	Based on my average monthly electricity bill of $200, what size system would you recommend? I'd like to understand the cost implications of different system sizes.	customer	2024-03-25T14:30:00Z
+ticket	State Rebate Programs	Question about local incentives	sarah.miller@email.com	new	low			2024-03-25T14:45:00Z
+message		State Rebate Programs		new	low	Besides the federal tax credit, what state-specific incentives are available in my area? How do I apply for these additional rebates?	customer	2024-03-25T14:45:00Z
+ticket	Performance Guarantee Terms	Question about production guarantee	michael.chang@email.com	new	medium			2024-03-25T15:00:00Z
+message		Performance Guarantee Terms		new	medium	Can you explain the details of the 5-year production guarantee? How is underperformance calculated and what compensation is provided if the system doesn't meet the guaranteed output?	customer	2024-03-25T15:00:00Z
+ticket	Smart Home Integration	Question about home automation	eric.foster@email.com	new	medium			2024-03-25T15:15:00Z
+message		Smart Home Integration		new	medium	Can your solar system integrate with my existing Google Home setup? I'd like to use voice commands to check system status and control power allocation to different appliances.	customer	2024-03-25T15:15:00Z
+ticket	International Warranty Coverage	Question about warranty abroad	julia.weber@email.com	new	medium			2024-03-25T15:30:00Z
+message		International Warranty Coverage		new	medium	I'm moving to Canada next year. Will my warranty still be valid there? Can I get service from your Canadian partners if needed?	customer	2024-03-25T15:30:00Z
+ticket	Custom Panel Design Request	Question about panel customization	brandon.lee@email.com	new	low			2024-03-25T15:45:00Z
+message		Custom Panel Design Request		new	low	Do you offer custom-colored solar panels to match my roof's unique color? I'd like something that blends in better than the standard black panels.	customer	2024-03-25T15:45:00Z
+ticket	Mobile App Feature Request	Question about app capabilities	ashley.williams@email.com	new	medium			2024-03-25T16:00:00Z
+message		Mobile App Feature Request		new	medium	Is there a way to set up custom alerts in the mobile app for specific power consumption thresholds? Also, can I control my battery storage system directly through the app?	customer	2024-03-25T16:00:00Z
+ticket	Cryptocurrency Mining Setup	Question about mining compatibility	ryan.cooper@email.com	new	medium			2024-03-25T16:15:00Z
+message		Cryptocurrency Mining Setup		new	medium	I'm planning to use my solar system to power a cryptocurrency mining operation. Can you help me calculate the optimal setup and confirm if this affects the warranty coverage?	customer	2024-03-25T16:15:00Z 

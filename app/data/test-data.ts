@@ -103,15 +103,6 @@ export const testData = {
     ]
   },
   {
-    "subject": "Battery Backup Installation",
-    "description": "Interested in adding battery backup to existing system",
-    "email": "emma.white@email.com",
-    "status": "new",
-    "priority": "medium",
-    "created_at": "2024-03-22T09:30:00Z",
-    "messages": []
-  },
-  {
     "subject": "Inverter Error Message",
     "description": "Getting error code E-034 on my inverter display",
     "email": "carlos.rodriguez@email.com",
@@ -266,21 +257,6 @@ export const testData = {
     ]
   },
   {
-    "subject": "Mobile App Feature Request",
-    "description": "Would like to see daily energy graphs in the mobile app",
-    "email": "rachel.green@email.com",
-    "status": "new",
-    "priority": "medium",
-    "created_at": "2024-03-22T11:30:00Z",
-    "messages": [
-      {
-        "content": "I think it would be really helpful to have daily energy production graphs in the mobile app",
-        "sender_type": "customer",
-        "created_at": "2024-03-22T11:35:00Z"
-      }
-    ]
-  },
-  {
     "subject": "Installation Timeline Question",
     "description": "When can installation begin after permit approval?",
     "email": "chandler.bing@email.com",
@@ -321,21 +297,6 @@ export const testData = {
     ]
   },
   {
-    "subject": "Tax Credit Documentation",
-    "description": "Need documentation for federal tax credit",
-    "email": "ross.geller@email.com",
-    "status": "new",
-    "priority": "medium",
-    "created_at": "2024-03-22T14:00:00Z",
-    "messages": [
-      {
-        "content": "Can you provide the necessary documentation for claiming the federal solar tax credit?",
-        "sender_type": "customer",
-        "created_at": "2024-03-22T14:05:00Z"
-      }
-    ]
-  },
-  {
     "subject": "Winter Performance Check",
     "description": "Concerned about snow coverage",
     "email": "phoebe.buffay@email.com",
@@ -352,41 +313,6 @@ export const testData = {
         "content": "Our panels are designed to handle snow load, but I'll share some winter maintenance tips and monitoring recommendations.",
         "sender_type": "agent",
         "created_at": "2024-03-22T15:20:00Z"
-      }
-    ]
-  },
-  {
-    "subject": "Rate Plan Optimization",
-    "description": "Need help choosing best utility rate plan",
-    "email": "joey.tribbiani@email.com",
-    "status": "new",
-    "priority": "medium",
-    "created_at": "2024-03-22T16:00:00Z",
-    "messages": [
-      {
-        "content": "My utility offers several rate plans for solar customers. Which would be best for my usage pattern?",
-        "sender_type": "customer",
-        "created_at": "2024-03-22T16:05:00Z"
-      }
-    ]
-  },
-  {
-    "subject": "Shading Analysis Request",
-    "description": "Trees growing near panels causing shade",
-    "email": "gunther.coffee@email.com",
-    "status": "new",
-    "priority": "medium",
-    "created_at": "2024-03-22T16:30:00Z",
-    "messages": [
-      {
-        "content": "The trees in my neighbor's yard have grown quite tall and I think they're affecting my panel performance",
-        "sender_type": "customer",
-        "created_at": "2024-03-22T16:35:00Z"
-      },
-      {
-        "content": "I'll schedule a drone inspection to analyze the shading impact and provide recommendations.",
-        "sender_type": "agent",
-        "created_at": "2024-03-22T16:45:00Z"
       }
     ]
   },
@@ -436,21 +362,6 @@ export const testData = {
     ]
   },
   {
-    "subject": "Solar Panel Hail Damage",
-    "description": "Recent hailstorm in area",
-    "email": "richard.burke@email.com",
-    "status": "new",
-    "priority": "high",
-    "created_at": "2024-03-22T18:00:00Z",
-    "messages": [
-      {
-        "content": "We just had a severe hailstorm. Should I be concerned about damage to my panels?",
-        "sender_type": "customer",
-        "created_at": "2024-03-22T18:05:00Z"
-      }
-    ]
-  },
-  {
     "subject": "Microinverter Replacement",
     "description": "One panel showing zero production",
     "email": "carol.willick@email.com",
@@ -487,41 +398,6 @@ export const testData = {
         "content": "I'll analyze your production data and weather patterns to verify the shortfall.",
         "sender_type": "agent",
         "created_at": "2024-03-22T19:15:00Z"
-      }
-    ]
-  },
-  {
-    "subject": "Panel Cleaning Quote",
-    "description": "Pollen season affecting production",
-    "email": "tag.jones@email.com",
-    "status": "new",
-    "priority": "low",
-    "created_at": "2024-03-22T19:30:00Z",
-    "messages": [
-      {
-        "content": "How much would it cost to get my panels cleaned? There's a lot of pollen buildup.",
-        "sender_type": "customer",
-        "created_at": "2024-03-22T19:35:00Z"
-      }
-    ]
-  },
-  {
-    "subject": "System Expansion Consultation",
-    "description": "Adding EV charging soon",
-    "email": "ben.geller@email.com",
-    "status": "new",
-    "priority": "medium",
-    "created_at": "2024-03-22T20:00:00Z",
-    "messages": [
-      {
-        "content": "Planning to get an electric vehicle. Will my current system handle the additional load?",
-        "sender_type": "customer",
-        "created_at": "2024-03-22T20:05:00Z"
-      },
-      {
-        "content": "I'll review your current system size and usage patterns to determine if an expansion is needed.",
-        "sender_type": "agent",
-        "created_at": "2024-03-22T20:15:00Z"
       }
     ]
   },
@@ -616,26 +492,6 @@ export const testData = {
     ]
   },
   {
-    "subject": "HOA Approval Process",
-    "description": "Need help with HOA submission",
-    "email": "mr.heckles@email.com",
-    "status": "new",
-    "priority": "medium",
-    "created_at": "2024-03-22T22:00:00Z",
-    "messages": [
-      {
-        "content": "My HOA requires detailed documentation for solar installation approval",
-        "sender_type": "customer",
-        "created_at": "2024-03-22T22:05:00Z"
-      },
-      {
-        "content": "I'll prepare a comprehensive package including visual renderings and technical specifications",
-        "sender_type": "agent",
-        "created_at": "2024-03-22T22:10:00Z"
-      }
-    ]
-  },
-  {
     "subject": "Emergency Shutdown Help",
     "description": "Need to shut down system for firefighters",
     "email": "mr.treeger@email.com",
@@ -671,42 +527,452 @@ export const testData = {
     ]
   },
   {
-    "subject": "Energy Storage Rebate",
-    "description": "Questions about state rebate program",
-    "email": "alice.knight@email.com",
+    "subject": "Roof Assessment for Installation",
+    "description": "Need to know if my roof is suitable for solar panels",
+    "email": "sarah.wilson@email.com",
     "status": "new",
     "priority": "medium",
-    "created_at": "2024-03-22T23:00:00Z",
+    "created_at": "2024-03-25T09:00:00Z",
     "messages": [
       {
-        "content": "I heard our state is offering rebates for adding battery storage. Can you help me apply?",
+        "content": "Hi, I'm interested in installing solar panels but my roof is 12 years old. Do you need to inspect it first? What's the assessment process like?",
         "sender_type": "customer",
-        "created_at": "2024-03-22T23:05:00Z"
-      },
-      {
-        "content": "Yes! The program just launched. Let me check your system's eligibility and get the paperwork started.",
-        "sender_type": "agent",
-        "created_at": "2024-03-22T23:10:00Z"
+        "created_at": "2024-03-25T09:00:00Z"
       }
     ]
   },
   {
-    "subject": "Panel Removal Request",
-    "description": "Temporary removal for roof repair",
-    "email": "jack.geller@email.com",
+    "subject": "Installation Timeline Question",
+    "description": "Questions about installation process duration",
+    "email": "mike.roberts@email.com",
     "status": "new",
     "priority": "medium",
-    "created_at": "2024-03-22T23:30:00Z",
+    "created_at": "2024-03-25T09:15:00Z",
     "messages": [
       {
-        "content": "Need panels temporarily removed for roof repair next month",
+        "content": "Could you provide a detailed timeline for the installation process? I need to plan ahead for time off work. Also, what preparations do I need to make before the installation team arrives?",
         "sender_type": "customer",
-        "created_at": "2024-03-22T23:35:00Z"
-      },
+        "created_at": "2024-03-25T09:15:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Safety Equipment Requirements",
+    "description": "Questions about required safety equipment",
+    "email": "david.chen@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T09:30:00Z",
+    "messages": [
       {
-        "content": "I can coordinate with your roofer. Please share their contact info and planned repair dates.",
-        "sender_type": "agent",
-        "created_at": "2024-03-22T23:40:00Z "
+        "content": "I'm reviewing the installation guide and noticed the safety equipment requirements. Does your team provide all the necessary safety equipment, or do I need to arrange anything specifically for the installation?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T09:30:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Post-Installation Documentation",
+    "description": "Question about required documentation",
+    "email": "lisa.patel@email.com",
+    "status": "new",
+    "priority": "low",
+    "created_at": "2024-03-25T09:45:00Z",
+    "messages": [
+      {
+        "content": "What documentation will I receive after the installation is complete? I want to make sure I have everything needed for insurance and warranty purposes.",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T09:45:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "System Commissioning Process",
+    "description": "Questions about system activation",
+    "email": "james.taylor@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T10:00:00Z",
+    "messages": [
+      {
+        "content": "Can you explain the commissioning process after installation? How long does it typically take to get the system up and running, and what steps are involved in the final testing?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T10:00:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Panel Cleaning Schedule",
+    "description": "Question about maintenance requirements",
+    "email": "emma.garcia@email.com",
+    "status": "new",
+    "priority": "low",
+    "created_at": "2024-03-25T10:15:00Z",
+    "messages": [
+      {
+        "content": "How often should I have my solar panels cleaned? I live in an area with lots of pollen in spring, and I want to make sure I'm maintaining them properly.",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T10:15:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Performance Monitoring Question",
+    "description": "Help with monitoring system",
+    "email": "ryan.murphy@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T10:30:00Z",
+    "messages": [
+      {
+        "content": "I noticed my daily production numbers seem lower than usual. How can I tell if this is due to weather or if there's a maintenance issue that needs attention?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T10:30:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Winter Maintenance Preparation",
+    "description": "Questions about winter care",
+    "email": "sophia.lee@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T10:45:00Z",
+    "messages": [
+      {
+        "content": "With winter approaching, what maintenance steps should I take to prepare my solar system? I'm particularly concerned about snow accumulation and cold weather impact.",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T10:45:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Annual Inspection Requirements",
+    "description": "Question about professional maintenance",
+    "email": "marcus.brown@email.com",
+    "status": "new",
+    "priority": "low",
+    "created_at": "2024-03-25T11:00:00Z",
+    "messages": [
+      {
+        "content": "The maintenance schedule mentions annual professional inspections. What exactly is checked during these inspections, and how do I schedule one?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T11:00:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "System Performance Analysis",
+    "description": "Request for performance review",
+    "email": "hannah.white@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T11:15:00Z",
+    "messages": [
+      {
+        "content": "Is there a way to get a comprehensive analysis of my system's performance over the past few months? I'd like to understand if it's operating at optimal efficiency.",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T11:15:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Warranty Transfer Process",
+    "description": "Question about transferring warranty",
+    "email": "alex.rodriguez@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T11:30:00Z",
+    "messages": [
+      {
+        "content": "I'm selling my house next month. What's the process for transferring the solar system warranty to the new owners? Are there any fees or paperwork involved?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T11:30:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Performance Warranty Claim",
+    "description": "Question about production guarantee",
+    "email": "jordan.kim@email.com",
+    "status": "new",
+    "priority": "high",
+    "created_at": "2024-03-25T11:45:00Z",
+    "messages": [
+      {
+        "content": "My system's production seems to be below the guaranteed minimum output. How do I initiate a performance warranty claim, and what documentation do I need to provide?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T11:45:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Extended Warranty Options",
+    "description": "Questions about warranty extension",
+    "email": "rachel.thompson@email.com",
+    "status": "new",
+    "priority": "low",
+    "created_at": "2024-03-25T12:00:00Z",
+    "messages": [
+      {
+        "content": "I see that extended warranty options are available for the inverter. What are the costs and benefits of extending the warranty beyond the standard 12 years?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T12:00:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Component Replacement Coverage",
+    "description": "Question about warranty coverage",
+    "email": "chris.martinez@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T12:15:00Z",
+    "messages": [
+      {
+        "content": "One of my solar panels has a small crack. Does the warranty cover this type of damage? What's the process for getting it inspected and potentially replaced?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T12:15:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Warranty Maintenance Requirements",
+    "description": "Question about warranty conditions",
+    "email": "olivia.anderson@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T12:30:00Z",
+    "messages": [
+      {
+        "content": "I want to make sure I'm not voiding my warranty. What maintenance records do I need to keep, and are there specific requirements for maintaining warranty coverage?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T12:30:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Panel Efficiency Ratings",
+    "description": "Question about panel specifications",
+    "email": "kevin.zhang@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T12:45:00Z",
+    "messages": [
+      {
+        "content": "I'm comparing your panels with another company. Can you explain what the 21.4% efficiency rating means in practical terms? How does this translate to actual power production?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T12:45:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Inverter System Compatibility",
+    "description": "Question about technical specs",
+    "email": "nina.patel@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T13:00:00Z",
+    "messages": [
+      {
+        "content": "I'm planning to add more panels in the future. Is the 7.6kW inverter system sufficient for expansion? What's the maximum number of panels it can handle?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T13:00:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Temperature Impact on Performance",
+    "description": "Technical performance question",
+    "email": "thomas.wilson@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T13:15:00Z",
+    "messages": [
+      {
+        "content": "The specs show an operating temperature range of -40°C to +85°C. How does extreme heat affect the system's performance? We get very hot summers here.",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T13:15:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Monitoring System Capabilities",
+    "description": "Question about monitoring features",
+    "email": "maria.sanchez@email.com",
+    "status": "new",
+    "priority": "low",
+    "created_at": "2024-03-25T13:30:00Z",
+    "messages": [
+      {
+        "content": "What data points does the monitoring system track? I'm particularly interested in the granularity of the data and if it can show panel-level performance.",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T13:30:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Wind Load Resistance",
+    "description": "Question about system durability",
+    "email": "robert.clark@email.com",
+    "status": "new",
+    "priority": "high",
+    "created_at": "2024-03-25T13:45:00Z",
+    "messages": [
+      {
+        "content": "I see the mounting system is rated for 140 mph winds. We get occasional strong storms - can you explain the testing process for these ratings and what happens in extreme weather?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T13:45:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Federal Tax Credit Calculation",
+    "description": "Question about tax incentives",
+    "email": "peter.wong@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T14:00:00Z",
+    "messages": [
+      {
+        "content": "I'm trying to understand the 30% federal tax credit. Does this apply to the total system cost including installation? What documentation will I need for my tax return?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T14:00:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Energy Production Estimates",
+    "description": "Question about ROI calculations",
+    "email": "amanda.jones@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T14:15:00Z",
+    "messages": [
+      {
+        "content": "How accurate are the energy production estimates? I'd like to understand the methodology used to calculate the 1,300-1,600 kWh per kW installed figure.",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T14:15:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "System Sizing and Cost",
+    "description": "Question about system options",
+    "email": "diego.torres@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T14:30:00Z",
+    "messages": [
+      {
+        "content": "Based on my average monthly electricity bill of $200, what size system would you recommend? I'd like to understand the cost implications of different system sizes.",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T14:30:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "State Rebate Programs",
+    "description": "Question about local incentives",
+    "email": "sarah.miller@email.com",
+    "status": "new",
+    "priority": "low",
+    "created_at": "2024-03-25T14:45:00Z",
+    "messages": [
+      {
+        "content": "Besides the federal tax credit, what state-specific incentives are available in my area? How do I apply for these additional rebates?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T14:45:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Performance Guarantee Terms",
+    "description": "Question about production guarantee",
+    "email": "michael.chang@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T15:00:00Z",
+    "messages": [
+      {
+        "content": "Can you explain the details of the 5-year production guarantee? How is underperformance calculated and what compensation is provided if the system doesn't meet the guaranteed output?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T15:00:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Smart Home Integration",
+    "description": "Question about home automation",
+    "email": "eric.foster@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T15:15:00Z",
+    "messages": [
+      {
+        "content": "Can your solar system integrate with my existing Google Home setup? I'd like to use voice commands to check system status and control power allocation to different appliances.",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T15:15:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "International Warranty Coverage",
+    "description": "Question about warranty abroad",
+    "email": "julia.weber@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T15:30:00Z",
+    "messages": [
+      {
+        "content": "I'm moving to Canada next year. Will my warranty still be valid there? Can I get service from your Canadian partners if needed?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T15:30:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Custom Panel Design Request",
+    "description": "Question about panel customization",
+    "email": "brandon.lee@email.com",
+    "status": "new",
+    "priority": "low",
+    "created_at": "2024-03-25T15:45:00Z",
+    "messages": [
+      {
+        "content": "Do you offer custom-colored solar panels to match my roof's unique color? I'd like something that blends in better than the standard black panels.",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T15:45:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Mobile App Feature Request",
+    "description": "Question about app capabilities",
+    "email": "ashley.williams@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T16:00:00Z",
+    "messages": [
+      {
+        "content": "Is there a way to set up custom alerts in the mobile app for specific power consumption thresholds? Also, can I control my battery storage system directly through the app?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T16:00:00Z"
+      }
+    ]
+  },
+  {
+    "subject": "Cryptocurrency Mining Setup",
+    "description": "Question about mining compatibility",
+    "email": "ryan.cooper@email.com",
+    "status": "new",
+    "priority": "medium",
+    "created_at": "2024-03-25T16:15:00Z",
+    "messages": [
+      {
+        "content": "I'm planning to use my solar system to power a cryptocurrency mining operation. Can you help me calculate the optimal setup and confirm if this affects the warranty coverage?",
+        "sender_type": "customer",
+        "created_at": "2024-03-25T16:15:00Z "
       }
     ]
   }
