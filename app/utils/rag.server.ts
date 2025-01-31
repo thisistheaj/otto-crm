@@ -45,8 +45,24 @@ Chat History:
 
 Question: {question}
 
-Answer in a helpful, professional manner. Include citations using [content_type:content_id] format when referencing specific information.
-End your response with 2-3 relevant follow-up questions the user might have.`;
+Analyze the situation and determine if this response should set the ticket status to 'pending'.
+Set status to 'pending' if:
+1. You're providing a complete solution that needs customer verification
+2. You're suggesting specific steps for the customer to try
+3. You're answering their question fully and waiting for confirmation
+
+Return your response in the following JSON format (replace the values with your actual response):
+{{
+  "setStatus": "pending" or false,
+  "response": "Your helpful response here, including citations using [Document Title] format"
+}}
+
+Your response should:
+- Be helpful and professional
+- Include citations by referencing document titles in square brackets, e.g. [Solar Panel Installation Guide]
+- Be properly escaped for JSON
+
+Format the response as valid JSON.`;
 
 interface ChainInput {
   question: string;
@@ -225,7 +241,7 @@ export async function getRagSuggestion(
   const context = docs
     .map(
       (doc: Document) =>
-        `[${doc.metadata.content_type}:${doc.metadata.content_id}] ${doc.pageContent}`
+        `[${doc.metadata.content_title || "Untitled Document"}] ${doc.pageContent}`
     )
     .join("\n\n");
 
@@ -237,11 +253,28 @@ export async function getRagSuggestion(
   ]);
 
   // Get final response
-  const content = await responseChain.invoke({
+  console.log('Getting response from LLM...');
+  const rawResponse = await responseChain.invoke({
     context,
     question,
     chat_history: chatHistory,
   });
+
+  console.log('Raw LLM response:', rawResponse);
+
+  // Parse the JSON response
+  let parsedResponse;
+  try {
+    parsedResponse = JSON.parse(rawResponse);
+    console.log('Parsed response:', parsedResponse);
+  } catch (error) {
+    console.error('Error parsing LLM response:', error);
+    // Fallback to original format if parsing fails
+    parsedResponse = {
+      setStatus: false,
+      response: rawResponse
+    };
+  }
 
   // Format citations with URLs and titles
   const citations = docs.map((doc: Document) => {
@@ -265,7 +298,8 @@ export async function getRagSuggestion(
   });
 
   return {
-    content,
+    content: parsedResponse.response,
     citations,
+    setStatus: parsedResponse.setStatus
   };
 } 

@@ -16,6 +16,7 @@ export interface Citation {
 export interface RagResponse {
   content: string;
   citations: Citation[];
+  setStatus: false | "pending";
 }
 
 export function convertToLangChainHistory(messages: { role: string; content: string }[]): Message[] {

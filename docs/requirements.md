@@ -121,13 +121,13 @@ High level todos:
 - [x] new chats move to open when responding
 - [x] pending chats allow user to resolve
 - [x] better chat messsages (richtext or separate links?)
-- [ ] can create ticket from textbox in KB
+- [x] can create ticket from textbox in KB
 
 * Implement AI Features
 - [x] implement: chat suggestions
-- [ ] agentic decision making / tool use
-    - [ ] agent can set ticket to pending 
-    - [ ] agent decides between: (ask a question | update ticket status)
+- [x] agentic decision making / tool use
+    - [x] agent can set ticket to pending 
+    - [x] agent decides between: (ask a question | update ticket status)
 
 * Test &Measure
 - [ ] generate relvant test data to the tasks 

@@ -10,6 +10,13 @@ import {
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Badge } from "~/components/ui/badge";
 import { Checkbox } from "~/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 import { useState, useEffect } from "react";
 import type { Citation } from "~/types/rag";
 
@@ -20,23 +27,50 @@ function stripHtml(html: string) {
   return tmp.textContent || tmp.innerText || "";
 }
 
+// Helper function to find all document titles mentioned in text
+function findMentionedTitles(text: string): string[] {
+  const matches = text.match(/\[(.*?)\]/g) || [];
+  return matches.map(match => match.slice(1, -1));
+}
+
 interface SuggestionDialogProps {
   suggestion: string;
   citations: Citation[];
   isOpen: boolean;
   onClose: () => void;
-  onUse: (text: string, selectedCitations: Citation[]) => void;
+  onUse: (text: string, selectedCitations: Citation[], proposedStatus: false | "pending") => void;
+  proposedStatus: false | "pending";
 }
 
-export function SuggestionDialog({ suggestion, citations, isOpen, onClose, onUse }: SuggestionDialogProps) {
+export function SuggestionDialog({ 
+  suggestion, 
+  citations, 
+  isOpen, 
+  onClose, 
+  onUse,
+  proposedStatus 
+}: SuggestionDialogProps) {
   const [selectedCitations, setSelectedCitations] = useState<Set<string>>(new Set());
+  const [selectedStatus, setSelectedStatus] = useState<string>(proposedStatus || "no_action");
 
-  // Reset selections when dialog opens with new suggestion
+  // Reset selections and auto-select mentioned citations when dialog opens
   useEffect(() => {
     if (isOpen) {
-      setSelectedCitations(new Set());
+      const mentionedTitles = findMentionedTitles(suggestion);
+      console.log('Mentioned titles:', mentionedTitles);
+      
+      const newSelected = new Set<string>();
+      citations.forEach(citation => {
+        if (mentionedTitles.includes(citation.title)) {
+          newSelected.add(`${citation.content_type}:${citation.content_id}`);
+        }
+      });
+      
+      console.log('Auto-selected citations:', newSelected);
+      setSelectedCitations(newSelected);
+      setSelectedStatus(proposedStatus || "no_action");
     }
-  }, [isOpen]);
+  }, [isOpen, proposedStatus, suggestion, citations]);
 
   const handleUse = () => {
     const selected = citations.filter(citation => 
@@ -50,7 +84,7 @@ export function SuggestionDialog({ suggestion, citations, isOpen, onClose, onUse
       ).join("\n");
     }
 
-    onUse(finalText, selected);
+    onUse(finalText, selected, selectedStatus === "pending" ? "pending" : false);
   };
 
   return (
@@ -117,6 +151,23 @@ export function SuggestionDialog({ suggestion, citations, isOpen, onClose, onUse
                 );
               })}
             </div>
+          </div>
+
+          {/* Status Proposal */}
+          <div className="space-y-2">
+            <h4 className="text-sm font-medium">Update ticket?</h4>
+            <Select
+              value={selectedStatus}
+              onValueChange={setSelectedStatus}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="no_action">No Action</SelectItem>
+                <SelectItem value="pending">Pending</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
 

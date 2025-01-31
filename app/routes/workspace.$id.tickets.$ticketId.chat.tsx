@@ -14,7 +14,9 @@ import { useRealtimeMessages } from "~/hooks/use-realtime-messages";
 import { useState, useRef, useEffect } from "react";
 import { getRagSuggestion } from "~/utils/rag.server";
 import { updateTicketStatus } from "~/models/ticket.server";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Loader2 } from "lucide-react";
+import { Checkbox } from "~/components/ui/checkbox";
+import { Label } from "~/components/ui/label";
 
 export async function loader({ request, params }: { request: Request; params: { id: string; ticketId: string } }) {
   const response = new Response();
@@ -188,7 +190,36 @@ export async function action({ request, params }: { request: Request; params: { 
       workspaceId: workspace.id,
       workspaceSlug: workspace.slug
     });
+    console.log("suggestion:");
+    console.log(suggestion);
     return json(suggestion);
+  }
+
+  if (intent === "update_status") {
+    const status = formData.get("status");
+    console.log('Updating ticket status to:', status);
+    
+    // Update ticket status
+    await updateTicketStatus(supabase, params.ticketId, status as string);
+    
+    // Add system message about status change
+    const { data: ticketData } = await supabase
+      .from('tickets')
+      .select('chat_room_id')
+      .eq('id', params.ticketId)
+      .single();
+
+    if (ticketData?.chat_room_id) {
+      await supabase
+        .from('messages')
+        .insert({
+          room_id: ticketData.chat_room_id,
+          content: `Ticket status updated to: ${status}`,
+          sender_type: 'system'
+        });
+    }
+
+    return json({ success: true });
   }
 
   // Handle existing message sending logic
@@ -198,13 +229,13 @@ export async function action({ request, params }: { request: Request; params: { 
   }
 
   // Get ticket to ensure it exists and get chat room id
-  const { data: ticket } = await supabase
+  const { data: ticketInfo } = await supabase
     .from('tickets')
     .select('chat_room_id')
     .eq('id', params.ticketId)
     .single();
 
-  if (!ticket?.chat_room_id) {
+  if (!ticketInfo?.chat_room_id) {
     throw new Response("Ticket not found", { status: 404 });
   }
 
@@ -219,7 +250,7 @@ export async function action({ request, params }: { request: Request; params: { 
     await supabase
       .from('messages')
       .insert({
-        room_id: ticket.chat_room_id,
+        room_id: ticketInfo.chat_room_id,
         content,
         sender_type: 'agent'
       });
@@ -238,7 +269,9 @@ export default function AgentTicketChat() {
   // Add state for suggestion handling
   const [suggestion, setSuggestion] = useState<string | null>(null);
   const [citations, setCitations] = useState<Citation[]>([]);
+  const [proposedStatus, setProposedStatus] = useState<false | "pending">(false);
   const [lastFetchTime, setLastFetchTime] = useState<number | null>(null);
+  const [autoSend, setAutoSend] = useState(false);
 
   // Function to get suggestion
   function getSuggestion() {
@@ -251,28 +284,109 @@ export default function AgentTicketChat() {
   // Handle fetcher state
   const isLoading = fetcher.state === "submitting";
 
+  // Helper function to find mentioned titles in text
+  function findMentionedTitles(text: string): string[] {
+    const matches = text.match(/\[(.*?)\]/g) || [];
+    return matches.map(match => match.slice(1, -1));
+  }
+
+  // Function to automatically send message and update status
+  async function autoSendMessage(text: string, citationsToInclude: Citation[], status: false | "pending") {
+    // First send the message
+    const messageFormData = new FormData();
+    let finalText = text;
+    if (citationsToInclude.length > 0) {
+      finalText += "\n\nHelpful Resources:\n" + citationsToInclude.map(citation => 
+        `[${citation.title}](${window.location.origin}${citation.url})`
+      ).join("\n");
+    }
+    console.log("Sending message:", finalText);
+    
+    // Add message to form data before submitting
+    messageFormData.append("message", finalText);
+
+    // Submit message and wait for completion
+    await new Promise<void>((resolve) => {
+      const submitter = submit(messageFormData, { method: "post" });
+      // Wait a bit to ensure the message is processed
+      setTimeout(resolve, 500);
+    });
+
+    // Then update status if needed
+    if (status === "pending") {
+      console.log('Setting ticket status to pending...');
+      const statusFormData = new FormData();
+      statusFormData.append("intent", "update_status");
+      statusFormData.append("status", "pending");
+      
+      // Submit status update and wait for completion
+      await new Promise<void>((resolve) => {
+        submit(statusFormData, { method: "post" });
+        // Wait a bit to ensure the status update is processed
+        setTimeout(resolve, 500);
+      });
+    }
+  }
+
   // Handle fetcher data
   useEffect(() => {
     // Only process new fetcher data
-    if (fetcher.data && fetcher.state === "idle" && lastFetchTime) {
-      setSuggestion(fetcher.data.content);
-      setCitations(fetcher.data.citations);
+    if (fetcher.data && 'content' in fetcher.data && 'setStatus' in fetcher.data && fetcher.state === "idle" && lastFetchTime) {
+      console.log('Received suggestion data:', fetcher.data);
+      
+      if (autoSend) {
+        // Find mentioned citations
+        const mentionedTitles = findMentionedTitles(fetcher.data.content);
+        const citationsToInclude = fetcher.data.citations.filter(
+          citation => mentionedTitles.includes(citation.title)
+        );
+        
+        // Auto send the message and update status
+        (async () => {
+          try {
+            await autoSendMessage(
+              fetcher.data.content,
+              citationsToInclude,
+              fetcher.data.setStatus
+            );
+            // Reset states after both operations complete
+            setLastFetchTime(null);
+          } catch (error) {
+            console.error('Error auto-sending message:', error);
+          }
+        })();
+      } else {
+        // Show the suggestion dialog
+        setSuggestion(fetcher.data.content);
+        setCitations(fetcher.data.citations);
+        setProposedStatus(fetcher.data.setStatus);
+      }
     }
-  }, [fetcher.data, fetcher.state, lastFetchTime]);
+  }, [fetcher.data, fetcher.state, lastFetchTime, autoSend]);
 
   // Function to use suggestion
-  function useSuggestion(text: string, selectedCitations: Citation[]) {
+  function useSuggestion(text: string, selectedCitations: Citation[], finalStatus: false | "pending") {
     if (inputRef.current) {
       inputRef.current.value = text;
       inputRef.current.focus();
     }
     setSuggestion(null);
+    
+    // Update status if needed
+    if (finalStatus === "pending") {
+      console.log('Setting ticket status to pending...');
+      const formData = new FormData();
+      formData.append("intent", "update_status");
+      formData.append("status", "pending");
+      submit(formData, { method: "post" });
+    }
   }
 
   // Function to close suggestion dialog
   function closeSuggestion() {
     setSuggestion(null);
     setLastFetchTime(null);
+    setProposedStatus(false);
   }
 
   // Function to open ticket
@@ -281,6 +395,19 @@ export default function AgentTicketChat() {
     formData.append("intent", "open_ticket");
     submit(formData, { method: "post" });
   }
+
+  // Get button text based on state
+  const getButtonText = () => {
+    if (isLoading) {
+      return (
+        <div className="flex items-center gap-2">
+          <Loader2 className="h-4 w-4 animate-spin" />
+          <span>AI is typing...</span>
+        </div>
+      );
+    }
+    return autoSend ? "Send Suggested Response" : "Get Suggestion";
+  };
 
   return (
     <div className="p-8">
@@ -344,16 +471,28 @@ export default function AgentTicketChat() {
             </div>
           ) : (
             <>
-              {/* Add suggestion button */}
-              <div className="px-4 pt-4">
-                <Button
-                  variant="outline"
-                  className="w-full mb-2"
-                  onClick={getSuggestion}
-                  disabled={isLoading}
-                >
-                  {isLoading ? "Getting suggestion..." : "Get Suggestion"}
-                </Button>
+              {/* Add suggestion button and auto-send checkbox */}
+              <div className="px-4 pt-6 pb-2 space-y-2">
+                <div className="flex items-center justify-between">
+                  <Button
+                    variant="outline"
+                    className="flex-1 mr-4 min-h-[36px]"
+                    onClick={getSuggestion}
+                    disabled={isLoading}
+                  >
+                    {getButtonText()}
+                  </Button>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="auto-send"
+                      checked={autoSend}
+                      onCheckedChange={(checked) => setAutoSend(checked as boolean)}
+                    />
+                    <Label htmlFor="auto-send" className="text-sm">
+                      Auto send
+                    </Label>
+                  </div>
+                </div>
               </div>
               
               <MessageInput ref={inputRef} />
@@ -366,8 +505,9 @@ export default function AgentTicketChat() {
             citations={citations}
             isOpen={!!suggestion}
             onClose={closeSuggestion}
-            onUse={(text, selectedCitations) => {
-              useSuggestion(text, selectedCitations);
+            proposedStatus={proposedStatus}
+            onUse={(text, selectedCitations, finalStatus) => {
+              useSuggestion(text, selectedCitations, finalStatus);
               closeSuggestion();
             }}
           />
